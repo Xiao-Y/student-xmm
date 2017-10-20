@@ -10,11 +10,6 @@ public class LoginHelper {
 
 	public static UserDto getLoginUser(HttpSession session) {
 		UserDto userDto = (UserDto) session.getAttribute("currentUser");
-		if (ToolsUtils.isEmpty(userDto.getUserName())) {
-			userDto = new UserDto();
-			userDto.setUserName("billow");
-			userDto.setUserId(1);
-		}
 		return userDto;
 	}
 

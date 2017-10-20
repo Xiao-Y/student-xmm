@@ -33,7 +33,13 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="${ctx }/home/login">
-                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <i class="fa fa-cart-plus fa-2x" aria-hidden="true"></i>
+                        我的购物车
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="${ctx }/home/login">
+                        <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
                         注销
                     </a>
                 </li>
@@ -47,6 +53,12 @@
                             <a href="javascript:;">
                                 <i class="fa fa-user-circle" aria-hidden="true"></i>
                                 个人信息
+                            </a>
+                        </dd>
+                        <dd>
+                            <a href="javascript:;">
+                                <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                我的购物车
                             </a>
                         </dd>
                         <dd id="lock">

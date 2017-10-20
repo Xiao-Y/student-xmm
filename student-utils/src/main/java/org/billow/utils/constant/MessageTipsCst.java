@@ -130,4 +130,12 @@ public class MessageTipsCst {
      * 注册失败
      */
     public static final String REGISTER_FAILURE = "注册失败！";
+    /**
+     * 商品添加成功
+     */
+    public static final String COMMODITY_SUCCESS = "商品添加成功！";
+    /**
+     * 商品添加失败
+     */
+    public static final String COMMODITY_FAILURE = "商品添加失败！";
 }

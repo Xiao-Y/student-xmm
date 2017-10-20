@@ -64,4 +64,8 @@ public class PagePathCst {
      * 商品管理
      */
     public static final String BASEPATH_COMMODITY = "page/commodity/";
+    /**
+     * 订单管理
+     */
+    public static final String BASEPATH_ORDER_FORM = "page/orderForm/";
 }

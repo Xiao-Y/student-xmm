@@ -4,33 +4,24 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>商品列表</title>
+    <title>我的购物车</title>
     <jsp:include page="/pub/pubTableCss.jsp"/>
     <jsp:include page="/pub/pubTableJs.jsp"/>
-    <script type="text/javascript" src="${ctx}/static/page/commodity/commodityList.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/extend/pubTableNew.js"></script>
+    <%--<script type="text/javascript" src="${ctx }/static/page/orderForm/myShoppingCart.js"></script>--%>
+
 </head>
 <body>
 <div class="admin-main">
-    <blockquote class="layui-elem-quote">
-        <a href="${ctx}/comModify/index?pageNo=${page.pageNum }" class="layui-btn layui-btn-small">
-            <i class="fa fa-refresh" aria-hidden="true"></i>
-            刷新
-        </a>
-        <a href="${ctx }/comModify/commodityEdit" class="layui-btn layui-btn-small">
-            <i class="layui-icon">&#xe608;</i>
-            添加商品
-        </a>
-    </blockquote>
     <fieldset class="layui-elem-field">
-        <legend>数据列表</legend>
+        <legend>我的购物车</legend>
         <div class="layui-field-box">
             <table class="site-table table-hover">
                 <thead>
                 <tr>
+                    <th><input type="checkbox" lay-skin="primary" id="selected-all"></th>
                     <th>商品名称</th>
+                    <th>数量</th>
                     <th>单价</th>
-                    <th>规格</th>
                     <th>包装</th>
                     <th>状态</th>
                     <th>有效性</th>
@@ -38,11 +29,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="commodity" items="${page.list}">
+                <c:forEach var="shoppingCartDto" items="${list}">
+                    <c:set var="commodity" value="${shoppingCartDto.commodityDto}"/>
                     <tr>
+                        <td><input type="checkbox" lay-skin="primary"></td>
                         <td>${commodity.commodityName }</td>
-                        <td>${commodity.unitPrice }</td>
-                        <td>${commodity.spec }</td>
+                        <td>${shoppingCartDto.commodityNum }</td>
+                        <td>${commodity.unitPrice }/${commodity.spec }</td>
                         <td>${commodity.packing }</td>
                         <td>
                             <c:if test="${commodity.status == '1'}"> 有货 </c:if>
@@ -65,8 +58,6 @@
             </table>
         </div>
     </fieldset>
-    <!-- 分页 -->
-    <jsp:include page="/pub/pubPage.jsp"/>
 </div>
 </body>
 

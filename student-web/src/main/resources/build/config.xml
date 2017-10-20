@@ -7,35 +7,35 @@
 	<!-- 版本 -->
 	<version>1.0</version>
 	<!-- 表名 -->
-	<tableName>t_commodity</tableName>
+	<tableName>t_shopping_cart</tableName>
 
-	<controllerPackageName>org.billow.controller.commodity</controllerPackageName>
-	<controllerClazzName>ComModifyController</controllerClazzName>
-	<explainController>商品修改控制器</explainController>
+	<controllerPackageName>org.billow.controller.orderForm4</controllerPackageName>
+	<controllerClazzName>ShoppingCartController</controllerClazzName>
+	<explainController>购物车控制器</explainController>
 
-	<servicePackageName>org.billow.api.commodity</servicePackageName>
-	<serviceClazzName>CommodityService</serviceClazzName>
-	<explainService>商品修改接口</explainService>
+	<servicePackageName>org.billow.api.orderForm</servicePackageName>
+	<serviceClazzName>ShoppingCartService</serviceClazzName>
+	<explainService>购物车接口</explainService>
 
-	<serviceImplPackageName>org.billow.service.commodity</serviceImplPackageName>
-	<serviceImplClazzName>CommodityServiceImpl</serviceImplClazzName>
-	<explainServiceImpl>商品修改实现类</explainServiceImpl>
+	<serviceImplPackageName>org.billow.service.orderForm</serviceImplPackageName>
+	<serviceImplClazzName>ShoppingCartServiceImpl</serviceImplClazzName>
+	<explainServiceImpl>购物车实现类</explainServiceImpl>
 
 	<daoPackageName>org.billow.dao</daoPackageName>
-	<daoClazzName>CommodityDao</daoClazzName>
-	<explainDao>商品修改接口</explainDao>
+	<daoClazzName>ShoppingCartDao</daoClazzName>
+	<explainDao>购物车接口</explainDao>
 
 	<modelBasePackageName>org.billow.model.domain</modelBasePackageName>
-	<modelBaseClazzName>CommodityBase</modelBaseClazzName>
-	<explainModelBase>商品修改数据库模型</explainModelBase>
+	<modelBaseClazzName>ShoppingCartBase</modelBaseClazzName>
+	<explainModelBase>购物车数据库模型</explainModelBase>
 
 	<modelPackageName>org.billow.model.expand</modelPackageName>
-	<modelClazzName>CommodityDto</modelClazzName>
-	<explainModel>商品修改model模型</explainModel>
+	<modelClazzName>ShoppingCartDto</modelClazzName>
+	<explainModel>购物车model模型</explainModel>
 
 	<mapperBasePackageName>mybatis.mapper.base</mapperBasePackageName>
-	<mapperBaseXMLName>CommodityBaseDao</mapperBaseXMLName>
+	<mapperBaseXMLName>ShoppingCartBaseDao</mapperBaseXMLName>
 
 	<mapperPackageName>mybatis.mapper.expand</mapperPackageName>
-	<mapperXMLName>CommodityDao</mapperXMLName>
+	<mapperXMLName>ShoppingCartDao</mapperXMLName>
 </root>

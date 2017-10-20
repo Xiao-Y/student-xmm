@@ -6,9 +6,9 @@
 <meta charset="UTF-8">
 <title>菜单列表</title>
 <jsp:include page="/pub/pubTableCss.jsp" />
-<jsp:include page="/pub/pubJs.jsp" />
+<jsp:include page="/pub/pubTableJs.jsp"/>
 <script type="text/javascript" src="${ctx }/static/page/system/menuManage.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/extend/pubTable.js"></script>
+<%--<script type="text/javascript" src="${ctx}/static/js/extend/pubTable.js"></script>--%>
 
 </head>
 <body>

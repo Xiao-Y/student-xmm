@@ -13,7 +13,7 @@ public class PageHelper extends com.github.pagehelper.PageHelper {
 
 	/**
 	 * 获取PageHelper实例
-	 * 
+	 *
 	 * @return
 	 * @author XiaoY
 	 * @date: 2017年5月28日 下午10:46:40
@@ -24,10 +24,10 @@ public class PageHelper extends com.github.pagehelper.PageHelper {
 
 	/**
 	 * 分页方法
-	 * 
+	 *
 	 * <br>
 	 * added by liuyongtao<br>
-	 * 
+	 *
 	 * @date 2017年4月28日 下午12:46:31
 	 */
 	@SuppressWarnings("deprecation")
@@ -40,10 +40,10 @@ public class PageHelper extends com.github.pagehelper.PageHelper {
 
 	/**
 	 * 分页方法
-	 * 
+	 *
 	 * <br>
 	 * added by liuyongtao<br>
-	 * 
+	 *
 	 * @date 2017年4月28日 下午12:46:31
 	 */
 	@SuppressWarnings("deprecation")
@@ -54,8 +54,23 @@ public class PageHelper extends com.github.pagehelper.PageHelper {
 	}
 
 	/**
+	 * 分页方法
+	 * @param pageSize 页面大小
+	 * <br>
+	 * added by liuyongtao<br>
+	 *
+	 * @date 2017年4月28日 下午12:46:31
+	 */
+	@SuppressWarnings("deprecation")
+	public static void startPage(Integer pageSize) {
+		HttpServletRequest request = RequestUtils.getRequest();
+		Integer targetPage = RequestUtils.getTargetPage(request);
+		startPage(targetPage, pageSize);
+	}
+
+	/**
 	 * 获取分页对象
-	 * 
+	 *
 	 * @param count
 	 *            总数量
 	 * @return
@@ -78,16 +93,16 @@ public class PageHelper extends com.github.pagehelper.PageHelper {
 
 	/**
 	 * 获取总页数
-	 * 
+	 *
 	 * <br>
 	 * added by liuyongtao<br>
-	 * 
+	 *
 	 * @param count
 	 *            总数量
 	 * @param pageSize
 	 *            页面大小
 	 * @return
-	 * 
+	 *
 	 * @date 2017年4月29日 下午5:36:31
 	 */
 	private static int pages(long count, int pageSize) {
@@ -96,16 +111,16 @@ public class PageHelper extends com.github.pagehelper.PageHelper {
 
 	/**
 	 * 数据起始位置
-	 * 
+	 *
 	 * <br>
 	 * added by liuyongtao<br>
-	 * 
+	 *
 	 * @param targetPage
 	 *            起始页码
 	 * @param pageSize
 	 *            页面大小
 	 * @return
-	 * 
+	 *
 	 * @date 2017年4月29日 下午5:45:08
 	 */
 	private static int startResult(int targetPage, int pageSize) {
