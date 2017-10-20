@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.billow.dao.UserDao">
+    <!-- 级联角色信息 -->
+    <resultMap id="userResultMap" type="org.billow.model.expand.UserDto" extends="BaseResultMap">
+        <collection property="userRoleDtos" ofType="org.billow.model.expand.UserRoleDto" javaType="ArrayList"
+                    column="user_id" select="org.billow.dao.UserRoleDao.findUserRoleByUserId"/>
+    </resultMap>
+    <select id="getUserByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where open_id = #{openId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findRoleListByUserId" resultMap="userResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <!-- 通过用户名和密码查询出用户信息和角色信息 -->
+    <select id="findUserByUserNameAndPwd" resultMap="userResultMap" parameterType="org.billow.model.expand.UserDto">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user u
+        where u.user_Name = #{userName,jdbcType=VARCHAR}
+        and u.password = #{password,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 通过用户名查询出用户信息 -->
+    <select id="findUserByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user u
+        where u.user_Name = #{userName,jdbcType=VARCHAR}
+    </select>
+</mapper>
