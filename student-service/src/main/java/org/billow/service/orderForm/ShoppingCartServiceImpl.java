@@ -67,8 +67,8 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCartDto> im
                 String commodityId = cartDto.getCommodityId();
                 CommodityDto commodityDto = new CommodityDto();
                 commodityDto.setId(commodityId);
-                commodityDao.selectByPrimaryKey(commodityDto);
-                cartDto.setCommodityDto(commodityDto);
+                CommodityDto commodity = commodityDao.selectByPrimaryKey(commodityDto);
+                cartDto.setCommodityDto(commodity);
             }
         }
         return list;

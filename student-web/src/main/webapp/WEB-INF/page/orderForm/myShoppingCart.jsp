@@ -7,7 +7,7 @@
     <title>我的购物车</title>
     <jsp:include page="/pub/pubTableCss.jsp"/>
     <jsp:include page="/pub/pubTableJs.jsp"/>
-    <%--<script type="text/javascript" src="${ctx }/static/page/orderForm/myShoppingCart.js"></script>--%>
+    <script type="text/javascript" src="${ctx }/static/page/orderForm/myShoppingCart.js"></script>
 
 </head>
 <body>
@@ -15,16 +15,17 @@
     <fieldset class="layui-elem-field">
         <legend>我的购物车</legend>
         <div class="layui-field-box">
-            <table class="site-table table-hover">
+            <table class="layui-table" lay-skin="line">
                 <thead>
                 <tr>
                     <th><input type="checkbox" lay-skin="primary" id="selected-all"></th>
                     <th>商品名称</th>
                     <th>数量</th>
-                    <th>单价</th>
+                    <th>单价（元）</th>
+                    <th>小计（元）</th>
                     <th>包装</th>
-                    <th>状态</th>
-                    <th>有效性</th>
+                    <th>是否有货</th>
+                    <th>是否有效</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -34,16 +35,27 @@
                     <tr>
                         <td><input type="checkbox" lay-skin="primary"></td>
                         <td>${commodity.commodityName }</td>
-                        <td>${shoppingCartDto.commodityNum }</td>
-                        <td>${commodity.unitPrice }/${commodity.spec }</td>
-                        <td>${commodity.packing }</td>
                         <td>
-                            <c:if test="${commodity.status == '1'}"> 有货 </c:if>
-                            <c:if test="${commodity.status == '0'}"> 无货 </c:if>
+                            <input type="text" value="${shoppingCartDto.commodityNum }">
+                        </td>
+                        <td>${commodity.unitPrice }/${commodity.spec }</td>
+                        <td>${commodity.unitPrice * shoppingCartDto.commodityNum }</td>
+                        <td>${commodity.packing }</td>
+                        <td style="text-align:center;">
+                            <c:if test="${commodity.status == '1'}">
+                                <i class="layui-icon" style="color:green;"></i>
+                            </c:if>
+                            <c:if test="${commodity.status == '0'}">
+                                <i class="layui-icon" style="color:red;"></i>
+                            </c:if>
                         </td>
                         <td>
-                            <c:if test="${commodity.valid == '1'}"> 有效 </c:if>
-                            <c:if test="${commodity.valid == '0'}"> 无效 </c:if>
+                            <c:if test="${commodity.valid == '1'}">
+                                <i class="layui-icon" style="color:green;"></i>
+                            </c:if>
+                            <c:if test="${commodity.valid == '0'}">
+                                <i class="layui-icon" style="color:red;"></i>
+                            </c:if>
                         </td>
                         <td>
                             <a href="${ctx }/comModify/commodityEdit?id=${commodity.id }&pageNo=${page.pageNum }"
