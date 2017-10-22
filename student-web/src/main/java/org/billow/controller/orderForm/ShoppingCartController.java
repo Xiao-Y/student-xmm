@@ -87,4 +87,63 @@ public class ShoppingCartController {
         av.setViewName(PagePathCst.BASEPATH_ORDER_FORM + "myShoppingCart");
         return av;
     }
+
+    /**
+     * 删除购物车信息
+     *
+     * @param commodityId 商品id
+     * @return
+     */
+    @RequestMapping("/deleteShoppingCart/{commodityId}")
+    public JsonResult deleteShoppingCart(HttpServletRequest request, @PathVariable("commodityId") String commodityId) {
+        HttpSession session = request.getSession();
+        UserDto userDto = LoginHelper.getLoginUser(session);
+        JsonResult json = new JsonResult();
+        String message = "";
+        String type = "";
+        try {
+            ShoppingCartDto dto = new ShoppingCartDto();
+            dto.setId(userDto.getUserId().toString());
+            dto.setCommodityId(commodityId);
+            shoppingCartService.deleteByPrimaryKey(dto);
+            message = MessageTipsCst.DELETE_SUCCESS;
+            type = MessageTipsCst.TYPE_SUCCES;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            message = MessageTipsCst.DELETE_FAILURE;
+            type = MessageTipsCst.TYPE_ERROR;
+        }
+        json.setMessage(message);
+        json.setType(type);
+        return json;
+    }
+
+    /**
+     * 更新购物车中的商品数量
+     *
+     * @param request
+     * @param commodityId  商品id
+     * @param commodityNum 商品数量
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/updateShoppingCartComNum/{commodityId}/{commodityNum}")
+    public String updateShoppingCartComNum(HttpServletRequest request, @PathVariable("commodityId") String commodityId,
+                                           @PathVariable("commodityNum") Integer commodityNum) {
+        HttpSession session = request.getSession();
+        UserDto userDto = LoginHelper.getLoginUser(session);
+        try {
+            ShoppingCartDto dto = new ShoppingCartDto();
+            dto.setId(userDto.getUserId().toString());
+            dto.setCommodityId(commodityId);
+            dto.setCommodityNum(commodityNum);
+            shoppingCartService.updateByPrimaryKeySelective(dto);
+            return "0";
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+        }
+        return "1";
+    }
 }

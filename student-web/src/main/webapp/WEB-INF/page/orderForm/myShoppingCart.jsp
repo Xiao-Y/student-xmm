@@ -15,7 +15,7 @@
     <fieldset class="layui-elem-field">
         <legend>我的购物车</legend>
         <div class="layui-field-box">
-            <table class="layui-table" lay-skin="line">
+            <table class="site-table" lay-skin="line">
                 <thead>
                 <tr>
                     <th><input type="checkbox" lay-skin="primary" id="selected-all"></th>
@@ -33,35 +33,41 @@
                 <c:forEach var="shoppingCartDto" items="${list}">
                     <c:set var="commodity" value="${shoppingCartDto.commodityDto}"/>
                     <tr>
-                        <td><input type="checkbox" lay-skin="primary"></td>
-                        <td>${commodity.commodityName }</td>
                         <td>
-                            <input type="text" value="${shoppingCartDto.commodityNum }">
+                            <c:if test="${commodity.status == '1' && commodity.valid == '1'}">
+                                <input type="checkbox" name="checkItem" lay-skin="primary">
+                            </c:if>
                         </td>
-                        <td>${commodity.unitPrice }/${commodity.spec }</td>
-                        <td>${commodity.unitPrice * shoppingCartDto.commodityNum }</td>
+                        <td>${commodity.commodityName }</td>
+                        <td align="center">
+                            <input type="text" name="commodityNum" value="${shoppingCartDto.commodityNum }"
+                                   style="text-align:center" class="0" readonly="readonly">
+                        </td>
+                        <td class="unitPrice"
+                            title="${commodity.unitPrice }">${commodity.unitPrice }/${commodity.spec }</td>
+                        <td class="subtotal">${commodity.unitPrice * shoppingCartDto.commodityNum }</td>
                         <td>${commodity.packing }</td>
-                        <td style="text-align:center;">
+                        <td style="text-align:center;" class="status" title="${commodity.status}">
                             <c:if test="${commodity.status == '1'}">
-                                <i class="layui-icon" style="color:green;"></i>
+                                <i class="fa fa-check-circle fa-lg" aria-hidden="true" style="color:green;"></i>
                             </c:if>
                             <c:if test="${commodity.status == '0'}">
-                                <i class="layui-icon" style="color:red;"></i>
+                                <i class="fa fa-times-circle fa-lg" aria-hidden="true" style="color:red;"></i>
                             </c:if>
                         </td>
-                        <td>
+                        <td class="valid" title="${commodity.valid}">
                             <c:if test="${commodity.valid == '1'}">
-                                <i class="layui-icon" style="color:green;"></i>
+                                <i class="fa fa-check-circle fa-lg" aria-hidden="true" style="color:green;"></i>
                             </c:if>
                             <c:if test="${commodity.valid == '0'}">
-                                <i class="layui-icon" style="color:red;"></i>
+                                <i class="fa fa-times-circle fa-lg" aria-hidden="true" style="color:red;"></i>
                             </c:if>
                         </td>
                         <td>
-                            <a href="${ctx }/comModify/commodityEdit?id=${commodity.id }&pageNo=${page.pageNum }"
-                               class="layui-btn layui-btn-mini">编辑</a>
-                            <a href="javascript:;" data-opt="del"
-                               url="${ctx }/comModify/commodityDel?id=${commodity.id }"
+                            <a href="javascript:void(0);" title="${shoppingCartDto.commodityId }" name="editComNum"
+                               class="layui-btn layui-btn-mini">修改</a>
+                            <a href="javascript:void(0);" data-opt="del"
+                               url="${ctx }/shoppingCart/deleteShoppingCart/${shoppingCartDto.commodityId }"
                                class="layui-btn layui-btn-danger layui-btn-mini">删除</a>
                         </td>
                     </tr>
