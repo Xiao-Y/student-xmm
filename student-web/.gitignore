@@ -1,5 +1,6 @@
 *.class
 *.lst
+*.iml
  
 # Package Files #
 *.jar
@@ -10,8 +11,10 @@
 /target/*
  
 # ignore eclipse files
-.classpath
-.project
 .settings
 .metadata
+.classpath
+.project
+.externalToolBuilders
 /target
+
