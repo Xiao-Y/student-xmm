@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="student-vue-element:war">
-    <output-path>$PROJECT_DIR$/student-vue-element/target</output-path>
-    <root id="archive" name="student-vue-element.war">
-      <element id="artifact" artifact-name="student-vue-element:war exploded" />
-    </root>
-  </artifact>
-</component>
