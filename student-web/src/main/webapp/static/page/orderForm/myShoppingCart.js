@@ -167,7 +167,7 @@ $(function () {
             var commodityNum = $thisTr.find("input[name='commodityNum']").val();
             commodityNums[idnex] = commodityNum;
         });
-        var url = "";
+        var url = path + "/orderForm/saveOrderForm";
         var data = {"addressId": addressId, "commodityIds": commodityIds, "commodityNums": commodityNums};
         $.ajax({
             type: "POST",

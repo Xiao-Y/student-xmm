@@ -45,6 +45,16 @@ public class OrderFormDetailBase extends BaseModel implements Serializable {
     private String spec;
     // 商品名称
     private String commodityName;
+    //商品数量
+    private Integer commodityNum;
+
+    public Integer getCommodityNum() {
+        return commodityNum;
+    }
+
+    public void setCommodityNum(Integer commodityNum) {
+        this.commodityNum = commodityNum;
+    }
 
     /**
      * 商品信息
