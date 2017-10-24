@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>student-jobs</artifactId>
-	<name>student-dao</name>
+	<name>student-jobs</name>
 	<packaging>jar</packaging>
 
 	<dependencies>
