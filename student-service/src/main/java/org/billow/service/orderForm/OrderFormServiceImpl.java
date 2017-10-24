@@ -60,7 +60,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     }
 
     @Override
-    public void saveOrderForm(UserDto loginUser, String addressId, String[] commodityIds, Integer[] commodityNums) throws Exception {
+    public void saveOrderForm(UserDto loginUser, String addressId, String[] commodityIds, String[] commodityNums) throws Exception {
         //订单金额
         BigDecimal orderFormAmount = new BigDecimal(0.00);
         //订单id
@@ -75,7 +75,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             BeanUtils.copyProperties(dto, orderFormDetailDto);
             orderFormDetailDto.setOrderFormId(orderFormId);
             orderFormDetailDto.setId(UUID.generate());
-            orderFormDetailDto.setCommodityNum(commodityNums[i]);
+            orderFormDetailDto.setCommodityNum(new Integer(commodityNums[i]));
             //计算订单金额
             orderFormAmount = orderFormAmount.add(new BigDecimal(commodityNums[i]).multiply(dto.getUnitPrice()));
             orderFormDetailDao.insert(orderFormDetailDto);

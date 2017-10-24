@@ -162,10 +162,10 @@ $(function () {
             var $thisTr = $this.parents("tr");
             //要购买的商品id
             var commodityId = $thisTr.find("input[name='commodityId']").val();
-            commodityIds[index] = commodityIds;
+            commodityIds[index] = commodityId;
             //要购买的商品数量
             var commodityNum = $thisTr.find("input[name='commodityNum']").val();
-            commodityNums[idnex] = commodityNum;
+            commodityNums[index] = commodityNum;
         });
         var url = path + "/orderForm/saveOrderForm";
         var data = {"addressId": addressId, "commodityIds": commodityIds, "commodityNums": commodityNums};
@@ -177,7 +177,6 @@ $(function () {
             success: function (obj) {
                 var message = obj.message;
                 var type = obj.type;
-                var root = obj.root;
                 if (type == 'success') {
                     new TipBox({
                         type: type, str: message, hasBtn: true, setTime: 1500, callBack: function () {

@@ -27,5 +27,5 @@ public interface OrderFormService extends BaseService<OrderFormDto> {
      * @param commodityNums 商品数量
      * @return
      */
-    void saveOrderForm(UserDto loginUser, String addressId, String[] commodityIds, Integer[] commodityNums) throws Exception;
+    void saveOrderForm(UserDto loginUser, String addressId, String[] commodityIds, String[] commodityNums) throws Exception;
 }
