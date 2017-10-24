@@ -94,6 +94,7 @@ public class ShoppingCartController {
      * @param commodityId 商品id
      * @return
      */
+    @ResponseBody
     @RequestMapping("/deleteShoppingCart/{commodityId}")
     public JsonResult deleteShoppingCart(HttpServletRequest request, @PathVariable("commodityId") String commodityId) {
         HttpSession session = request.getSession();

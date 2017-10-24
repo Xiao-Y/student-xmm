@@ -9,11 +9,13 @@
     <bookmark url="file://D:/huaan/code/clm/clm-utils/src/main/java/com/core/application/common/Md5Encrypt.java" description="{" line="27" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d67d3f85-4a64-43c1-9f9a-d16409b808ea" name="Default" comment="">
+    <list default="true" id="d67d3f85-4a64-43c1-9f9a-d16409b808ea" name="Default" comment="优化购物车">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/ShoppingCartController.java" afterPath="$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/ShoppingCartController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/student-web/src/main/resources/build/config.xml" afterPath="$PROJECT_DIR$/student-web/src/main/resources/build/config.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/orderForm/myShoppingCart.jsp" afterPath="$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/orderForm/myShoppingCart.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/student-web/src/main/webapp/static/page/orderForm/myShoppingCart.js" afterPath="$PROJECT_DIR$/student-web/src/main/webapp/static/page/orderForm/myShoppingCart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/css/layui.css" afterPath="$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/css/layui.css" />
     </list>
     <ignored path="$PROJECT_DIR$/spring-cloud-hystrix/target/" />
     <ignored path="$PROJECT_DIR$/spring-cloud-config-client-eureka/target/" />
@@ -48,22 +50,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ShoppingCartController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/ShoppingCartController.java">
+      <file leaf-file-name="MyAddressController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/MyAddressController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="141" column="21" lean-forward="false" selection-start-line="141" selection-start-column="21" selection-end-line="141" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ShoppingCartServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/student-service/src/main/java/org/billow/service/orderForm/ShoppingCartServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="864">
-              <caret line="63" column="16" lean-forward="false" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
-              <folding />
+            <state relative-caret-position="324">
+              <caret line="18" column="35" lean-forward="false" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,16 +65,22 @@
       <file leaf-file-name="myShoppingCart.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/orderForm/myShoppingCart.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="42" column="65" lean-forward="false" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="65" />
+            <state relative-caret-position="144">
+              <caret line="47" column="31" lean-forward="true" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
               <folding>
-                <element signature="n#style#0;n#input#0;n#td#2;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#6;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#td#6;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#td#6;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#td#7;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#1;n#td#7;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/student-web/src/main/resources/build/config.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="7" column="26" lean-forward="true" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -88,32 +88,9 @@
       <file leaf-file-name="myShoppingCart.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/orderForm/myShoppingCart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="74" column="59" lean-forward="false" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
+            <state relative-caret-position="306">
+              <caret line="170" column="57" lean-forward="false" selection-start-line="170" selection-start-column="45" selection-end-line="170" selection-end-column="57" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="register.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/home/register.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="48" column="24" lean-forward="false" selection-start-line="48" selection-start-column="24" selection-end-line="48" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pubPopForm.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/js/extend/pubPopForm.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="160" column="61" lean-forward="false" selection-start-line="160" selection-start-column="61" selection-end-line="160" selection-end-column="61" />
-              <folding>
-                <marker date="1502065694460" expanded="true" signature="2362:2381" ph="..." />
-                <marker date="1502065694460" expanded="true" signature="2395:2408" ph="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -130,12 +107,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>报销流程</find>
-      <find>reimbursement</find>
-      <find>search</find>
-      <find>请</find>
-      <find>menu</find>
-      <find>commodityInfo</find>
       <find>valid</find>
       <find>grade</find>
       <find>unitPrice</find>
@@ -160,6 +131,12 @@
       <find>selected-all</find>
       <find>checkUserName</find>
       <find>commodityId</find>
+      <find>number</find>
+      <find>layui-bg-green</find>
+      <find>hr</find>
+      <find>layui-bg-orange</find>
+      <find>sex</find>
+      <find>editComNum</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -181,6 +158,9 @@
       <replace>购物车</replace>
       <replace>orderForm</replace>
       <replace>form</replace>
+      <replace>address</replace>
+      <replace>OrderForm</replace>
+      <replace>订单信息</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -199,11 +179,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/student-model/src/main/java/org/billow/model/expand/ShoppingCartDto.java" />
-        <option value="$PROJECT_DIR$/student-utils/src/main/java/org/billow/utils/constant/PagePathCst.java" />
-        <option value="$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/system/menuManage.jsp" />
-        <option value="$PROJECT_DIR$/student-web/src/main/webapp/static/page/activiti/apply/leave/leaveApplyList.js" />
-        <option value="$PROJECT_DIR$/student-web/src/main/webapp/static/page/activiti/apply/reimbursement/rebApplyList.js" />
         <option value="$PROJECT_DIR$/student-web/src/main/webapp/static/page/activiti/approval/leave/leaveTaskList.js" />
         <option value="$PROJECT_DIR$/student-web/src/main/webapp/static/page/activiti/approval/leave/form-key/leaveTaskList.js" />
         <option value="$PROJECT_DIR$/student-web/src/main/webapp/static/page/activiti/deploy/actDeploy.js" />
@@ -247,9 +222,14 @@
         <option value="$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/activiti/apply/leave/formkey/ApplyLeaveFormKeyController.java" />
         <option value="$PROJECT_DIR$/student-service/src/main/java/org/billow/service/orderForm/ShoppingCartServiceImpl.java" />
         <option value="$PROJECT_DIR$/student-common/src/main/java/org/billow/common/login/LoginHelper.java" />
+        <option value="$PROJECT_DIR$/student-web/src/main/webapp/static/js/common/computer.js" />
+        <option value="$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/ShoppingCartController.java" />
+        <option value="$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/css/layui.css" />
+        <option value="$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/MyAddressController.java" />
+        <option value="$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/orderForm/myAddressView.jsp" />
         <option value="$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/orderForm/myShoppingCart.jsp" />
         <option value="$PROJECT_DIR$/student-web/src/main/webapp/static/page/orderForm/myShoppingCart.js" />
-        <option value="$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/ShoppingCartController.java" />
+        <option value="$PROJECT_DIR$/student-web/src/main/resources/build/config.xml" />
       </list>
     </option>
   </component>
@@ -347,6 +327,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -378,7 +359,7 @@
               <item name="student-web" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
@@ -386,207 +367,16 @@
               <item name="student-web" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="billow" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="billow" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="billow" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="home" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="org" type="462c0819:PsiDirectoryNode" />
-              <item name="billow" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="orderForm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="commodity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="home" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="orderForm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="layui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="plugins" type="462c0819:PsiDirectoryNode" />
-              <item name="layui" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="orderForm" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="student-xmm" type="b2602c69:ProjectViewProjectNode" />
-              <item name="student-xmm" type="462c0819:PsiDirectoryNode" />
-              <item name="student-web" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-              <item name="page" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -607,19 +397,19 @@
     <key name="OPEN_URL_DIALOG">
       <recent name="https://github.com/Xiao-Y/lemon" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\WEB-INF\page\orderForm" />
+      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\static\page\orderForm" />
+      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\static" />
+      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\WEB-INF\page\commodity" />
+      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\static\plugins" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\resources\mybatis\mapper\expand" />
       <recent name="D:\IdeaProjects\student-demo\student-web\src\main\webapp\static\page\activiti\approval\leave" />
       <recent name="D:\IdeaProjects\student-demo\student-web\src\main\webapp\WEB-INF\page\activiti\approval\leave" />
       <recent name="D:\IdeaProjects\student-demo\student-web\src\main\webapp\static\page\activiti\apply\leave" />
       <recent name="D:\IdeaProjects\student-demo\student-web\src\main\webapp\WEB-INF\page\activiti\apply\leave" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\static\page\orderForm" />
-      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\WEB-INF\page\orderForm" />
-      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\static" />
-      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\WEB-INF\page\commodity" />
-      <recent name="D:\IdeaProjects\student-xmm\student-web\src\main\webapp\static\plugins" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1148,7 +938,8 @@
       <workItem from="1508414080809" duration="28016000" />
       <workItem from="1508488084379" duration="4208000" />
       <workItem from="1508493706654" duration="10218000" />
-      <workItem from="1508635842102" duration="12817000" />
+      <workItem from="1508635842102" duration="14203000" />
+      <workItem from="1508805252517" duration="21417000" />
     </task>
     <task id="LOCAL-00001" summary="添加熔断器的处理">
       <created>1504491220568</created>
@@ -1353,7 +1144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1508562991784</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="优化购物车">
+      <created>1508651148350</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1508651148350</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1389,7 +1187,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="228407000" />
+    <option name="totallyTimeSpent" value="251210000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1423,14 +1221,15 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41267124" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41267124" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27231467" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27155825" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="BPMNPalette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13918306" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1439,7 +1238,6 @@
       <window_info id="BPMN Editor" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21104388" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1467,11 +1265,11 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41267124" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41267124" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27231467" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27155825" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="BPMNPalette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13918306" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1582,7 +1380,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="69" />
+      <option name="time" value="70" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1591,169 +1389,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/configuration/properties-task-listeners-controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="37" column="38" lean-forward="false" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/configuration/toolbar-default-actions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6855">
-          <caret line="384" column="66" lean-forward="false" selection-start-line="384" selection-start-column="66" selection-end-line="384" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/editor/oryx.debug.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336597">
-          <caret line="18703" column="58" lean-forward="false" selection-start-line="18703" selection-start-column="58" selection-end-line="18703" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/editor/oryx.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="29" column="252327" lean-forward="false" selection-start-line="29" selection-start-column="252327" selection-end-line="29" selection-end-column="252327" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/libs/angular-cookies_1.2.13/angular-cookies.min.js.map">
-      <provider editor-type-id="sourcemapFileViewerProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/libs/angular-sanitize_1.2.13/angular-sanitize.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7449">
-          <caret line="417" column="37" lean-forward="false" selection-start-line="417" selection-start-column="37" selection-end-line="417" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/libs/angular_1.2.13/angular.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3579">
-          <caret line="202" column="229" lean-forward="false" selection-start-line="202" selection-start-column="229" selection-end-line="202" selection-end-column="229" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/libs/bootstrap_3.1.1/js/bootstrap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13857">
-          <caret line="773" column="58" lean-forward="false" selection-start-line="773" selection-start-column="58" selection-end-line="773" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/libs/bootstrap_3.1.1/js/bootstrap.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1833">
-          <caret line="5" column="10879" lean-forward="false" selection-start-line="5" selection-start-column="10879" selection-end-line="5" selection-end-column="10879" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/libs/json3_3.2.6/lib/json3.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10941">
-          <caret line="611" column="54" lean-forward="false" selection-start-line="611" selection-start-column="54" selection-end-line="611" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/libs/prototype-1.5.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17385">
-          <caret line="984" column="48" lean-forward="false" selection-start-line="984" selection-start-column="48" selection-end-line="984" selection-end-column="48" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/js/jquery-1.11.0.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="1" column="980" lean-forward="false" selection-start-line="1" selection-start-column="980" selection-end-line="1" selection-end-column="980" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/system/dictionaryManage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="31" column="34" lean-forward="false" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/jQuery-File-Upload/js/jquery.fileupload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18915">
-          <caret line="1054" column="4" lean-forward="false" selection-start-line="1054" selection-start-column="4" selection-end-line="1054" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/jQuery-File-Upload/js/jquery.iframe-transport.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2751">
-          <caret line="156" column="74" lean-forward="false" selection-start-line="156" selection-start-column="74" selection-end-line="156" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/layui.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="26" lean-forward="false" selection-start-line="1" selection-start-column="26" selection-end-line="1" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/lay/dest/layui.all.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28689">
-          <caret line="4" column="50976" lean-forward="false" selection-start-line="4" selection-start-column="50976" selection-end-line="4" selection-end-column="50976" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/lay/dest/layui.mod.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27717">
-          <caret line="4" column="50970" lean-forward="false" selection-start-line="4" selection-start-column="50970" selection-end-line="4" selection-end-column="50970" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <marker date="1508497116370" expanded="true" signature="165205:165224" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/lay/lib/jquery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15639">
-          <caret line="3" column="29105" lean-forward="false" selection-start-line="3" selection-start-column="29105" selection-end-line="3" selection-end-column="29105" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/lay/modules/form.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="4346" lean-forward="false" selection-start-line="1" selection-start-column="4346" selection-end-line="1" selection-end-column="4346" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/lay/modules/layedit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1617">
-          <caret line="1" column="9866" lean-forward="false" selection-start-line="1" selection-start-column="9866" selection-end-line="1" selection-end-column="9866" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/lay/modules/upload.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -1789,13 +1424,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="33">
           <caret line="5" column="36" lean-forward="true" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/commodity/commodityList.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="12" column="6" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -1841,26 +1469,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/system/menuManage.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="62" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/idea.jar!/resources/html5-schema/html5/tables.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="235" column="0" lean-forward="true" selection-start-line="235" selection-start-column="0" selection-end-line="236" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-service/src/main/java/org/billow/service/orderForm/ShoppingCartServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="864">
-          <caret line="63" column="16" lean-forward="false" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -1889,14 +1501,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/system/menuManage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1566">
-          <caret line="87" column="7" lean-forward="true" selection-start-line="65" selection-start-column="4" selection-end-line="87" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/process-editor/editor-app/libs/jquery_1.11.0/jquery.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="366">
@@ -1905,30 +1509,6 @@
             <marker date="1508496909091" expanded="true" signature="90983:93211" ph="{...}" />
             <marker date="1508496909091" expanded="true" signature="238432:239787" ph="{...}" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/system/menuEdit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="50" lean-forward="true" selection-start-line="5" selection-start-column="50" selection-end-line="5" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/commodity/commodityEdit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/commodity/commodityList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1944,7 +1524,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1956,33 +1535,247 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/orderForm/myShoppingCart.jsp">
+    <entry file="file://$PROJECT_DIR$/student-service/src/main/java/org/billow/service/orderForm/ShoppingCartServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="42" column="65" lean-forward="false" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="65" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#td#2;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#6;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#td#6;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#1;n#td#6;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#td#7;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#1;n#td#7;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#fieldset#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="54">
+          <caret line="21" column="2" lean-forward="false" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/pub/pubPage.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="2" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/home/register.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
+        <state relative-caret-position="270">
           <caret line="48" column="24" lean-forward="false" selection-start-line="48" selection-start-column="24" selection-end-line="48" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/system/menuEdit.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="28" lean-forward="false" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/commodity/commodityEdit.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="16" column="42" lean-forward="false" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="42" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/js/common/dataTool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="39" column="15" lean-forward="true" selection-start-line="39" selection-start-column="15" selection-end-line="39" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/pub/pubTableJs.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="96" lean-forward="false" selection-start-line="2" selection-start-column="96" selection-end-line="2" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/js/extend/pubTableNew.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="27" lean-forward="false" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/home/main.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/orderForm/myAddressList.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="15" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/commodity/commodityList.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="14" column="4" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="23" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/css/global.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/css/table.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/pagination/pagination.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="17" lean-forward="true" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/plugins/layui/css/layui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="367" column="0" lean-forward="true" selection-start-line="367" selection-start-column="0" selection-end-line="367" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/system/menuManage.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="24" column="21" lean-forward="true" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/ShoppingCartController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="86" column="72" lean-forward="false" selection-start-line="86" selection-start-column="23" selection-end-line="86" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/HtmlTemplate/temp/edit-form.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="7" lean-forward="false" selection-start-line="13" selection-start-column="7" selection-end-line="13" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/pub/pubTableCss.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="60" lean-forward="false" selection-start-line="0" selection-start-column="60" selection-end-line="0" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/home/weichat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-672">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/rabbitMQ/rabbitmq.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/redis/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/system/uploadIndex.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1338">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1505804942143" expanded="true" signature="467:473" ph="&amp;nbsp;" />
+            <marker date="1505804942143" expanded="true" signature="473:479" ph="&amp;nbsp;" />
+            <marker date="1505804942143" expanded="true" signature="516:529" ph="..." />
+            <marker date="1505804942143" expanded="true" signature="618:628" ph="..." />
+            <marker date="1505804942143" expanded="true" signature="798:807" ph="..." />
+            <marker date="1505804942143" expanded="true" signature="2458:2464" ph="&amp;nbsp;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/system/menuManage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-486">
+          <caret line="33" column="25" lean-forward="true" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/orderForm/myAddressView.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="19" column="14" lean-forward="true" selection-start-line="14" selection-start-column="8" selection-end-line="19" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/MyAddressController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="35" lean-forward="false" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/system/menuEdit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="14" column="41" lean-forward="true" selection-start-line="14" selection-start-column="41" selection-end-line="14" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/commodity/commodityList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/js/extend/pubPopForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="160" column="61" lean-forward="false" selection-start-line="160" selection-start-column="61" selection-end-line="160" selection-end-column="61" />
+        <state relative-caret-position="150">
+          <caret line="138" column="4" lean-forward="false" selection-start-line="138" selection-start-column="4" selection-end-line="162" selection-end-column="7" />
           <folding>
             <marker date="1502065694460" expanded="true" signature="2362:2381" ph="..." />
             <marker date="1502065694460" expanded="true" signature="2395:2408" ph="..." />
@@ -1990,18 +1783,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/orderForm/myShoppingCart.js">
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/commodity/commodityEdit.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="74" column="59" lean-forward="false" selection-start-line="74" selection-start-column="59" selection-end-line="74" selection-end-column="59" />
+        <state relative-caret-position="90">
+          <caret line="5" column="27" lean-forward="false" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/student-web/src/main/java/org/billow/controller/orderForm/ShoppingCartController.java">
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/static/page/orderForm/myShoppingCart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="141" column="21" lean-forward="false" selection-start-line="141" selection-start-column="21" selection-end-line="141" selection-end-column="21" />
+        <state relative-caret-position="306">
+          <caret line="170" column="57" lean-forward="false" selection-start-line="170" selection-start-column="45" selection-end-line="170" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/webapp/WEB-INF/page/orderForm/myShoppingCart.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="47" column="31" lean-forward="true" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
+          <folding>
+            <element signature="n#style#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/student-web/src/main/resources/build/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="26" lean-forward="true" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
           <folding />
         </state>
       </provider>

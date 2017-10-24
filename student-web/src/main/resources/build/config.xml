@@ -9,33 +9,33 @@
 	<!-- 表名 -->
 	<tableName>t_shopping_cart</tableName>
 
-	<controllerPackageName>org.billow.controller.orderForm4</controllerPackageName>
-	<controllerClazzName>ShoppingCartController</controllerClazzName>
-	<explainController>购物车控制器</explainController>
+	<controllerPackageName>org.billow.controller.orderForm</controllerPackageName>
+	<controllerClazzName>OrderFormController</controllerClazzName>
+	<explainController>订单信息控制器</explainController>
 
 	<servicePackageName>org.billow.api.orderForm</servicePackageName>
-	<serviceClazzName>ShoppingCartService</serviceClazzName>
-	<explainService>购物车接口</explainService>
+	<serviceClazzName>OrderFormService</serviceClazzName>
+	<explainService>订单信息接口</explainService>
 
 	<serviceImplPackageName>org.billow.service.orderForm</serviceImplPackageName>
-	<serviceImplClazzName>ShoppingCartServiceImpl</serviceImplClazzName>
-	<explainServiceImpl>购物车实现类</explainServiceImpl>
+	<serviceImplClazzName>OrderFormServiceImpl</serviceImplClazzName>
+	<explainServiceImpl>订单信息实现类</explainServiceImpl>
 
 	<daoPackageName>org.billow.dao</daoPackageName>
-	<daoClazzName>ShoppingCartDao</daoClazzName>
-	<explainDao>购物车接口</explainDao>
+	<daoClazzName>OrderFormDao</daoClazzName>
+	<explainDao>订单信息接口</explainDao>
 
 	<modelBasePackageName>org.billow.model.domain</modelBasePackageName>
-	<modelBaseClazzName>ShoppingCartBase</modelBaseClazzName>
-	<explainModelBase>购物车数据库模型</explainModelBase>
+	<modelBaseClazzName>OrderFormBase</modelBaseClazzName>
+	<explainModelBase>订单信息数据库模型</explainModelBase>
 
 	<modelPackageName>org.billow.model.expand</modelPackageName>
-	<modelClazzName>ShoppingCartDto</modelClazzName>
-	<explainModel>购物车model模型</explainModel>
+	<modelClazzName>OrderFormDto</modelClazzName>
+	<explainModel>订单信息model模型</explainModel>
 
 	<mapperBasePackageName>mybatis.mapper.base</mapperBasePackageName>
-	<mapperBaseXMLName>ShoppingCartBaseDao</mapperBaseXMLName>
+	<mapperBaseXMLName>OrderFormBaseDao</mapperBaseXMLName>
 
 	<mapperPackageName>mybatis.mapper.expand</mapperPackageName>
-	<mapperXMLName>ShoppingCartDao</mapperXMLName>
+	<mapperXMLName>OrderFormDao</mapperXMLName>
 </root>
