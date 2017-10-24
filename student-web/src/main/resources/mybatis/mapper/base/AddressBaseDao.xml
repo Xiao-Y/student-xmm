@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.billow.dao.AddressDao">
+	<resultMap id="BaseResultMap" type="org.billow.model.expand.AddressDto">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="consignee_address" property="consigneeAddress" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="consignee_phone" property="consigneePhone" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="base_column_list">
+		consignee_address,update_time,consignee,create_time,user_id,id,consignee_phone,status
+	</sql>
+	<!-- 公用查询条件 -->
+	<sql id="selectCondition">
+		<where>
+			<if test="null != consigneeAddress and '' != consigneeAddress">
+				and consignee_address = #{consigneeAddress}
+			</if>
+			<if test="null != updateTime and '' != updateTime">
+				and update_time = #{updateTime}
+			</if>
+			<if test="null != consignee and '' != consignee">
+				and consignee = #{consignee}
+			</if>
+			<if test="null != createTime and '' != createTime">
+				and create_time = #{createTime}
+			</if>
+			<if test="null != userId and '' != userId">
+				and user_id = #{userId}
+			</if>
+			<if test="null != id and '' != id">
+				and id = #{id}
+			</if>
+			<if test="null != consigneePhone and '' != consigneePhone">
+				and consignee_phone = #{consigneePhone}
+			</if>
+			<if test="null != status and '' != status">
+				and status = #{status}
+			</if>
+		</where>
+	</sql>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.AddressDto">
+		select
+		<include refid="base_column_list" />
+		from t_address
+		<include refid="selectCondition" />
+	</select>
+	<select id="selectAllCount" resultType="java.lang.Integer" parameterType="org.billow.model.expand.AddressDto">
+		select count(*)
+		from t_address
+		<include refid="selectCondition" />
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.billow.model.expand.AddressDto">
+		select
+		<include refid="base_column_list" />
+		from t_address
+		where 1=1
+		and id = #{id}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="org.billow.model.expand.AddressDto">
+		delete from t_address
+		where 1=1
+		and id = #{id}
+	</delete>
+	<insert id="insert" parameterType="org.billow.model.expand.AddressDto">
+		insert into t_address (consignee_address,update_time,consignee,create_time,user_id,id,consignee_phone,status)
+		values (
+			#{consigneeAddress,jdbcType=VARCHAR},
+			#{updateTime,jdbcType=TIMESTAMP},
+			#{consignee,jdbcType=VARCHAR},
+			#{createTime,jdbcType=TIMESTAMP},
+			#{userId,jdbcType=INTEGER},
+			#{id,jdbcType=VARCHAR},
+			#{consigneePhone,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="org.billow.model.expand.AddressDto">
+		insert into t_address
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="null != consigneeAddress">
+				consignee_address,
+			</if>
+			<if test="null != updateTime">
+				update_time,
+			</if>
+			<if test="null != consignee">
+				consignee,
+			</if>
+			<if test="null != createTime">
+				create_time,
+			</if>
+			<if test="null != userId">
+				user_id,
+			</if>
+			<if test="null != id">
+				id,
+			</if>
+			<if test="null != consigneePhone">
+				consignee_phone,
+			</if>
+			<if test="null != status">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="null != consigneeAddress">
+				#{consigneeAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="null != updateTime">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != consignee">
+				#{consignee,jdbcType=VARCHAR},
+			</if>
+			<if test="null != createTime">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != userId">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="null != id">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="null != consigneePhone">
+				#{consigneePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="null != status">
+				#{status,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.AddressDto">
+		update t_address
+		<set>
+			<if test="null != consigneeAddress">
+				consignee_address = #{consigneeAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="null != updateTime">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != consignee">
+				consignee = #{consignee,jdbcType=VARCHAR},
+			</if>
+			<if test="null != createTime">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != userId">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="null != id">
+				id = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="null != consigneePhone">
+				consignee_phone = #{consigneePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="null != status">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where 1=1
+		and id = #{id}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.AddressDto">
+		update t_address
+		set
+			consignee_address = #{consigneeAddress,jdbcType=VARCHAR},
+			update_time = #{updateTime,jdbcType=TIMESTAMP},
+			consignee = #{consignee,jdbcType=VARCHAR},
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+			user_id = #{userId,jdbcType=INTEGER},
+			consignee_phone = #{consigneePhone,jdbcType=VARCHAR},
+			status = #{status,jdbcType=VARCHAR}
+		where 1=1
+		and id = #{id}
+	</update>
+</mapper>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.billow.dao.OrderFormDao">
+	<resultMap id="BaseResultMap" type="org.billow.model.expand.OrderFormDto">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="consignee" property="consignee" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="orderform_amount" property="orderformAmount" jdbcType="DECIMAL" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="consignee_phone" property="consigneePhone" jdbcType="VARCHAR" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="base_column_list">
+		consignee,user_id,orderform_amount,id,create_date,consignee_phone,update_date,status
+	</sql>
+	<!-- 公用查询条件 -->
+	<sql id="selectCondition">
+		<where>
+			<if test="null != consignee and '' != consignee">
+				and consignee = #{consignee}
+			</if>
+			<if test="null != userId and '' != userId">
+				and user_id = #{userId}
+			</if>
+			<if test="null != orderformAmount and '' != orderformAmount">
+				and orderform_amount = #{orderformAmount}
+			</if>
+			<if test="null != id and '' != id">
+				and id = #{id}
+			</if>
+			<if test="null != createDate and '' != createDate">
+				and create_date = #{createDate}
+			</if>
+			<if test="null != consigneePhone and '' != consigneePhone">
+				and consignee_phone = #{consigneePhone}
+			</if>
+			<if test="null != updateDate and '' != updateDate">
+				and update_date = #{updateDate}
+			</if>
+			<if test="null != status and '' != status">
+				and status = #{status}
+			</if>
+		</where>
+	</sql>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.OrderFormDto">
+		select
+		<include refid="base_column_list" />
+		from t_order_form
+		<include refid="selectCondition" />
+	</select>
+	<select id="selectAllCount" resultType="java.lang.Integer" parameterType="org.billow.model.expand.OrderFormDto">
+		select count(*)
+		from t_order_form
+		<include refid="selectCondition" />
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.billow.model.expand.OrderFormDto">
+		select
+		<include refid="base_column_list" />
+		from t_order_form
+		where 1=1
+		and id = #{id}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="org.billow.model.expand.OrderFormDto">
+		delete from t_order_form
+		where 1=1
+		and id = #{id}
+	</delete>
+	<insert id="insert" parameterType="org.billow.model.expand.OrderFormDto">
+		insert into t_order_form (consignee,user_id,orderform_amount,id,create_date,consignee_phone,update_date,status)
+		values (
+			#{consignee,jdbcType=VARCHAR},
+			#{userId,jdbcType=INTEGER},
+			#{orderformAmount,jdbcType=DECIMAL},
+			#{id,jdbcType=VARCHAR},
+			#{createDate,jdbcType=TIMESTAMP},
+			#{consigneePhone,jdbcType=VARCHAR},
+			#{updateDate,jdbcType=TIMESTAMP},
+			#{status,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="org.billow.model.expand.OrderFormDto">
+		insert into t_order_form
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="null != consignee">
+				consignee,
+			</if>
+			<if test="null != userId">
+				user_id,
+			</if>
+			<if test="null != orderformAmount">
+				orderform_amount,
+			</if>
+			<if test="null != id">
+				id,
+			</if>
+			<if test="null != createDate">
+				create_date,
+			</if>
+			<if test="null != consigneePhone">
+				consignee_phone,
+			</if>
+			<if test="null != updateDate">
+				update_date,
+			</if>
+			<if test="null != status">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="null != consignee">
+				#{consignee,jdbcType=VARCHAR},
+			</if>
+			<if test="null != userId">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="null != orderformAmount">
+				#{orderformAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="null != id">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="null != createDate">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != consigneePhone">
+				#{consigneePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="null != updateDate">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != status">
+				#{status,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.OrderFormDto">
+		update t_order_form
+		<set>
+			<if test="null != consignee">
+				consignee = #{consignee,jdbcType=VARCHAR},
+			</if>
+			<if test="null != userId">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="null != orderformAmount">
+				orderform_amount = #{orderformAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="null != id">
+				id = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="null != createDate">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != consigneePhone">
+				consignee_phone = #{consigneePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="null != updateDate">
+				update_date = #{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != status">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where 1=1
+		and id = #{id}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.OrderFormDto">
+		update t_order_form
+		set
+			consignee = #{consignee,jdbcType=VARCHAR},
+			user_id = #{userId,jdbcType=INTEGER},
+			orderform_amount = #{orderformAmount,jdbcType=DECIMAL},
+			create_date = #{createDate,jdbcType=TIMESTAMP},
+			consignee_phone = #{consigneePhone,jdbcType=VARCHAR},
+			update_date = #{updateDate,jdbcType=TIMESTAMP},
+			status = #{status,jdbcType=VARCHAR}
+		where 1=1
+		and id = #{id}
+	</update>
+</mapper>

@@ -7,35 +7,35 @@
 	<!-- 版本 -->
 	<version>1.0</version>
 	<!-- 表名 -->
-	<tableName>t_shopping_cart</tableName>
+	<tableName>t_address</tableName>
 
 	<controllerPackageName>org.billow.controller.orderForm</controllerPackageName>
-	<controllerClazzName>OrderFormController</controllerClazzName>
-	<explainController>订单信息控制器</explainController>
+	<controllerClazzName>AddressController</controllerClazzName>
+	<explainController>收货地址控制器</explainController>
 
 	<servicePackageName>org.billow.api.orderForm</servicePackageName>
-	<serviceClazzName>OrderFormService</serviceClazzName>
-	<explainService>订单信息接口</explainService>
+	<serviceClazzName>AddressService</serviceClazzName>
+	<explainService>收货地址接口</explainService>
 
 	<serviceImplPackageName>org.billow.service.orderForm</serviceImplPackageName>
-	<serviceImplClazzName>OrderFormServiceImpl</serviceImplClazzName>
-	<explainServiceImpl>订单信息实现类</explainServiceImpl>
+	<serviceImplClazzName>AddressServiceImpl</serviceImplClazzName>
+	<explainServiceImpl>收货地址实现类</explainServiceImpl>
 
 	<daoPackageName>org.billow.dao</daoPackageName>
-	<daoClazzName>OrderFormDao</daoClazzName>
-	<explainDao>订单信息接口</explainDao>
+	<daoClazzName>AddressDao</daoClazzName>
+	<explainDao>收货地址接口</explainDao>
 
 	<modelBasePackageName>org.billow.model.domain</modelBasePackageName>
-	<modelBaseClazzName>OrderFormBase</modelBaseClazzName>
-	<explainModelBase>订单信息数据库模型</explainModelBase>
+	<modelBaseClazzName>AddressBase</modelBaseClazzName>
+	<explainModelBase>收货地址数据库模型</explainModelBase>
 
 	<modelPackageName>org.billow.model.expand</modelPackageName>
-	<modelClazzName>OrderFormDto</modelClazzName>
-	<explainModel>订单信息model模型</explainModel>
+	<modelClazzName>AddressDto</modelClazzName>
+	<explainModel>收货地址model模型</explainModel>
 
 	<mapperBasePackageName>mybatis.mapper.base</mapperBasePackageName>
-	<mapperBaseXMLName>OrderFormBaseDao</mapperBaseXMLName>
+	<mapperBaseXMLName>AddressBaseDao</mapperBaseXMLName>
 
 	<mapperPackageName>mybatis.mapper.expand</mapperPackageName>
-	<mapperXMLName>OrderFormDao</mapperXMLName>
+	<mapperXMLName>AddressDao</mapperXMLName>
 </root>
