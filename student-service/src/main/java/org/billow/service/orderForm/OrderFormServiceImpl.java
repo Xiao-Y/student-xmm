@@ -21,6 +21,7 @@ import org.billow.utils.generator.OrderNumUtil;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -48,6 +49,9 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     private AddressDao addressDao;
     @Autowired
     private ShoppingCartDao shoppingCartDao;
+
+    @Value("${mail.auto.send}")
+    private boolean emailAutoSend;
 
     @Resource
     @Override
@@ -96,7 +100,13 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         orderFormDto.setUpdateDate(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
         orderFormDto.setUserId(loginUser.getUserId());
         orderFormDao.insert(orderFormDto);
-
         // 4、邮件通知商家
+        if (emailAutoSend) {
+            try {
+
+            } catch (Exception e) {
+
+            }
+        }
     }
 }
