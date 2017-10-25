@@ -9,35 +9,27 @@
 </head>
 <body>
 <div class="admin-main">
-    <hr class="layui-bg-orange">
-    <div class="addressDiv">
-        <input type="radio" name="address" value="AAAA">
-        <div class="layui-field-box addressDetailed">
-            <input type="hidden" name="addressId" value="AAAA">
-            <p>&nbsp;&nbsp;&nbsp;收货人：AAAA</p>
-            <p>手机号码：15555555555</p>
-            <p>详细地址：武汉市，武昌区.....</p>
-        </div>
-    </div>
-    <div class="addressDiv">
-        <input type="radio" name="address" value="BBBB">
-        <div class="layui-field-box addressDetailed">
-            <input type="hidden" name="addressId" value="BBBB">
-            <p>&nbsp;&nbsp;&nbsp;收货人：BBBB</p>
-            <p>手机号码：15555555555</p>
-            <p>详细地址：武汉市，武昌区.....</p>
-        </div>
-    </div>
-    <hr class="layui-bg-orange">
-    <div class="addressDiv">
-        <input type="radio" name="address" value="CCCC">
-        <div class="layui-field-box addressDetailed">
-            <input type="hidden" name="addressId" value="CCCC">
-            <p>&nbsp;&nbsp;&nbsp;收货人：CCCC</p>
-            <p>手机号码：15555555555</p>
-            <p>详细地址：武汉市，武昌区.....</p>
-        </div>
-    </div>
+    <fieldset class="layui-elem-field">
+        <legend>收货地址</legend>
+        <c:if test="${empty addressDtos}">
+            <br>
+            &nbsp;&nbsp;&nbsp;还没有收货地址，请在“个人中心”-“收货地址”中添加...
+        </c:if>
+        <c:forEach var="address" items="${addressDtos}" varStatus="status">
+            <div class="addressDiv">
+                <input type="radio" name="address" value="${address.id}">
+                <div class="layui-field-box addressDetailed">
+                    <input type="hidden" name="addressId" value="${address.id}">
+                    <p>&nbsp;&nbsp;&nbsp;收货人：${address.consignee}</p>
+                    <p>手机号码：${address.consigneePhone}</p>
+                    <p>详细地址：${address.consigneeAddress}</p>
+                </div>
+            </div>
+            <c:if test="${status.index != status.count}">
+                <hr class="layui-bg-orange">
+            </c:if>
+        </c:forEach>
+    </fieldset>
 </div>
 </body>
 </html>

@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/orderForm")
 public class OrderFormController {
 
-    private static final Logger logger = Logger.getLogger(ShoppingCartController.class);
+    private static final Logger logger = Logger.getLogger(OrderFormController.class);
 
     @Autowired
     private OrderFormService orderFormService;

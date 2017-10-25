@@ -46,10 +46,10 @@ layui.use(['layer', 'icheck'], function () {
 
     //切换收货地址
     $('#add').on('click', function () {
-        $.get(path + '/myAddress/myAddressView', null, function (form) {
+        $.get(path + '/address/myAddressView', null, function (form) {
             layer.open({
                 type: 1,
-                title: '切换收货地址',
+                title: '',
                 content: form,
                 btn: ['确定', '取消'],
                 area: ['600px', '400px'],
@@ -153,6 +153,10 @@ $(function () {
         }
         //收货地址id
         var addressId = $("input[name='addressId']").val();
+        if (addressId == '') {
+            new TipBox({type: 'error', str: '请选择收货地址!', hasBtn: true});
+            return;
+        }
         //要购买的商品
         var commodityIds = new Array();
         //要购买的商品数量
