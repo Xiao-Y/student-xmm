@@ -43,18 +43,15 @@ public class OrderFormController {
      */
     @ResponseBody
     @RequestMapping("/saveOrderForm")
-    public JsonResult saveOrderForm(HttpServletRequest request/*, @RequestParam(value = "addressId") String addressId,
-                                    @RequestParam(value = "commodityIds") String[] commodityIds,
-                                    @RequestParam(value = "commodityNums") String[] commodityNums*/) {
+    public JsonResult saveOrderForm(HttpServletRequest request, @RequestParam(value = "addressId") String addressId,
+                                    @RequestParam(value = "commodityIds[]") String[] commodityIds,
+                                    @RequestParam(value = "commodityNums[]") String[] commodityNums) {
         JsonResult json = new JsonResult();
         HttpSession session = request.getSession();
         UserDto loginUser = LoginHelper.getLoginUser(session);
         String message = "";
         String type = "";
         try {
-            String addressId = request.getParameter("addressId");
-            String[] commodityIds = request.getParameterValues("commodityIds");
-            String[] commodityNums = request.getParameterValues("commodityNums");
             orderFormService.saveOrderForm(loginUser, addressId,commodityIds, commodityNums);
             message = MessageTipsCst.COMMODITY_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
