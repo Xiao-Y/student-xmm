@@ -18,7 +18,7 @@
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>修改密码</legend>
     </fieldset>
-    <form class="layui-form layui-form-pane1" data-type="ajax" action="${ctx }/home/updatePwd">
+    <form class="layui-form layui-form-pane1" data-type="ajax" action="${ctx }/home/updatePwd/${sid}">
         <div class="layui-form-item">
             <label class="layui-form-label"><font style="color: red">*</font>用户名</label>
             <div class="layui-input-block">

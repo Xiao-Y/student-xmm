@@ -290,14 +290,19 @@ public class HomeController implements Comparator<MenuBase> {
     @RequestMapping("/checkLink")
     public ModelAndView checkLink(@RequestParam("sid") String sid, @RequestParam("userName") String userName) {
         ModelAndView av = new ModelAndView();
-        UserDto userDto = userService.findUserByUserName(userName);
-        if (userDto != null) {
-            String secretKey = userDto.getOpenID();
-            String digitalSignature = Md5Encrypt.md5(secretKey);// 数字签名
-            if (digitalSignature.equals(sid)) {
-                av.addObject("userName", userName);
-                av.setViewName("page/home/editPwd");
-                return av;
+        if (ToolsUtils.isNotEmpty(sid)) {
+            UserDto userDto = userService.findUserByUserName(userName);
+            if (userDto != null) {
+                String secretKey = userDto.getOpenID();
+                if (ToolsUtils.isNotEmpty(secretKey)) {
+                    String digitalSignature = Md5Encrypt.md5(secretKey);// 数字签名
+                    if (digitalSignature.equals(sid)) {
+                        av.addObject("userName", userName);
+                        av.addObject("sid", sid);
+                        av.setViewName("page/home/editPwd");
+                        return av;
+                    }
+                }
             }
         }
         av.setViewName("page/404/404");
@@ -310,17 +315,26 @@ public class HomeController implements Comparator<MenuBase> {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/updatePwd")
-    public JsonResult updatePwd(UserDto userDto) {
+    @RequestMapping("/updatePwd/{sid}")
+    public JsonResult updatePwd(UserDto userDto, @PathVariable("sid") String sid) {
         JsonResult json = new JsonResult();
         String message = "";
         String type = "";
         try {
             UserDto dto = userService.findUserByUserName(userDto.getUserName());
             if (dto != null) {
-                userService.updateByPrimaryKeySelective(dto);
-                message = MessageTipsCst.UPDATE_SUCCESS;
-                type = MessageTipsCst.TYPE_SUCCES;
+                String secretKey = dto.getOpenID();
+                String digitalSignature = Md5Encrypt.md5(secretKey);// 数字签名
+                if (!sid.equals(digitalSignature)) {
+                    message = "签名错误，请不要修改邮件链接！";
+                    type = MessageTipsCst.TYPE_ERROR;
+                } else {
+                    dto.setPassword(userDto.getPassword());
+                    dto.setOpenID(null);
+                    userService.updateByPrimaryKey(dto);
+                    message = MessageTipsCst.UPDATE_SUCCESS;
+                    type = MessageTipsCst.TYPE_SUCCES;
+                }
             } else {
                 message = "该用户不存在，请查证！";
                 type = MessageTipsCst.TYPE_ERROR;
