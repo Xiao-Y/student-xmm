@@ -37,6 +37,7 @@ public class ComViewController {
         ModelAndView av = new ModelAndView();
         PageHelper.startPage(12);
         commodityDto.setDeleFlag("1");
+        commodityDto.setValid("1");
         List<CommodityDto> commodityList = commodityService.selectAll(commodityDto);
         PageInfo<CommodityDto> page = new PageInfo<>(commodityList);
         av.addObject("page", page);
