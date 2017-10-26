@@ -5,7 +5,10 @@
 
     <!-- 简单消息对象创建 -->
     <bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
-        <property name="from" value="${mail.server.from}"></property>
+        <property name="from" value="${mail.server.from}"/>
+        <property name="to" value="${mail.auto.default.to}"/>
+        <property name="subject" value="${mail.auto.default.subject}"/>
+        <property name="text" value="${mail.auto.default.text}"/>
     </bean>
 
     <!-- 2.创建发送器 -->
