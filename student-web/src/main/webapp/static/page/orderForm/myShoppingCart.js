@@ -46,7 +46,9 @@ layui.use(['layer', 'icheck'], function () {
 
     //切换收货地址
     $('#add').on('click', function () {
+        var indexLoad = layer.load();
         $.get(path + '/address/myAddressView', null, function (form) {
+            layer.close(indexLoad);
             layer.open({
                 type: 1,
                 title: '',
@@ -157,6 +159,8 @@ $(function () {
             new TipBox({type: 'error', str: '请选择收货地址!', hasBtn: true});
             return;
         }
+
+        var tipBox = new TipBox({type: 'load', str: "加载中..."});
         //要购买的商品
         var commodityIds = new Array();
         //要购买的商品数量
@@ -179,6 +183,9 @@ $(function () {
             url: url,
             data: data,
             success: function (obj) {
+                if (tipBox != null) {
+                    tipBox.close();
+                }
                 var message = obj.message;
                 var type = obj.type;
                 if (type == 'success') {
@@ -192,6 +199,9 @@ $(function () {
                 }
             },
             error: function (obj) {
+                if (tipBox != null) {
+                    tipBox.close();
+                }
                 new TipBox({type: 'error', str: '网络错误', hasBtn: true})
             }
         });

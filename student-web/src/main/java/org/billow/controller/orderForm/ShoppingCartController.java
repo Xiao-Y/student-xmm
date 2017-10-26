@@ -1,11 +1,14 @@
 package org.billow.controller.orderForm;
 
 import org.apache.log4j.Logger;
+import org.billow.api.orderForm.AddressService;
 import org.billow.api.orderForm.ShoppingCartService;
 import org.billow.common.login.LoginHelper;
 import org.billow.model.custom.JsonResult;
+import org.billow.model.expand.AddressDto;
 import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
+import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.constant.PagePathCst;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,8 @@ public class ShoppingCartController {
 
     @Autowired
     private ShoppingCartService shoppingCartService;
+    @Autowired
+    private AddressService addressService;
 
     /**
      * 商品添加到购物车,{id}商品id,购物车主键为用户id
@@ -83,7 +88,23 @@ public class ShoppingCartController {
         HttpSession session = request.getSession();
         UserDto userDto = LoginHelper.getLoginUser(session);
         List<ShoppingCartDto> list = shoppingCartService.myShoppingCart(userDto);
+        AddressDto address = null;
+        AddressDto addressDto = new AddressDto();
+        addressDto.setUserId(userDto.getUserId());
+        List<AddressDto> addressDtos = addressService.selectAll(addressDto);
+        if (ToolsUtils.isNotEmpty(addressDtos)) {
+            for (AddressDto dto : addressDtos) {
+                if ("1".equals(dto.getStatus())) {
+                    address = dto;
+                    break;
+                }
+            }
+            if (address == null) {
+                address = addressDtos.get(0);
+            }
+        }
         av.addObject("list", list);
+        av.addObject("address", address);
         av.setViewName(PagePathCst.BASEPATH_ORDER_FORM + "myShoppingCart");
         return av;
     }

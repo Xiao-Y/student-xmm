@@ -26,12 +26,18 @@
     <fieldset class="layui-elem-field">
         <legend>收货地址</legend>
         <div class="addresId">
-            <div class="layui-field-box">
-                <input type="hidden" name="addressId" value="TTTT">
-                <p>&nbsp;&nbsp;&nbsp;收货人：TTTT</p>
-                <p>手机号码：15555555555</p>
-                <p>详细地址：武汉市，武昌区.....</p>
-            </div>
+            <c:if test="${empty address}">
+                <br>
+                &nbsp;&nbsp;&nbsp;还没有收货地址，请在“个人中心”-“收货地址”中添加...
+            </c:if>
+            <c:if test="${not empty address}">
+                <div class="layui-field-box">
+                    <input type="hidden" name="addressId" value="${address.id}">
+                    <p>&nbsp;&nbsp;&nbsp;收货人：${address.consignee}</p>
+                    <p>手机号码：${address.consigneePhone}</p>
+                    <p>详细地址：${address.consigneeAddress}</p>
+                </div>
+            </c:if>
         </div>
     </fieldset>
     <fieldset class="layui-elem-field">

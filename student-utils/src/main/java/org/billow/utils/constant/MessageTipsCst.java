@@ -138,4 +138,12 @@ public class MessageTipsCst {
      * 商品添加失败
      */
     public static final String COMMODITY_FAILURE = "商品添加失败！";
+    /**
+     * 订单提交成功
+     */
+    public static final String ORDERFORM_SUCCESS = "订单提交成功！";
+    /**
+     * 订单提交失败
+     */
+    public static final String ORDERFORM_FAILURE = "订单提交失败！";
 }
