@@ -2,11 +2,13 @@ package org.billow.controller.orderForm;
 
 import org.apache.log4j.Logger;
 import org.billow.api.orderForm.OrderFormService;
+import org.billow.common.email.EmailServer;
 import org.billow.common.login.LoginHelper;
 import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.constant.MessageTipsCst;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * 订单信息控制器<br>
@@ -31,6 +34,12 @@ public class OrderFormController {
 
     @Autowired
     private OrderFormService orderFormService;
+    @Autowired
+    private EmailServer emailServer;
+    @Value("${mail.auto.send}")
+    private boolean emailAutoSend;
+    @Value("${mail.auto.default.to}")
+    private String toEmails;
 
     /**
      * 保存订单信息
@@ -52,13 +61,22 @@ public class OrderFormController {
         String message = "";
         String type = "";
         try {
-            orderFormService.saveOrderForm(loginUser, addressId,commodityIds, commodityNums);
-            message = MessageTipsCst.COMMODITY_SUCCESS;
+            Map<String, String> map = orderFormService.saveOrderForm(loginUser, addressId, commodityIds, commodityNums);
+            // 4、邮件通知商家
+            if (emailAutoSend) {
+                try {
+                    emailServer.singleMailSend(toEmails, "您有新订单，请及时处理", map.get("mailContent"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    logger.error(e);
+                }
+            }
+            message = MessageTipsCst.ORDERFORM_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e);
-            message = MessageTipsCst.COMMODITY_FAILURE;
+            message = MessageTipsCst.ORDERFORM_FAILURE;
             type = MessageTipsCst.TYPE_ERROR;
         }
         json.setMessage(message);
