@@ -3,7 +3,9 @@ package org.billow.controller.home;
 import org.apache.log4j.Logger;
 import org.billow.api.menu.MenuService;
 import org.billow.api.user.UserService;
+import org.billow.common.email.EmailServer;
 import org.billow.model.custom.JsonResult;
+import org.billow.model.custom.MailModel;
 import org.billow.model.domain.MenuBase;
 import org.billow.model.expand.MenuDto;
 import org.billow.model.expand.UserDto;
@@ -13,8 +15,6 @@ import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.generator.Md5Encrypt;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,11 +41,8 @@ public class HomeController implements Comparator<MenuBase> {
      */
     private static final Logger logger = Logger.getLogger(HomeController.class);
 
-    @Autowired(required = false)
-    private SimpleMailMessage mailMessage;
-    @Autowired(required = false)
-    private JavaMailSender mailSender;
-
+    @Autowired
+    private EmailServer emailServer;
     @Autowired
     private MenuService menuService;
     @Autowired
@@ -252,23 +249,26 @@ public class HomeController implements Comparator<MenuBase> {
                 String secretKey = UUID.generate();
                 userDto.setOpenID(secretKey);
                 userService.updateByPrimaryKeySelective(userDto);
-                //发送邮件
                 String digitalSignature = Md5Encrypt.md5(secretKey);// 数字签名
-                String path = request.getContextPath();
-                String basePath = request.getScheme() + "://"
-                        + request.getServerName() + ":"
-                        + request.getServerPort() + path + "/home/";
-                String resetPassHref = basePath + "checkLink?sid="
-                        + digitalSignature + "&userName=" + userDto.getUserName();
-                String emailContent = "请勿回复本邮件.点击下面的链接,重设密码\r\t"
-                        + "<a href=" + resetPassHref + " target='_blank'>点击我重新设置密码</a>";
-                logger.info(emailContent);
-
-                mailMessage.setTo(userDto.getMail());
-                mailMessage.setSubject("找回您的账户密码");
-                mailMessage.setText(emailContent);
-                mailSender.send(mailMessage);
-
+                //发送邮件
+                //http://localhost:8099/home/checkLink?sid=79d5d8e88c89db8214d5ef429af2a653&userName=admin
+                StringBuffer emailContent = new StringBuffer();
+                emailContent.append("请勿回复本邮件.点击下面的链接,重设密码<br>");
+                emailContent.append("<a href=\"");
+                emailContent.append(request.getScheme());
+                emailContent.append("://");
+                emailContent.append(request.getServerName());
+                emailContent.append(":");
+                emailContent.append(request.getServerPort());
+                emailContent.append(request.getContextPath());
+                emailContent.append("/home/");
+                emailContent.append("checkLink?sid=");
+                emailContent.append(digitalSignature);
+                emailContent.append("&userName=");
+                emailContent.append(userDto.getUserName());
+                emailContent.append("\" target='_blank'>点击我重新设置密码</a>");
+                logger.info(emailContent.toString());
+                emailServer.singleMailSend(userDto.getMail(), "找回您的账户密码", emailContent.toString());
                 message = MessageTipsCst.SEND_SUCCESS;
                 type = MessageTipsCst.TYPE_SUCCES;
             }
