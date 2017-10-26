@@ -17,7 +17,7 @@
             <i class="fa fa-refresh" aria-hidden="true"></i>
             刷新
         </a>
-        <a href="javascript:void(0);" id="add" class="layui-btn layui-btn-small">
+        <a href="${ctx}/address/myAddressEdit" name="add" class="layui-btn layui-btn-small">
             <i class="layui-icon">&#xe608;</i>
             添加地址
         </a>
@@ -28,7 +28,6 @@
             <table class="site-table table-hover">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>收货人</th>
                     <th>收货人电话</th>
                     <th>收货人地址</th>
@@ -38,12 +37,12 @@
                 <tbody>
                 <c:forEach var="address" items="${addressDtos}">
                     <tr>
-                        <td>${address.id }</td>
                         <td>${address.consignee }</td>
                         <td>${address.consigneePhone }</td>
                         <td>${address.consigneeAddress }</td>
                         <td>
-                            <a href="${ctx }/address/myAddressEdit?id=${address.id }" class="layui-btn layui-btn-mini">编辑</a>
+                            <a href="${ctx}/address/myAddressEdit?id=${address.id }"
+                               class="layui-btn layui-btn-mini">编辑</a>
                             <a href="javascript:;" data-opt="del" url="${ctx }/address/myAddressDel?id=${address.id }"
                                class="layui-btn layui-btn-danger layui-btn-mini">删除</a>
                             <c:if test="${address.status == '1'}">
@@ -58,5 +57,4 @@
     </fieldset>
 </div>
 </body>
-
 </html>

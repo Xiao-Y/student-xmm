@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -87,15 +88,20 @@ public class AddressController {
     public ModelAndView myAddressEdit(AddressDto addressDto) {
         ModelAndView av = new ModelAndView();
         if (addressDto != null) {
-            AddressDto dto = new AddressDto();
-            dto.setId(addressDto.getId());
-            AddressDto address = addressService.selectByPrimaryKey(dto);
+            AddressDto address = addressService.selectByPrimaryKey(addressDto);
             av.addObject("address", address);
         }
         av.setViewName(PagePathCst.BASEPATH_ORDER_FORM + "myAddressEdit");
         return av;
     }
 
+    /**
+     * 添加or更新收货地址,更新默认收货地址
+     *
+     * @param request
+     * @param addressDto
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/myAddressSave")
     public JsonResult myAddressSave(HttpServletRequest request, AddressDto addressDto) {
@@ -104,22 +110,35 @@ public class AddressController {
         String message = "";
         String type = "";
         try {
-            if (ToolsUtils.isNotEmpty(addressDto.getId())) {
-                addressDto.setUpdateTime(new Date());
-                addressService.updateByPrimaryKeySelective(addressDto);
-            } else {
-                addressDto.setId(UUID.generate());
-                addressDto.setUpdateTime(new Date());
-                addressDto.setCreateTime(new Date());
-                addressDto.setUserId(loginUser.getUserId());
-                addressService.insert(addressDto);
-            }
+            addressService.saveOrUpdateMyAddress(loginUser, addressDto);
             message = MessageTipsCst.SUBMIT_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
+            json.setRoot("/address/myAddressList");
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e);
             message = MessageTipsCst.SUBMIT_FAILURE;
+            type = MessageTipsCst.TYPE_ERROR;
+        }
+        json.setMessage(message);
+        json.setType(type);
+        return json;
+    }
+
+    @ResponseBody
+    @RequestMapping("/myAddressDel")
+    public JsonResult myAddressDel(AddressDto addressDto) {
+        JsonResult json = new JsonResult();
+        String message = "";
+        String type = "";
+        try {
+            addressService.deleteByPrimaryKey(addressDto);
+            message = MessageTipsCst.DELETE_SUCCESS;
+            type = MessageTipsCst.TYPE_SUCCES;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            message = MessageTipsCst.DELETE_FAILURE;
             type = MessageTipsCst.TYPE_ERROR;
         }
         json.setMessage(message);
