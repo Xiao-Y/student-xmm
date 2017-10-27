@@ -46,8 +46,28 @@ public class OrderFormBase extends BaseModel implements Serializable {
     private String consigneePhone;
     // 修改时间
     private Date updateDate;
-    // 订单状态：0-删除，1-提交，2-确认，3-取消，4-完成
+    // 订单状态：1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成
     private String status;
+    //是否删除，0-否，1-是。只有在status为3-客户取消，4-商家取消，5-交易完成才能取消
+    private String delFlag;
+
+    /**
+     * 是否删除，0-否，1-是。只有在status为3-客户取消，4-商家取消，5-交易完成才能取消
+     *
+     * @return
+     */
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    /**
+     * 是否删除，0-否，1-是。只有在status为3-客户取消，4-商家取消，5-交易完成才能取消
+     *
+     * @param delFlag
+     */
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
 
     /**
      * 收货人
@@ -204,7 +224,7 @@ public class OrderFormBase extends BaseModel implements Serializable {
     }
 
     /**
-     * 订单状态：0-删除，1-提交，2-确认，3-取消，4-完成
+     * 订单状态：1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成
      *
      * @return
      * @author billow<br>
@@ -215,7 +235,7 @@ public class OrderFormBase extends BaseModel implements Serializable {
     }
 
     /**
-     * 订单状态：0-删除，1-提交，2-确认，3-取消，4-完成
+     * 订单状态：1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成
      *
      * @param status
      * @author billow<br>

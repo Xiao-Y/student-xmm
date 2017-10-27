@@ -146,4 +146,12 @@ public class MessageTipsCst {
      * 订单提交失败
      */
     public static final String ORDERFORM_FAILURE = "订单提交失败！";
+    /**
+     * 订单取消成功
+     */
+    public static final String ORDERFORM_CANCEL_SUCCESS = "订单取消成功！";
+    /**
+     * 订单取消失败
+     */
+    public static final String ORDERFORM_CANCEL_FAILURE = "订单取消失败！";
 }

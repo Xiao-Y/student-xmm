@@ -12,7 +12,7 @@
         <result column="commodity_num" property="commodityNum" jdbcType="INTEGER"/>
     </resultMap>
     <sql id="base_column_list">
-		commodity_info,order_form_id,id,unit_price,packing,spec,commodity_name
+		commodity_info,order_form_id,id,unit_price,packing,spec,commodity_name,commodity_num
 	</sql>
     <!-- 公用查询条件 -->
     <sql id="selectCondition">

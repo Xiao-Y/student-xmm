@@ -10,9 +10,10 @@
         <result column="consignee_phone" property="consigneePhone" jdbcType="VARCHAR" />
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
         <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="del_flag" property="delFlag" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="base_column_list">
-		consignee,user_id,orderform_amount,id,create_date,consignee_phone,update_date,status
+		consignee,user_id,orderform_amount,id,create_date,consignee_phone,update_date,status,del_flag
 	</sql>
 	<!-- 公用查询条件 -->
 	<sql id="selectCondition">
@@ -41,6 +42,10 @@
 			<if test="null != status and '' != status">
 				and status = #{status}
 			</if>
+			<if test="null != delFlag and '' != delFlag">
+				and del_flag = #{delFlag}
+			</if>
+			ORDER BY update_date DESC
 		</where>
 	</sql>
 	<select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.OrderFormDto">
@@ -67,7 +72,7 @@
 		and id = #{id}
 	</delete>
 	<insert id="insert" parameterType="org.billow.model.expand.OrderFormDto">
-		insert into t_order_form (consignee,user_id,orderform_amount,id,create_date,consignee_phone,update_date,status)
+		insert into t_order_form (consignee,user_id,orderform_amount,id,create_date,consignee_phone,update_date,status,del_flag)
 		values (
 			#{consignee,jdbcType=VARCHAR},
 			#{userId,jdbcType=INTEGER},
@@ -76,7 +81,8 @@
 			#{createDate,jdbcType=TIMESTAMP},
 			#{consigneePhone,jdbcType=VARCHAR},
 			#{updateDate,jdbcType=TIMESTAMP},
-			#{status,jdbcType=VARCHAR}
+			#{status,jdbcType=VARCHAR},
+			#{delFlag,jdbcType=VARCHAR}
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="org.billow.model.expand.OrderFormDto">
@@ -106,6 +112,9 @@
 			<if test="null != status">
 				status,
 			</if>
+			<if test="null != delFlag">
+				del_flag,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="null != consignee">
@@ -131,6 +140,9 @@
 			</if>
 			<if test="null != status">
 				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="null != delFlag">
+				#{delFlag,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -161,6 +173,9 @@
 			<if test="null != status">
 				status = #{status,jdbcType=VARCHAR},
 			</if>
+			<if test="null != delFlag">
+				del_flag = #{delFlag,jdbcType=VARCHAR},
+			</if>
 		</set>
 		where 1=1
 		and id = #{id}
@@ -174,7 +189,8 @@
 			create_date = #{createDate,jdbcType=TIMESTAMP},
 			consignee_phone = #{consigneePhone,jdbcType=VARCHAR},
 			update_date = #{updateDate,jdbcType=TIMESTAMP},
-			status = #{status,jdbcType=VARCHAR}
+			status = #{status,jdbcType=VARCHAR},
+			del_flag = #{delFlag,jdbcType=VARCHAR}
 		where 1=1
 		and id = #{id}
 	</update>
