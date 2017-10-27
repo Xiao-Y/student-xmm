@@ -18,10 +18,12 @@
 <div class="admin-main">
     <blockquote class="layui-elem-quote">
         <a href="${ctx}/orderForm/queryOrderFormList?pageNo=${page.pageNum }" class="layui-btn layui-btn-small">
-            <i class="fa fa-refresh" aria-hidden="true"></i>刷新
+            <i class="fa fa-refresh" aria-hidden="true"></i>
+            刷新
         </a>
         <a href="javascript:;" id="search" name="search" class="layui-btn layui-btn-small">
-            <i class="layui-icon">&#xe608;</i>查询
+            <i class="fa fa-search" aria-hidden="true"></i>
+            查询
         </a>
     </blockquote>
     <fieldset class="layui-elem-field">
@@ -38,7 +40,7 @@
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">当前状态</label>
+                        <label class="layui-form-label">订单状态</label>
                         <div class="layui-input-block">
                             <input type="radio" name="status" value="" title="所有状态" checked>
                             <input type="radio" name="status" value="1" title="客户提交">
@@ -63,8 +65,8 @@
                     <th>收货人</th>
                     <th>收货人电话</th>
                     <th>订单金额</th>
-                    <th>当前状态</th>
-                    <th>备注</th>
+                    <th>订单状态</th>
+                    <th>下单时间</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -73,7 +75,7 @@
                     <tr>
                         <td width="30">
                             <a href="${ctx}/orderForm/queryOrderFormDetailList?orderFormId=${orderFormDto.id }"
-                               title="查询订单详细信息">${orderFormDto.id }</a>
+                               title="查看订单详细信息">${orderFormDto.id }</a>
                         </td>
                         <td>${orderFormDto.consignee }</td>
                         <td>${orderFormDto.consigneePhone }</td>
@@ -100,7 +102,7 @@
                                 </c:when>
                             </c:choose>
                         </td>
-                        <td>12312312312</td>
+                        <td><fmt:formatDate value="${orderFormDto.createDate }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                         <td>
                             <c:if test="${orderFormDto.status == '1'}">
                                 <a href="javascript:;" class="layui-btn layui-btn-mini" id="cancelOrderForm"
