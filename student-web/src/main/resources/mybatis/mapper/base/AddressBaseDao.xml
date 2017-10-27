@@ -41,6 +41,7 @@
 			<if test="null != status and '' != status">
 				and status = #{status}
 			</if>
+			ORDER BY update_time DESC
 		</where>
 	</sql>
 	<select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.AddressDto">
