@@ -25,8 +25,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,21 +62,15 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     }
 
     @Override
-    public Map<String, String> saveOrderForm(UserDto loginUser, String addressId, String[] commodityIds, String[] commodityNums) throws Exception {
+    public Map<String, String> saveOrderForm(UserDto loginUser, String addressId, String[] commodityIds,
+                                             String[] commodityNums) throws Exception {
         //订单金额
         BigDecimal orderFormAmount = new BigDecimal(0.00);
         //订单id
         String orderFormId = OrderNumUtil.makeOrderNum();
         // 2、保存订单详细信息
-        StringBuilder detailContent = new StringBuilder();
-        detailContent.append("<table width=\"600\" rules=\"rows\"> ");
-        detailContent.append("<tr>");
-        detailContent.append("<td width=\"200\">商品名称</td>");
-        detailContent.append("<td width=\"100\">商品数量</td>");
-        detailContent.append("<td width=\"100\">单价</td>");
-        detailContent.append("<td width=\"100\">规格</td>");
-        detailContent.append("<td width=\"100\">小计</td>");
-        detailContent.append("</tr>");
+        //用于邮件发送
+        List<OrderFormDetailDto> detailes = new ArrayList<>();
         for (int i = 0; i < commodityIds.length; i++) {
             CommodityDto commodityDto = new CommodityDto();
             commodityDto.setId(commodityIds[i]);
@@ -85,36 +81,16 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             orderFormDetailDto.setOrderFormId(orderFormId);
             orderFormDetailDto.setId(UUID.generate());
             orderFormDetailDto.setCommodityNum(new Integer(commodityNums[i]));
-            //小计
-            BigDecimal decimal = new BigDecimal(commodityNums[i]).multiply(dto.getUnitPrice());
             //计算订单金额
-            orderFormAmount = orderFormAmount.add(decimal);
+            orderFormAmount = orderFormAmount.add(new BigDecimal(commodityNums[i]).multiply(dto.getUnitPrice()));
+            detailes.add(orderFormDetailDto);
             orderFormDetailDao.insert(orderFormDetailDto);
-            //商品详细,用于发送邮件
-            detailContent.append("<tr>");
-            detailContent.append("<td>");
-            detailContent.append(orderFormDetailDto.getCommodityName());
-            detailContent.append("</td>");
-            detailContent.append("<td>");
-            detailContent.append(orderFormDetailDto.getCommodityNum());
-            detailContent.append("</td>");
-            detailContent.append("<td>");
-            detailContent.append(orderFormDetailDto.getUnitPrice());
-            detailContent.append("</td>");
-            detailContent.append("<td>");
-            detailContent.append(orderFormDetailDto.getSpec());
-            detailContent.append("</td>");
-            detailContent.append("<td>");
-            detailContent.append(decimal);
-            detailContent.append("</tr>");
-
             // 3、删除购物车中已经购买的商品
             ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
             shoppingCartDto.setId(loginUser.getUserId().toString());
             shoppingCartDto.setCommodityId(dto.getId());
             shoppingCartDao.deleteByPrimaryKey(shoppingCartDto);
         }
-        detailContent.append("</table>");
         // 1、保存订单信息
         //查询地址信息
         AddressDto addressDto = new AddressDto();
@@ -130,19 +106,66 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         orderFormDto.setUpdateDate(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
         orderFormDto.setUserId(loginUser.getUserId());
         orderFormDao.insert(orderFormDto);
+        logger.info("订单生成，订单号：" + orderFormId);
+        //邮件发送内容
+        return this.mailSendContent(orderFormId, orderFormAmount, detailes, dto);
+    }
+
+    /**
+     * 邮件发送内容
+     *
+     * @param orderFormId     订单号
+     * @param orderFormAmount 订单金额
+     * @param detailes        订单详细信息
+     * @param address         收货地址
+     * @return key-mailContent
+     */
+    private Map<String, String> mailSendContent(String orderFormId, BigDecimal orderFormAmount,
+                                                List<OrderFormDetailDto> detailes, AddressDto address) {
+        StringBuilder detailContent = new StringBuilder();
+        detailContent.append("<table width=\"600\" rules=\"rows\"> ");
+        detailContent.append("<tr>");
+        detailContent.append("<td width=\"200\">商品名称</td>");
+        detailContent.append("<td width=\"100\">商品数量</td>");
+        detailContent.append("<td width=\"100\">单价</td>");
+        detailContent.append("<td width=\"100\">规格</td>");
+        detailContent.append("<td width=\"100\">小计</td>");
+        detailContent.append("</tr>");
+        for (OrderFormDetailDto orderFormDetailDto : detailes) {
+            detailContent.append("<tr>");
+            detailContent.append("<td>");
+            detailContent.append(orderFormDetailDto.getCommodityName());
+            detailContent.append("</td>");
+            detailContent.append("<td>");
+            detailContent.append(orderFormDetailDto.getCommodityNum());
+            detailContent.append("</td>");
+            detailContent.append("<td>");
+            detailContent.append(orderFormDetailDto.getUnitPrice());
+            detailContent.append("</td>");
+            detailContent.append("<td>");
+            detailContent.append(orderFormDetailDto.getSpec());
+            detailContent.append("</td>");
+            detailContent.append("<td>");
+            //小计
+            BigDecimal decimal = new BigDecimal(orderFormDetailDto.getCommodityNum())
+                    .multiply(orderFormDetailDto.getUnitPrice());
+            detailContent.append(decimal);
+            detailContent.append("</tr>");
+        }
+        detailContent.append("</table>");
         //邮件发送内容
         StringBuilder content = new StringBuilder();
         content.append("订单号：");
         content.append(orderFormId);
         content.append("<br/>");
         content.append("收货人：");
-        content.append(dto.getConsignee());
+        content.append(address.getConsignee());
         content.append("<br/>");
         content.append("收货人电话：");
-        content.append(dto.getConsigneePhone());
+        content.append(address.getConsigneePhone());
         content.append("<br/>");
         content.append("收货人地址：");
-        content.append(dto.getConsigneeAddress());
+        content.append(address.getConsigneeAddress());
         content.append("<br/>");
         content.append("订单金额：");
         content.append(orderFormAmount.setScale(2));
