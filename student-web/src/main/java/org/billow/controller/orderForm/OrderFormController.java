@@ -186,6 +186,10 @@ public class OrderFormController {
                     e.printStackTrace();
                     logger.error(e);
                 }
+            }else if ("2".equals(orderFormDto.getStatus())) {
+                message = "确认订单成功！";
+            }else if ("5".equals(orderFormDto.getStatus())) {
+                message = "交易成功！";
             }
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {
@@ -193,8 +197,12 @@ public class OrderFormController {
             logger.error(e);
             if ("1".equals(orderFormDto.getDelFlag())) {
                 message = MessageTipsCst.DELETE_FAILURE;
-            } else if ("3".equals(orderFormDto.getStatus())) {
+            } else if ("3".equals(orderFormDto.getStatus()) || "4".equals(orderFormDto.getStatus())) {
                 message = MessageTipsCst.ORDERFORM_CANCEL_FAILURE;
+            }else if ("2".equals(orderFormDto.getStatus())) {
+                message = "确认订单失败！";
+            }else if ("5".equals(orderFormDto.getStatus())) {
+                message = "交易完成失败！";
             }
             type = MessageTipsCst.TYPE_ERROR;
         }

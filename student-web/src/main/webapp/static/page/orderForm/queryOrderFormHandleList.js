@@ -18,9 +18,10 @@ layui.use(['layer', 'form'], function () {
     $(document).on('click', '#cancelOrderForm', function () {
         var url = $(this).attr("url");
         var tipBox = null;
+        var str = $(this).text();
         new TipBox({
             type: 'confirm',
-            str: '确定取消订单？',
+            str: '确定'+str+'？',
             hasBtn: true,
             callBack: function () {
                 $.ajax({
@@ -28,7 +29,7 @@ layui.use(['layer', 'form'], function () {
                     url: url,
                     dataType: 'json',
                     beforeSend: function (XHR) {
-                        tipBox = new TipBox({type: 'load', str: "正在取消订单..."});
+                        tipBox = new TipBox({type: 'load', str: "正在加载数据..."});
                     },
                     success: function (data) {
                         tipBox.close();
