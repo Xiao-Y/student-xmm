@@ -50,6 +50,26 @@ public class OrderFormBase extends BaseModel implements Serializable {
     private String status;
     //是否删除，0-否，1-是。只有在status为3-客户取消，4-商家取消，5-交易完成才能取消
     private String delFlag;
+    //收货人地址
+    private String consigneeAddress;
+
+    /**
+     * 收货人地址
+     *
+     * @return
+     */
+    public String getConsigneeAddress() {
+        return consigneeAddress;
+    }
+
+    /**
+     * 收货人地址
+     *
+     * @param consigneeAddress
+     */
+    public void setConsigneeAddress(String consigneeAddress) {
+        this.consigneeAddress = consigneeAddress;
+    }
 
     /**
      * 是否删除，0-否，1-是。只有在status为3-客户取消，4-商家取消，5-交易完成才能取消

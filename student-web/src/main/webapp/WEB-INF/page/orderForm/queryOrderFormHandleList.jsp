@@ -10,14 +10,14 @@
     <jsp:include page="/pub/pubFormCss.jsp"/>
     <script type="text/javascript" src="${ctx}/static/js/extend/pubPopForm.js"></script>
 
-    <script type="text/javascript" src="${ctx}/static/page/orderForm/queryOrderFormList.js"></script>
+    <script type="text/javascript" src="${ctx}/static/page/orderForm/queryOrderFormHandleList.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/extend/pubTableNew.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/common/dataTool.js"></script>
 </head>
 <body>
 <div class="admin-main">
     <blockquote class="layui-elem-quote">
-        <a href="${ctx}/orderForm/queryOrderFormList?pageNo=${page.pageNum }" class="layui-btn layui-btn-small">
+        <a href="${ctx}/orderForm/queryOrderFormHandleList?pageNo=${page.pageNum }" class="layui-btn layui-btn-small">
             <i class="fa fa-refresh" aria-hidden="true"></i>
             刷新
         </a>
@@ -30,7 +30,7 @@
         <legend>查询条件</legend>
         <div class="layui-field-box">
             <form class="layui-form layui-form-pane1" id="searchForm" data-type="ajax"
-                  action="${ctx}/orderForm/queryOrderFormList">
+                  action="${ctx}/orderForm/queryOrderFormHandleList">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">订单号</label>
@@ -102,15 +102,18 @@
                                 </c:when>
                             </c:choose>
                         </td>
-                        <td><fmt:formatDate value="${orderFormDto.createDate }" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                        <td><fmt:formatDate value="${orderFormDto.createDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                         <td>
+                                <%-- 1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成 --%>
                             <c:if test="${orderFormDto.status == '1'}">
                                 <a href="javascript:;" class="layui-btn layui-btn-mini" id="cancelOrderForm"
-                                   url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=3">取消订单</a>
+                                   url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=2">确认订单</a>
+                                <a href="javascript:;" class="layui-btn layui-btn-mini" id="cancelOrderForm"
+                                   url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=4">取消订单</a>
                             </c:if>
-                            <c:if test="${orderFormDto.status == '3' || orderFormDto.status == '4' || orderFormDto.status == '5'}">
-                                <a href="javascript:;" data-opt="del" class="layui-btn layui-btn-danger layui-btn-mini"
-                                   url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&delFlag=1">删除记录</a>
+                            <c:if test="${orderFormDto.status == '2'}">
+                                <a href="javascript:;" class="layui-btn layui-btn-mini" id="cancelOrderForm"
+                                   url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=5">交易完成</a>
                             </c:if>
                         </td>
                     </tr>

@@ -18,6 +18,16 @@
         </a>
     </blockquote>
     <fieldset class="layui-elem-field">
+        <legend>收货地址</legend>
+        <div class="addresId">
+            <div class="layui-field-box">
+                <p>&nbsp;&nbsp;&nbsp;收货人：${orderForm.consignee}</p>
+                <p>手机号码：${orderForm.consigneePhone}</p>
+                <p>详细地址：${orderForm.consigneeAddress}</p>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="layui-elem-field">
         <legend>订单详细信息</legend>
         <div class="layui-field-box">
             <table class="site-table" lay-skin="line">

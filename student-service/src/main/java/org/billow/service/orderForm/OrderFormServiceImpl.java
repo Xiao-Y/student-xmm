@@ -99,8 +99,10 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         OrderFormDto orderFormDto = new OrderFormDto();
         orderFormDto.setId(orderFormId);
         orderFormDto.setStatus("1");
+        orderFormDto.setDelFlag("0");
         orderFormDto.setConsignee(dto.getConsignee());
         orderFormDto.setConsigneePhone(dto.getConsigneePhone());
+        orderFormDto.setConsigneeAddress(dto.getConsigneeAddress());
         orderFormDto.setOrderformAmount(orderFormAmount.setScale(2));
         orderFormDto.setCreateDate(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
         orderFormDto.setUpdateDate(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
