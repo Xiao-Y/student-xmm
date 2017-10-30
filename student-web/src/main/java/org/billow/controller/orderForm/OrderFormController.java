@@ -136,6 +136,8 @@ public class OrderFormController {
         OrderFormDto orderFormDto = orderFormService.selectByPrimaryKey(new OrderFormDto(orderFormDetailDto.getOrderFormId()));
         ModelAndView av = new ModelAndView();
         av.addObject("orderFormId", orderFormDetailDto.getOrderFormId());
+        av.addObject("handleType", orderFormDetailDto.getHandleType());
+        av.addObject("pageNo", orderFormDetailDto.getPageNo());
         av.addObject("list", orderFormDetailDtos);
         av.addObject("orderForm", orderFormDto);
         av.setViewName(PagePathCst.BASEPATH_ORDER_FORM + "queryOrderFormDetailList");
@@ -179,7 +181,7 @@ public class OrderFormController {
                         mailContent.append("<br><br><br>");
                         emailServer.singleMailSend(toEmails, "客户取消了您的订单！", mailContent.toString());
                     } else if ("4".equals(orderFormDto.getStatus()) && customerCancel) {//4-商家取消
-                        String mailContent = "订单号：" + orderFormDto.getId() + "<br> 非常抱歉你的订单被商家取消了，如果有疑问请与商家联系!";
+                        String mailContent = "订单号：" + orderFormDto.getId() + "<br> 非常抱歉你的订单被商家取消了，如果有疑问请与商家联系!<br><br><br>";
                         emailServer.singleMailSend(loginUser.getMail(), "商家取消了您的订单！", mailContent);
                     }
                 } catch (Exception e) {

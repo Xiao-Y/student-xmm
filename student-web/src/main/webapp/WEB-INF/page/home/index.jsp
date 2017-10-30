@@ -51,12 +51,12 @@
             <ul class="layui-tab-title">
                 <li class="layui-this">
                     <i class="fa fa-dashboard" aria-hidden="true"></i>
-                    <cite>我的工作台</cite>
+                    <cite>商城首页</cite>
                 </li>
             </ul>
             <div class="layui-tab-content" style="min-height: 150px; padding: 5px 0 0 0;">
                 <div class="layui-tab-item layui-show">
-                    <iframe src="${ctx }/home/main"></iframe>
+                    <iframe src="${ctx }/commodity/commodityView"></iframe>
                 </div>
             </div>
         </div>

@@ -67,38 +67,37 @@
                     <th>订单金额</th>
                     <th>订单状态</th>
                     <th>下单时间</th>
-                    <th>操作</th>
+                    <th width="120">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="orderFormDto" items="${page.list}">
                     <tr>
                         <td width="30">
-                            <a href="${ctx}/orderForm/queryOrderFormDetailList?orderFormId=${orderFormDto.id }"
+                            <a href="${ctx}/orderForm/queryOrderFormDetailList?pageNo=${page.pageNum }&orderFormId=${orderFormDto.id }&handleType=1"
                                title="查看订单详细信息">${orderFormDto.id }</a>
                         </td>
                         <td>${orderFormDto.consignee }</td>
                         <td>${orderFormDto.consigneePhone }</td>
                         <td>
-                            <fmt:formatNumber type="number" value="${orderFormDto.orderformAmount }"
-                                              pattern="#,#00.0#"/>
+                            <fmt:formatNumber type="currency" value="${orderFormDto.orderformAmount }"/>
                         </td>
                         <td>
                             <c:choose>
                                 <c:when test="${orderFormDto.status == '1'}">
-                                    客户提交
+                                    <span class="layui-btn layui-btn-normal layui-btn-radius layui-btn-mini">客户提交</span>
                                 </c:when>
                                 <c:when test="${orderFormDto.status == '2'}">
-                                    商家确认
+                                    <span class="layui-btn layui-btn-warm layui-btn-radius layui-btn-mini">商家确认</span>
                                 </c:when>
                                 <c:when test="${orderFormDto.status == '3'}">
-                                    客户取消
+                                    <span class="layui-btn layui-btn-danger layui-btn-radius layui-btn-mini">客户取消</span>
                                 </c:when>
                                 <c:when test="${orderFormDto.status == '4'}">
-                                    商家取消
+                                    <span class="layui-btn layui-btn-danger layui-btn-radius layui-btn-mini">商家取消</span>
                                 </c:when>
                                 <c:when test="${orderFormDto.status == '5'}">
-                                    交易完成
+                                    <span class="layui-btn layui-btn-primary layui-btn-radius layui-btn-mini">交易完成</span>
                                 </c:when>
                             </c:choose>
                         </td>
@@ -106,13 +105,13 @@
                         <td>
                                 <%-- 1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成 --%>
                             <c:if test="${orderFormDto.status == '1'}">
-                                <a href="javascript:;" class="layui-btn layui-btn-mini" id="cancelOrderForm"
+                                <a href="javascript:;" class="layui-btn layui-btn-mini" name="cancelOrderForm"
                                    url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=2">确认订单</a>
-                                <a href="javascript:;" class="layui-btn layui-btn-mini" id="cancelOrderForm"
+                                <a href="javascript:;" class="layui-btn layui-btn-mini" name="cancelOrderForm"
                                    url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=4">取消订单</a>
                             </c:if>
                             <c:if test="${orderFormDto.status == '2'}">
-                                <a href="javascript:;" class="layui-btn layui-btn-mini" id="cancelOrderForm"
+                                <a href="javascript:;" class="layui-btn layui-btn-mini" name="cancelOrderForm"
                                    url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=5">交易完成</a>
                             </c:if>
                         </td>

@@ -15,7 +15,7 @@
     注意：<br><font style="color: red">*</font>为必填项
 </blockquote>
 <div style="margin: 30px 240px 30px 100px;">
-    <form class="layui-form layui-form-pane1" data-type="ajax" action="${ctx }/comModify/commoditySave">
+    <form class="layui-form layui-form-pane1" data-type="ajax" action="${ctx }/commodity/commoditySave">
         <input type="hidden" name="id" value="${commodity.id }">
         <input type="hidden" name="pageNo" value="${commodity.pageNo }">
         <div class="layui-form-item">

@@ -14,13 +14,31 @@ layui.use(['layer', 'form'], function () {
         $("#searchForm").submit();
     });
 
-    //取消订单
-    $(document).on('click', '#cancelOrderForm', function () {
-        var url = $(this).attr("url");
+    $(document).on('click', 'a[name="cancelOrderForm"]', function () {
         var tipBox = null;
+        var url = $(this).attr("url");
+        var status = url.split("&")[1].split("=")[1];
+        var str1 = "";
+        var str2 = "";
+        var type = "confirm";
+        // 1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成
+        if (status == '1') {//delFlag=1
+            str1 = "确定删除记录？";
+            str2 = "正在删除记录...";
+        } else if (status == '2') {
+            str1 = "是否确认订单？";
+            str2 = "正在确认订单...";
+            type = "confirm1";
+        } else if (status == '3' || status == '4') {
+            str1 = "确认取消订单？";
+            str2 = "正在取消订单...";
+        } else if (status == '5') {
+            str1 = "确认交易完成？";
+            str2 = "正在交易完成...";
+        }
         new TipBox({
-            type: 'confirm',
-            str: '确定取消订单？',
+            type: type,
+            str: str1,
             hasBtn: true,
             callBack: function () {
                 $.ajax({
@@ -28,7 +46,7 @@ layui.use(['layer', 'form'], function () {
                     url: url,
                     dataType: 'json',
                     beforeSend: function (XHR) {
-                        tipBox = new TipBox({type: 'load', str: "正在取消订单..."});
+                        tipBox = new TipBox({type: 'load', str: str2});
                     },
                     success: function (data) {
                         tipBox.close();

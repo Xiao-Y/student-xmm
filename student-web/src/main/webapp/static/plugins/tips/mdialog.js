@@ -66,6 +66,7 @@ TipBox.prototype.renderUI = function(tipType){
     tipType == 'error'   && this.errorRenderUI();  
     tipType == 'tip'     && this.tipRenderUI(); 
     tipType == 'confirm' && this.confirmRenderUI();
+    tipType == 'confirm1' && this.confirmRenderUI();
     TipBox.prototype.boundingBox.appendTo(this.config.windowDom.document.body);  
                   
     //是否显示遮罩  
@@ -86,9 +87,11 @@ TipBox.prototype.renderUI = function(tipType){
                 break;
             case 'confirm':$(".tip").after("<div class='twoButton'><button class='okoButton'>确定</button></div><div class='twoButton'><button class='canceloButton'>取消</button></div>");
                 break;
+            case 'confirm1':$(".tip").after("<div class='twoButton'><button class='okoButton'>是</button></div><div class='twoButton'><button class='canceloButton'>否</button></div>");
+                break;
             default: break;
         }
-        if(this.config.type == 'confirm'){
+        if(this.config.type == 'confirm' || this.config.type == 'confirm1'){
             $('button.okoButton').on('click',function(){_this.confirmClose();});
             $('button.canceloButton').on('click',function(){_this.cancelClose();});
         }else{
@@ -99,7 +102,7 @@ TipBox.prototype.renderUI = function(tipType){
     _this = this;  
     !this.config.setTime && (typeof this.config.callBack === "function" || typeof this.config.callBackCancel === "function") && (this.config.setTime = 1);      
     this.config.setTime != -1 && setTimeout( function(){
-        if(_this.config.hasBtn && _this.config.type == 'confirm'){
+        if(_this.config.hasBtn && (_this.config.type == 'confirm' || _this.config.type == 'confirm1')){
             _this.cancelClose();
         }else{
             _this.close();

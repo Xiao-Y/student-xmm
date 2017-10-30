@@ -24,7 +24,26 @@ public class OrderFormDetailDto extends OrderFormDetailBase {
 	public OrderFormDetailDto(String id ) {
 		super(id );
 	}
-	
+
+	//用于是从订单查询进来还是订单处理进来。0或null-查询进来，1-处理进来
+	public String handleType;
+
+	/**
+	 * 用于是从订单查询进来还是订单处理进来。0或null-查询进来，1-处理进来
+	 * @return
+	 */
+	public String getHandleType() {
+		return handleType;
+	}
+
+	/**
+	 * 用于是从订单查询进来还是订单处理进来。0或null-查询进来，1-处理进来
+	 * @param handleType
+	 */
+	public void setHandleType(String handleType) {
+		this.handleType = handleType;
+	}
+
 	/**
 	 * 主键toString 非主键不允许添加
 	 */

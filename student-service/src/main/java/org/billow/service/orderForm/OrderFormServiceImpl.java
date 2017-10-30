@@ -125,12 +125,11 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     private Map<String, String> mailSendContent(String orderFormId, BigDecimal orderFormAmount,
                                                 List<OrderFormDetailDto> detailes, AddressDto address) {
         StringBuilder detailContent = new StringBuilder();
-        detailContent.append("<table width=\"600\" rules=\"rows\"> ");
+        detailContent.append("<table width=\"500\" rules=\"rows\"> ");
         detailContent.append("<tr>");
         detailContent.append("<td width=\"200\">商品名称</td>");
         detailContent.append("<td width=\"100\">商品数量</td>");
         detailContent.append("<td width=\"100\">单价</td>");
-        detailContent.append("<td width=\"100\">规格</td>");
         detailContent.append("<td width=\"100\">小计</td>");
         detailContent.append("</tr>");
         for (OrderFormDetailDto orderFormDetailDto : detailes) {
@@ -143,8 +142,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             detailContent.append("</td>");
             detailContent.append("<td>");
             detailContent.append(orderFormDetailDto.getUnitPrice());
-            detailContent.append("</td>");
-            detailContent.append("<td>");
+            detailContent.append("/");
             detailContent.append(orderFormDetailDto.getSpec());
             detailContent.append("</td>");
             detailContent.append("<td>");

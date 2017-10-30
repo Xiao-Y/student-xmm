@@ -23,7 +23,7 @@ $(function () {
         showData: $("#pageSize").val(),//每页显示
         current: $("#pageNum").val(),//当前第几页
         callback: function (api) {
-            location.href = path + '/comModify/index?pageNo=' + api.getCurrent();
+            location.href = path + '/commodity/index?pageNo=' + api.getCurrent();
         }
     });
 });

@@ -74,7 +74,10 @@
                         </td>
                         <td class="unitPrice"
                             title="${commodity.unitPrice }">${commodity.unitPrice }/${commodity.spec }</td>
-                        <td class="subtotal">${commodity.unitPrice * shoppingCartDto.commodityNum }</td>
+                        <td class="subtotal">
+                            <fmt:formatNumber type="currency"
+                                              value="${commodity.unitPrice * shoppingCartDto.commodityNum }"/>
+                        </td>
                         <td>${commodity.packing }</td>
                         <td style="text-align:center;" class="status" title="${commodity.status}">
                             <c:if test="${commodity.status == '1'}">

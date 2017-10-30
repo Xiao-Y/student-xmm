@@ -13,11 +13,11 @@
 <body>
 <div class="admin-main">
     <blockquote class="layui-elem-quote">
-        <a href="${ctx}/comModify/index?pageNo=${page.pageNum }" class="layui-btn layui-btn-small">
+        <a href="${ctx}/commodity/index?pageNo=${page.pageNum }" class="layui-btn layui-btn-small">
             <i class="fa fa-refresh" aria-hidden="true"></i>
             刷新
         </a>
-        <a href="${ctx }/comModify/commodityEdit" class="layui-btn layui-btn-small">
+        <a href="${ctx }/commodity/commodityEdit" class="layui-btn layui-btn-small">
             <i class="layui-icon">&#xe608;</i>
             添加商品
         </a>
@@ -53,10 +53,10 @@
                             <c:if test="${commodity.valid == '0'}"> 无效 </c:if>
                         </td>
                         <td>
-                            <a href="${ctx }/comModify/commodityEdit?id=${commodity.id }&pageNo=${page.pageNum }"
+                            <a href="${ctx }/commodity/commodityEdit?id=${commodity.id }&pageNo=${page.pageNum }"
                                class="layui-btn layui-btn-mini">编辑</a>
                             <a href="javascript:;" data-opt="del"
-                               url="${ctx }/comModify/commodityDel?id=${commodity.id }"
+                               url="${ctx }/commodity/commodityDel?id=${commodity.id }"
                                class="layui-btn layui-btn-danger layui-btn-mini">删除</a>
                         </td>
                     </tr>

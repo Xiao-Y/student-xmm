@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -27,9 +28,9 @@ import java.util.List;
  * @date 2017-10-19 15:45:38
  */
 @Controller
-@RequestMapping("/comModify")
-public class ComModifyController {
-    private static final Logger logger = Logger.getLogger(ComModifyController.class);
+@RequestMapping("/commodity")
+public class CommodityController {
+    private static final Logger logger = Logger.getLogger(CommodityController.class);
 
     @Autowired
     private CommodityService commodityService;
@@ -101,7 +102,7 @@ public class ComModifyController {
         }
         json.setMessage(message);
         json.setType(type);
-        json.setRoot("/comModify/index?pageNo=" + commodityDto.getPageNo());
+        json.setRoot("/commodity/index?pageNo=" + commodityDto.getPageNo());
         return json;
     }
 
@@ -131,5 +132,23 @@ public class ComModifyController {
         json.setMessage(message);
         json.setType(type);
         return json;
+    }
+
+    /**
+     * 进入商品选购页面
+     *
+     * @return
+     */
+    @RequestMapping("/commodityView")
+    public ModelAndView commodityView(CommodityDto commodityDto, HttpServletRequest request) {
+        ModelAndView av = new ModelAndView();
+        PageHelper.startPage(12);
+        commodityDto.setDeleFlag("1");
+        commodityDto.setValid("1");
+        List<CommodityDto> commodityList = commodityService.selectAll(commodityDto);
+        PageInfo<CommodityDto> page = new PageInfo<>(commodityList);
+        av.addObject("page", page);
+        av.setViewName(PagePathCst.BASEPATH_COMMODITY + "commodityView");
+        return av;
     }
 }

@@ -117,7 +117,7 @@ $(function () {
                 if (result == '0') {
                     //计算小计
                     var unitPrice = $(".unitPrice").eq(index).attr("title");
-                    $(".subtotal").eq(index).text((commodityNum * unitPrice).toFixed(2));
+                    $(".subtotal").eq(index).text('￥' + fmoney((commodityNum * unitPrice), 2));
                 } else {//更新出错时
                     new TipBox({type: 'error', str: '商品数量更新出错！', hasBtn: true});
                     text = "完成";
@@ -155,7 +155,7 @@ $(function () {
         }
         //收货地址id
         var addressId = $("input[name='addressId']").val();
-        if (addressId == '') {
+        if (typeof(addressId) == 'undefined' || addressId == '') {
             new TipBox({type: 'error', str: '请选择收货地址!', hasBtn: true});
             return;
         }
