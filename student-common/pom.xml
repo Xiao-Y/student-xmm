@@ -18,10 +18,5 @@
 			<artifactId>student-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.billow</groupId>
-			<artifactId>student-dubbo</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 	</dependencies>
 </project>

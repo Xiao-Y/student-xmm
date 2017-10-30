@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.billow.dao.CommodityDao">
+    <resultMap id="BaseResultMap" type="org.billow.model.expand.CommodityDto">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="commodity_info" property="commodityInfo" jdbcType="VARCHAR"/>
+        <result column="valid" property="valid" jdbcType="VARCHAR"/>
+        <result column="grade" property="grade" jdbcType="VARCHAR"/>
+        <result column="unit_price" property="unitPrice" jdbcType="DECIMAL"/>
+        <result column="locality_growth" property="localityGrowth" jdbcType="VARCHAR"/>
+        <result column="packing" property="packing" jdbcType="VARCHAR"/>
+        <result column="spec" property="spec" jdbcType="VARCHAR"/>
+        <result column="commodity_name" property="commodityName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="dele_Flag" property="deleFlag" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="base_column_list">
+		commodity_info,valid,grade,id,unit_price,locality_growth,packing,spec,commodity_name,status,dele_Flag
+	</sql>
+    <!-- 公用查询条件 -->
+    <sql id="selectCondition">
+        <where>
+            <if test="null != commodityInfo and '' != commodityInfo">
+                and commodity_info = #{commodityInfo}
+            </if>
+            <if test="null != valid and '' != valid">
+                and valid = #{valid}
+            </if>
+            <if test="null != grade and '' != grade">
+                and grade = #{grade}
+            </if>
+            <if test="null != id and '' != id">
+                and id = #{id}
+            </if>
+            <if test="null != unitPrice and '' != unitPrice">
+                and unit_price = #{unitPrice}
+            </if>
+            <if test="null != localityGrowth and '' != localityGrowth">
+                and locality_growth = #{localityGrowth}
+            </if>
+            <if test="null != packing and '' != packing">
+                and packing = #{packing}
+            </if>
+            <if test="null != spec and '' != spec">
+                and spec = #{spec}
+            </if>
+            <if test="null != commodityName and '' != commodityName">
+                and commodity_name = #{commodityName}
+            </if>
+            <if test="null != status and '' != status">
+                and status = #{status}
+            </if>
+            <if test="null != deleFlag and '' != deleFlag">
+                and dele_Flag = #{deleFlag}
+            </if>
+        </where>
+    </sql>
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.CommodityDto">
+        select
+        <include refid="base_column_list"/>
+        from t_commodity
+        <include refid="selectCondition"/>
+    </select>
+    <select id="selectAllCount" resultType="java.lang.Integer" parameterType="org.billow.model.expand.CommodityDto">
+        select count(*)
+        from t_commodity
+        <include refid="selectCondition"/>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.billow.model.expand.CommodityDto">
+        select
+        <include refid="base_column_list"/>
+        from t_commodity
+        where 1=1
+        and id = #{id}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="org.billow.model.expand.CommodityDto">
+		delete from t_commodity
+		where 1=1
+		and id = #{id}
+	</delete>
+    <insert id="insert" parameterType="org.billow.model.expand.CommodityDto">
+		insert into t_commodity (commodity_info,valid,grade,id,unit_price,locality_growth,
+		packing,spec,commodity_name,status,dele_Flag)
+		values (
+			#{commodityInfo,jdbcType=VARCHAR},
+			#{valid,jdbcType=VARCHAR},
+			#{grade,jdbcType=VARCHAR},
+			#{id,jdbcType=VARCHAR},
+			#{unitPrice,jdbcType=DECIMAL},
+			#{localityGrowth,jdbcType=VARCHAR},
+			#{packing,jdbcType=VARCHAR},
+			#{spec,jdbcType=VARCHAR},
+			#{commodityName,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},
+			#{deleFlag,jdbcType=VARCHAR}
+		)
+	</insert>
+    <insert id="insertSelective" parameterType="org.billow.model.expand.CommodityDto">
+        insert into t_commodity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != commodityInfo">
+                commodity_info,
+            </if>
+            <if test="null != valid">
+                valid,
+            </if>
+            <if test="null != grade">
+                grade,
+            </if>
+            <if test="null != id">
+                id,
+            </if>
+            <if test="null != unitPrice">
+                unit_price,
+            </if>
+            <if test="null != localityGrowth">
+                locality_growth,
+            </if>
+            <if test="null != packing">
+                packing,
+            </if>
+            <if test="null != spec">
+                spec,
+            </if>
+            <if test="null != commodityName">
+                commodity_name,
+            </if>
+            <if test="null != status">
+                status,
+            </if>
+            <if test="null != deleFlag">
+                dele_Flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != commodityInfo">
+                #{commodityInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="null != valid">
+                #{valid,jdbcType=VARCHAR},
+            </if>
+            <if test="null != grade">
+                #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="null != id">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="null != unitPrice">
+                #{unitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="null != localityGrowth">
+                #{localityGrowth,jdbcType=VARCHAR},
+            </if>
+            <if test="null != packing">
+                #{packing,jdbcType=VARCHAR},
+            </if>
+            <if test="null != spec">
+                #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="null != commodityName">
+                #{commodityName,jdbcType=VARCHAR},
+            </if>
+            <if test="null != status">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="null != deleFlag">
+                #{deleFlag,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.CommodityDto">
+        update t_commodity
+        <set>
+            <if test="null != commodityInfo">
+                commodity_info = #{commodityInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="null != valid">
+                valid = #{valid,jdbcType=VARCHAR},
+            </if>
+            <if test="null != grade">
+                grade = #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="null != id">
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="null != unitPrice">
+                unit_price = #{unitPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="null != localityGrowth">
+                locality_growth = #{localityGrowth,jdbcType=VARCHAR},
+            </if>
+            <if test="null != packing">
+                packing = #{packing,jdbcType=VARCHAR},
+            </if>
+            <if test="null != spec">
+                spec = #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="null != commodityName">
+                commodity_name = #{commodityName,jdbcType=VARCHAR},
+            </if>
+            <if test="null != status">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="null != deleFlag">
+                dele_Flag = #{deleFlag,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where 1=1
+        and id = #{id}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="org.billow.model.expand.CommodityDto">
+		update t_commodity
+		set
+			commodity_info = #{commodityInfo,jdbcType=VARCHAR},
+			valid = #{valid,jdbcType=VARCHAR},
+			grade = #{grade,jdbcType=VARCHAR},
+			unit_price = #{unitPrice,jdbcType=DECIMAL},
+			locality_growth = #{localityGrowth,jdbcType=VARCHAR},
+			packing = #{packing,jdbcType=VARCHAR},
+			spec = #{spec,jdbcType=VARCHAR},
+			commodity_name = #{commodityName,jdbcType=VARCHAR},
+			status = #{status,jdbcType=VARCHAR},
+			dele_Flag = #{deleFlag,jdbcType=VARCHAR}
+		where 1=1
+		and id = #{id}
+	</update>
+</mapper>
