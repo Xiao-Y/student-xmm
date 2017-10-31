@@ -48,6 +48,7 @@
 		<quartz.version>2.2.1</quartz.version>
 		<activiti.version>5.22.0</activiti.version>
 		<jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
+		<shiro.version>1.2.2</shiro.version>
 
 		<jdk.version>1.7</jdk.version>
 		<maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
@@ -255,7 +256,27 @@
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-
+		<!--Apache Shiro所需的jar包 -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>

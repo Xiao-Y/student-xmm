@@ -4,9 +4,8 @@ import org.apache.log4j.Logger;
 import org.billow.api.menu.MenuService;
 import org.billow.api.user.UserService;
 import org.billow.common.email.EmailServer;
+import org.billow.common.login.LoginHelper;
 import org.billow.model.custom.JsonResult;
-import org.billow.model.custom.MailModel;
-import org.billow.model.domain.MenuBase;
 import org.billow.model.expand.MenuDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.RequestUtils;
@@ -28,14 +27,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 @Controller
 @RequestMapping("/home")
-public class HomeController implements Comparator<MenuBase> {
+public class HomeController {
     /**
      * Logger for this class
      */
@@ -180,42 +176,11 @@ public class HomeController implements Comparator<MenuBase> {
     @ResponseBody
     @RequestMapping("/menu")
     public List<MenuDto> indexMenu(HttpServletRequest request) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
         ServletContext servletContext = request.getServletContext();
         String contextPath = servletContext.getContextPath();
-        MenuDto menu = new MenuDto();
-        menu.setPid(0);
-        List<MenuDto> selectAll = menuService.selectAll(menu);
-        Collections.sort(selectAll, this);
-        if (ToolsUtils.isNotEmpty(selectAll)) {
-            for (MenuBase temp : selectAll) {
-                List<MenuDto> childList = menuService.getMenuChildList(temp.getId());
-                if (ToolsUtils.isNotEmpty(childList)) {
-                    Iterator<MenuDto> iterator = childList.iterator();
-                    while (iterator.hasNext()) {
-                        MenuBase tempChild = iterator.next();
-                        if (Long.compare(0, tempChild.getPid()) == 0) {
-                            iterator.remove();
-                        }
-                        String href = tempChild.getHref();
-                        if (ToolsUtils.isNotEmpty(href) && !(href.startsWith("https") || href.startsWith("http"))) {
-                            href = contextPath + href;
-                        }
-                        tempChild.setHref(href);
-                    }
-                }
-                Collections.sort(childList, this);
-                temp.setChildren(childList);
-            }
-        }
-        return selectAll;
-    }
-
-    /**
-     * 菜单排序
-     */
-    @Override
-    public int compare(MenuBase m1, MenuBase m2) {
-        return m1.getDisplayno().compareTo(m2.getDisplayno());
+        List<MenuDto> menus = menuService.findMenu(loginUser,contextPath);
+        return menus;
     }
 
     /**
