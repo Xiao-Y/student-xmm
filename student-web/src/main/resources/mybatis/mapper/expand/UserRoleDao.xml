@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.billow.dao.UserRoleDao">
+
+	<!-- 用户id级联查询出角色信息 -->
+	<resultMap id="UserRoleResultMap" type="org.billow.model.expand.UserRoleDto" extends="BaseResultMap">
+		<collection property="roleDto" javaType="org.billow.model.expand.RoleDto" column="id"
+			ofType="org.billow.model.expand.RoleDto" select="org.billow.dao.RoleDao.selectByPrimaryKey" />
+	</resultMap>
+
+	<select id="findUserRoleByUserId" resultMap="UserRoleResultMap" parameterType="org.billow.model.expand.UserRoleDto">
+		select r.user_id,r.role_id as id
+		from
+		t_user_role r
+		where user_id = #{userId,jdbcType=INTEGER}
+	</select>
+</mapper>

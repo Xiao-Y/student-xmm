@@ -28,16 +28,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
     }
 
     @Override
-    public void deleteTest() {
-        // this.deleteByPrimaryKey(15);
-        UserDto record = new UserDto();
-        record.setUserId(52);
-        record.setUserName("XXXX");
-        record.setPhoneNumber("22222");
-        this.insert(record);
-    }
-
-    @Override
     public List<UserDto> findUserList(UserDto user) {
         return userDao.selectAll(user);
     }
@@ -52,11 +42,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
         UserDto dto = new UserDto();
         dto.setUserId(id);
         return super.selectByPrimaryKey(dto);
-    }
-
-    @Override
-    public UserDto getUserByOpenId(String openId) {
-        return userDao.getUserByOpenId(openId);
     }
 
     @Override

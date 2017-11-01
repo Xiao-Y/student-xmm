@@ -6,12 +6,6 @@
         <collection property="userRoleDtos" ofType="org.billow.model.expand.UserRoleDto" javaType="ArrayList"
                     column="user_id" select="org.billow.dao.UserRoleDao.findUserRoleByUserId"/>
     </resultMap>
-    <select id="getUserByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String">
-        select
-        <include refid="Base_Column_List"/>
-        from t_user
-        where open_id = #{openId,jdbcType=VARCHAR}
-    </select>
 
     <select id="findRoleListByUserId" resultMap="userResultMap" parameterType="java.lang.Integer">
         select
