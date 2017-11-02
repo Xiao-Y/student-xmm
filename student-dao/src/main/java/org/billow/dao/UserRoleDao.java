@@ -6,19 +6,25 @@ import org.billow.model.domain.UserRoleBase;
 import org.billow.model.expand.UserRoleDto;
 
 public interface UserRoleDao {
-	
-	int insert(UserRoleBase record);
 
-	int insertSelective(UserRoleBase record);
+    int insert(UserRoleBase record);
 
-	/**
-	 * 通过用户id查询出用户角色对象
-	 * 
-	 * @param userId
-	 *            用户id
-	 * @return 用户角色对象
-	 * @author XiaoY
-	 * @date: 2017年6月19日 下午9:19:17
-	 */
-	List<UserRoleDto> findUserRoleByUserId(Integer userId);
+    int insertSelective(UserRoleBase record);
+
+    /**
+     * 通过用户id查询出用户角色对象
+     *
+     * @param userId 用户id
+     * @return 用户角色对象
+     * @author XiaoY
+     * @date: 2017年6月19日 下午9:19:17
+     */
+    List<UserRoleDto> findUserRoleByUserId(Integer userId);
+
+    /**
+     * 通过角色id删除UserRole表中的数据
+     *
+     * @param roleId 角色id
+     */
+    void deleteUserRoleByRoleId(Integer roleId);
 }

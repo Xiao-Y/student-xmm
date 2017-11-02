@@ -1,27 +1,27 @@
 package org.billow.model.expand;  
   
-import org.billow.model.domain.RoleBase; 
+import org.billow.model.domain.RolePermissionBase; 
   
 /**
  * 
- * 角色管理model模型<br>
+ * 角色权限model模型<br>
  *
  * @version 1.0
  * @author billow<br>
  * @Mail lyongtao123@126.com<br>
- * @date 2017-11-02 09:41:50
+ * @date 2017-11-02 14:05:54
  */
-public class RoleDto extends RoleBase {
+public class RolePermissionDto extends RolePermissionBase {
 	
-	public RoleDto() {
+	public RolePermissionDto() {
 		super();
 	}
 	
 	/**
 	 * 主键构造器
-	 * @param id 
+	 * @param id 主键
 	 */
-	public RoleDto(Integer id ) {
+	public RolePermissionDto(Integer id ) {
 		super(id );
 	}
 	

@@ -7,35 +7,35 @@
 	<!-- 版本 -->
 	<version>1.0</version>
 	<!-- 表名 -->
-	<tableName>t_address</tableName>
+	<tableName>t_role_permission</tableName>
 
-	<controllerPackageName>org.billow.controller.orderForm</controllerPackageName>
-	<controllerClazzName>AddressController</controllerClazzName>
-	<explainController>收货地址控制器</explainController>
+	<controllerPackageName>org.billow.controller.system</controllerPackageName>
+	<controllerClazzName>RolePermissionController</controllerClazzName>
+	<explainController>角色权限控制器</explainController>
 
-	<servicePackageName>org.billow.api.orderForm</servicePackageName>
-	<serviceClazzName>AddressService</serviceClazzName>
-	<explainService>收货地址接口</explainService>
+	<servicePackageName>org.billow.api.system</servicePackageName>
+	<serviceClazzName>RolePermissionService</serviceClazzName>
+	<explainService>角色权限接口</explainService>
 
-	<serviceImplPackageName>org.billow.service.orderForm</serviceImplPackageName>
-	<serviceImplClazzName>AddressServiceImpl</serviceImplClazzName>
-	<explainServiceImpl>收货地址实现类</explainServiceImpl>
+	<serviceImplPackageName>org.billow.service.system</serviceImplPackageName>
+	<serviceImplClazzName>RolePermissionServiceImpl</serviceImplClazzName>
+	<explainServiceImpl>角色权限实现类</explainServiceImpl>
 
 	<daoPackageName>org.billow.dao</daoPackageName>
-	<daoClazzName>AddressDao</daoClazzName>
-	<explainDao>收货地址接口</explainDao>
+	<daoClazzName>RolePermissionDao</daoClazzName>
+	<explainDao>角色权限接口</explainDao>
 
 	<modelBasePackageName>org.billow.model.domain</modelBasePackageName>
-	<modelBaseClazzName>AddressBase</modelBaseClazzName>
-	<explainModelBase>收货地址数据库模型</explainModelBase>
+	<modelBaseClazzName>RolePermissionBase</modelBaseClazzName>
+	<explainModelBase>角色权限数据库模型</explainModelBase>
 
 	<modelPackageName>org.billow.model.expand</modelPackageName>
-	<modelClazzName>AddressDto</modelClazzName>
-	<explainModel>收货地址model模型</explainModel>
+	<modelClazzName>RolePermissionDto</modelClazzName>
+	<explainModel>角色权限model模型</explainModel>
 
 	<mapperBasePackageName>mybatis.mapper.base</mapperBasePackageName>
-	<mapperBaseXMLName>AddressBaseDao</mapperBaseXMLName>
+	<mapperBaseXMLName>RolePermissionBaseDao</mapperBaseXMLName>
 
 	<mapperPackageName>mybatis.mapper.expand</mapperPackageName>
-	<mapperXMLName>AddressDao</mapperXMLName>
+	<mapperXMLName>RolePermissionDao</mapperXMLName>
 </root>

@@ -1,5 +1,5 @@
 layui.config({
-	base : path + '/plugins/layui/modules/'
+	base : path + '/static/plugins/layui/modules/'
 });
 
 layui.use([ 'laypage', 'layer' ], function() {
