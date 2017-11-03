@@ -338,7 +338,7 @@ public class HomeController {
         String message = "";
         String type = "";
         try {
-            userService.insert(userDto);
+            userService.saveRegister(userDto);
             message = MessageTipsCst.REGISTER_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {

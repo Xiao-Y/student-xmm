@@ -14,6 +14,8 @@ import org.billow.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * 角色管理实现类<br>
  *
@@ -52,8 +54,11 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleDto> implements RoleSer
     public void saveRoleAndRolePerssion(RoleDto role, String menuIds) {
         //保存角色信息
         if (role.getId() == null) {
+            role.setCreateTime(new Date());
+            role.setUpdateTime(new Date());
             roleDao.insert(role);
         } else {
+            role.setUpdateTime(new Date());
             roleDao.updateByPrimaryKeySelective(role);
         }
         //保存权限信息
