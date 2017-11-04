@@ -7,13 +7,13 @@
     <title>用户列表</title>
     <jsp:include page="/pub/pubTableCss.jsp"/>
     <jsp:include page="/pub/pubTableJs.jsp"/>
-    <script type="text/javascript" src="${ctx }/static/page/system/userList.js"></script>
+    <script type="text/javascript" src="${ctx }/static/page/user/userList.js"></script>
 </head>
 <body>
 <div class="admin-main">
     <blockquote class="layui-elem-quote">
         <a href="${ctx}/user/queryUsers" class="layui-btn layui-btn-small">
-            <i class="fa fa-refresh" aria-hidden="true"></i>
+            <i class="fa fa-refresh" aria-huserIdden="true"></i>
             刷新
         </a>
         <a href="${ctx }/user/userEdit" class="layui-btn layui-btn-small">
@@ -38,15 +38,15 @@
                 <tbody>
                 <c:forEach var="user" items="${page.list}">
                     <tr>
-                        <td>${user.id }</td>
+                        <td>${user.userId }</td>
                         <td>${user.userName }</td>
                         <td>${user.phoneNumber }</td>
                         <td>${user.mail }</td>
                         <td>${user.roles }</td>
                         <td>
-                            <a href="${ctx }/user/userEdit?id=${user.id }&pageNo=${page.pageNum }"
+                            <a href="${ctx }/user/userEdit?userId=${user.userId }&pageNo=${page.pageNum }"
                                class="layui-btn layui-btn-mini">编辑</a>
-                            <a href="javascript:;" data-opt="del" url="${ctx }/user/userDel?id=${user.id }"
+                            <a href="javascript:;" data-opt="del" url="${ctx }/user/userDel?userId=${user.userId }"
                                class="layui-btn layui-btn-danger layui-btn-mini">删除</a>
                         </td>
                     </tr>

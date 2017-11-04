@@ -27,4 +27,10 @@ public interface UserRoleDao {
      * @param roleId 角色id
      */
     void deleteUserRoleByRoleId(Integer roleId);
+
+    /**
+     * 通过用户id删除UserRole表中的数据
+     * @param userId 用户id
+     */
+    void deleteUserRoleByUserId(Integer userId);
 }

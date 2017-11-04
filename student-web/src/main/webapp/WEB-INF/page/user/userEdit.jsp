@@ -1,54 +1,81 @@
 <!doctype html>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/pub/taglib.jsp" %>
-<%@ include file="/pub/pubTips.jsp" %>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>角色列表</title>
+    <title>添加/修改用户信息</title>
     <jsp:include page="/pub/pubFormCss.jsp"/>
     <jsp:include page="/pub/pubFormJs.jsp"/>
-    <%-- 插件zTree start --%>
-    <link rel="stylesheet" href="${ctx }/static/plugins/zTree/css/bootstrapStyle/bootstrapStyle.css" type="text/css">
-    <script type="text/javascript" src="${ctx }/static/plugins/zTree/js/jquery.min.js"></script>
-    <script type="text/javascript" src="${ctx }/static/plugins/zTree/js/jquery.ztree.core.js"></script>
-    <script type="text/javascript" src="${ctx }/static/plugins/zTree/js/jquery.ztree.excheck.js"></script>
-    <script type="text/javascript" src="${ctx }/static/plugins/zTree/js/jquery.ztree.exedit.js"></script>
-    <%-- 插件zTree start --%>
-
-    <script type="text/javascript" src="${ctx }/static/page/system/roleEdit.js"></script>
+    <script type="text/javascript" src="${ctx }/static/page/user/userEdit.js"></script>
 </head>
 <body style="padding: 10px;">
-<form class="layui-form layui-form-pane1" data-type="ajax" action="${ctx }/sysPower/roleSave">
-    <input type="hidden" id="id" name="id" value="${role.id }">
-    <input type="hidden" name="pageNo" value="${role.pageNo }">
-    <div class="layui-form-item">
-        <label class="layui-form-label">角色名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="roleName" lay-verify="required" required placeholder="请输入角色名称" autocomplete="off"
-                   class="layui-input" value="${role.roleName }">
+<blockquote class="layui-elem-quote">
+    注意：<br><font style="color: red">*</font>为必填项<br>
+    电子邮箱将用于以后的密码的找回，请保证邮箱的正确性！！！<br>
+    用户名注册后不可以更改，请牢记用户名！！！
+</blockquote>
+<div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>用户信息修改</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane1" data-type="ajax" action="${ctx }/user/userSave">
+        <input type="hidden" id="userId" name="userId" value="${user.userId }">
+        <input type="hidden" name="pageNo" value="${user.pageNo }">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><font style="color: red">*</font>用户名</label>
+            <div class="layui-input-block">
+                <input type="text" name="userName" lay-verify="userName" required placeholder="这里输入用户名"
+                       autocomplete="off" class="layui-input" id="userName" value="${user.userName }">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">描述</label>
-        <div class="layui-input-block">
-            <textarea placeholder="请输入内容" name="remark" lay-verify="required" required
-                      class="layui-textarea">${role.remark }</textarea>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><font style="color: red">*</font>手机号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="phoneNumber" lay-verify="phoneNumber" required placeholder="这里输入手机号码"
+                       autocomplete="off" class="layui-input" id="phoneNumber" value="${user.phoneNumber }">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">菜单权限</label>
-        <div class="layui-input-block">
-            <ul id="treeDemo" class="ztree"></ul>
-            <input type="hidden" id="menuIds" name="menuIds" value="">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><font style="color: red">*</font>电子邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="mail" lay-verify="email" required placeholder="这里输入电子邮箱"
+                       autocomplete="off" class="layui-input" value="${user.mail }">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
-            <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><font style="color: red">*</font>新密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" lay-verify="rePassword" required placeholder="这里输入密码"
+                       autocomplete="off" class="layui-input" id="password" value="${user.password }">
+            </div>
         </div>
-    </div>
-</form>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><font style="color: red">*</font>确认密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="rePassword" lay-verify="rePassword" required placeholder="这里输入密码"
+                       autocomplete="off" class="layui-input" id="rePassword" value="${user.password }">
+            </div>
+        </div>
+        <div class="layui-form-inline">
+            <label class="layui-form-label">用户角色</label>
+            <div class="layui-input-block">
+                <c:forEach var="role" items="${user.roleDtos}">
+                    <input type="checkbox" name="roleId" value="${role.id}" title="${role.remark}"
+                    <c:if test="${role.checked}">
+                           checked
+                    </c:if>
+                    >
+                </c:forEach>
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
+                <button class="layui-btn layui-btn-primary" type="reset">重置</button>
+            </div>
+        </div>
+    </form>
 </body>
 </html>

@@ -103,13 +103,23 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
         if (ToolsUtils.isNotEmpty(users)) {
             for (UserDto user : users) {
                 UserDto dto = userDao.findRoleListByUserId(user.getUserId());
-                List<RoleDto> roleDtos = dto.getRoleDtos();
+                List<UserRoleDto> userRoleDtos = dto.getUserRoleDtos();
                 List<String> roles = new ArrayList<>();
-                if (ToolsUtils.isNotEmpty(roleDtos)) {
-                    for (RoleDto roleDto : roleDtos) {
-                        roles.add(roleDto.getRemark());
+                List<RoleDto> roleDtos = new ArrayList<>();
+                if (ToolsUtils.isNotEmpty(userRoleDtos)) {
+                    for (UserRoleDto userRoleDto : userRoleDtos) {
+                        RoleDto role = userRoleDto.getRoleDto();
+                        if (role != null) {
+                            roleDtos.add(role);
+                            roles.add(role.getRemark());
+                        }
                     }
                 }
+                //角色信息放入到用户对象中
+                if (ToolsUtils.isNotEmpty(roleDtos)) {
+                    user.setRoleDtos(roleDtos);
+                }
+                //用于页面显示
                 if (ToolsUtils.isNotEmpty(roles)) {
                     user.setRoles(StringUtils.join(roles, ","));
                 }
@@ -128,10 +138,11 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
         if (user.getUserId() != null) {
             //查询用户的信息和角色
             userDto = userDao.findRoleListByUserId(user.getUserId());
-            List<RoleDto> roleDtoList = userDto.getRoleDtos();
-            if (ToolsUtils.isNotEmpty(roleDtoList) && ToolsUtils.isNotEmpty(roleDtos)) {
+            List<UserRoleDto> userRoleDtos = userDto.getUserRoleDtos();
+            if (ToolsUtils.isNotEmpty(userRoleDtos) && ToolsUtils.isNotEmpty(roleDtos)) {
                 for (RoleDto dto : roleDtos) {
-                    for (RoleDto temp : roleDtoList) {
+                    for (UserRoleDto userRoleDto : userRoleDtos) {
+                        RoleDto temp = userRoleDto.getRoleDto();
                         //用户有角色信息时选中
                         if (dto.getId() == temp.getId()) {
                             dto.setChecked(true);
@@ -146,19 +157,25 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
 
     @Override
     public void saveUserAndRole(UserDto user, String[] roleIds) {
-
+        if (user.getUserId() == null) {
+            userDao.insert(user);
+        } else {
+            userDao.updateByPrimaryKey(user);
+        }
+        userRoleDao.deleteUserRoleByUserId(user.getUserId());
+        if (ToolsUtils.isNotEmpty(roleIds)) {
+            for (String roleId : roleIds) {
+                UserRoleDto userRoleDto = new UserRoleDto();
+                userRoleDto.setRoleId(new Integer(roleId));
+                userRoleDto.setUserId(user.getUserId());
+                userRoleDao.insert(userRoleDto);
+            }
+        }
     }
 
     @Override
     public void deleteDel(UserDto user) {
-        UserDto userDto = userDao.findRoleListByUserId(user.getUserId());
-        List<RoleDto> roleDtoList = userDto.getRoleDtos();
-        if (ToolsUtils.isNotEmpty(roleDtoList)) {
-            for (RoleDto temp : roleDtoList) {
-                userRoleDao.deleteUserRoleByRoleId(temp.getId());
-
-            }
-        }
-        userDao.deleteByPrimaryKey(userDto);
+        userRoleDao.deleteUserRoleByUserId(user.getUserId());
+        userDao.deleteByPrimaryKey(user);
     }
 }

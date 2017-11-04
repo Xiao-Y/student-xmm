@@ -13,53 +13,10 @@ public class PagePathCst {
      */
     public static final String BASEPATH_SYSTEM = "page/system/";
     /**
-     * 申请管理
-     */
-    public static final String BASEPATH_ACTIVITI_APPLY = "page/activiti/apply/";
-    /**
-     * 审批管理
-     */
-    public static final String BASEPATH_ACTIVITI_APPROVAL = "page/activiti/approval/";
-    /**
-     * 流程模板
-     */
-    public static final String BASEPATH_ACTIVITI_MODEL = "page/activiti/model/";
-    /**
-     * 流程定义
-     */
-    public static final String BASEPATH_ACTIVITI_PROC_DEF = "page/activiti/procdef/";
-    /**
-     * 流程部署
-     */
-    public static final String BASEPATH_ACTIVITI_DEPLOY = "page/activiti/deploy/";
-    /**
-     * 流程
-     */
-    public static final String BASEPATH_ACTIVITI = "page/activiti/";
-    /**
      * 自动任务
      */
     public static final String BASEPATH_AUTOTASK = "page/autoTask/";
-    /**
-     * activeMQ
-     */
-    public static final String BASEPATH_ACTIVEMQ = "page/activeMQ/";
-    /**
-     * Dubbo
-     */
-    public static final String BASEPATH_DUBBO = "page/dubbo/";
-    /**
-     * rabbitMQ
-     */
-    public static final String BASEPATH_RABBITMQ = "page/rabbitMQ/";
-    /**
-     * redis
-     */
-    public static final String BASEPATH_REDIS = "page/redis/";
-    /**
-     * vue
-     */
-    public static final String BASEPATH_VUE = "page/vue/";
+
     /**
      * 商品管理
      */
@@ -68,4 +25,8 @@ public class PagePathCst {
      * 订单管理
      */
     public static final String BASEPATH_ORDER_FORM = "page/orderForm/";
+    /**
+     * 用户管理
+     */
+    public static final String BASEPATH_USER = "page/user/";
 }

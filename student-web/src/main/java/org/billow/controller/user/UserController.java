@@ -43,7 +43,7 @@ public class UserController {
         ModelAndView av = new ModelAndView();
         PageInfo<UserDto> page = userService.queryUsers(userDto);
         av.addObject("page", page);
-        av.setViewName(PagePathCst.BASEPATH_SYSTEM + "userList");
+        av.setViewName(PagePathCst.BASEPATH_USER + "userList");
         return av;
     }
 
@@ -60,7 +60,7 @@ public class UserController {
         // 用于修改后保持停留在页面
         userDto.setPageNo(user.getPageNo());
         av.addObject("user", userDto);
-        av.setViewName(PagePathCst.BASEPATH_SYSTEM + "userEdit");
+        av.setViewName(PagePathCst.BASEPATH_USER + "userEdit");
         return av;
     }
 
@@ -73,7 +73,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping("/userSave")
-    public JsonResult userSave(UserDto user, @RequestParam("roleId[]") String[] roleIds) {
+    public JsonResult userSave(@RequestParam(required = false, value = "roleId") String[] roleIds, UserDto user) {
         JsonResult json = new JsonResult();
         String message = "";
         String type = "";
@@ -89,7 +89,7 @@ public class UserController {
         }
         json.setMessage(message);
         json.setType(type);
-        json.setRoot("/sysPower/queryRoles?pageNo=" + user.getPageNo());
+        json.setRoot("/user/queryUsers?pageNo=" + user.getPageNo());
         return json;
     }
 

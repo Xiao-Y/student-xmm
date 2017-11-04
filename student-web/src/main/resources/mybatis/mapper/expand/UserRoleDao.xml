@@ -18,4 +18,7 @@
     <delete id="deleteUserRoleByRoleId" parameterType="java.lang.Integer">
 		DELETE FROM t_user_role WHERE role_id = #{roleId,jdbcType=INTEGER}
 	</delete>
+	<delete id="deleteUserRoleByUserId" parameterType="java.lang.Integer">
+		DELETE FROM t_user_role WHERE user_id = #{userId,jdbcType=INTEGER}
+	</delete>
 </mapper>
