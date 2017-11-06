@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.billow.dao.RolePermissionDao">
-	<delete id="deleteRolePermissionByRoleId" parameterType="java.lang.Integer">
+    <delete id="deleteRolePermissionByRoleId" parameterType="java.lang.Integer">
         DELETE FROM t_role_permission WHERE role_id = #{roleId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByRoleIdAndMenuId" parameterType="org.billow.model.expand.RolePermissionDto">
+        DELETE FROM t_role_permission WHERE role_id = #{roleId,jdbcType=INTEGER} and user_id = #{userId,jdbcType=INTEGER}
     </delete>
 </mapper>

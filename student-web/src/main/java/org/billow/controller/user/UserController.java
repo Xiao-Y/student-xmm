@@ -3,6 +3,7 @@ package org.billow.controller.user;
 import com.github.pagehelper.PageInfo;
 import org.apache.log4j.Logger;
 import org.billow.api.user.UserService;
+import org.billow.common.login.LoginHelper;
 import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.RoleDto;
 import org.billow.model.expand.UserDto;
@@ -40,8 +41,9 @@ public class UserController {
      */
     @RequestMapping("/queryUsers")
     public ModelAndView queryUsers(HttpServletRequest request, UserDto userDto) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
         ModelAndView av = new ModelAndView();
-        PageInfo<UserDto> page = userService.queryUsers(userDto);
+        PageInfo<UserDto> page = userService.queryUsers(loginUser,userDto);
         av.addObject("page", page);
         av.setViewName(PagePathCst.BASEPATH_USER + "userList");
         return av;
@@ -54,8 +56,9 @@ public class UserController {
      * @return
      */
     @RequestMapping("/userEdit")
-    public ModelAndView userEdit(UserDto user) {
-        UserDto userDto = userService.userEdit(user);
+    public ModelAndView userEdit(HttpServletRequest request,UserDto user) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
+        UserDto userDto = userService.userEdit(loginUser,user);
         ModelAndView av = new ModelAndView();
         // 用于修改后保持停留在页面
         userDto.setPageNo(user.getPageNo());

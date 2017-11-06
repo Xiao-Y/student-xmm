@@ -20,4 +20,11 @@ public interface RolePermissionDao extends BaseDao<RolePermissionDto> {
      * @param roleId
      */
     void deleteRolePermissionByRoleId(Integer roleId);
+
+    /**
+     * 通过角色id和菜单id删除权限信息
+     *
+     * @param dto
+     */
+    void deleteByRoleIdAndMenuId(RolePermissionDto dto);
 }

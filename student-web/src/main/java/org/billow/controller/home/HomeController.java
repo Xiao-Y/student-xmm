@@ -78,7 +78,7 @@ public class HomeController {
     }
 
     /**
-     * 进入主页
+     * 进入主页，验证登陆
      *
      * @param userTemp
      * @return
@@ -89,43 +89,41 @@ public class HomeController {
     public ModelAndView homeIndex(UserDto userTemp, HttpServletRequest request, HttpServletResponse response, RedirectAttributes attr) {
         ModelAndView av = new ModelAndView();
         HttpSession session = RequestUtils.getSession(request);
-
+        try {
+            Cookie userCo = new Cookie("userName", null);
+            userCo.setMaxAge(0);
+            Cookie pwdCo = new Cookie("password", null);
+            pwdCo.setMaxAge(0);
+            response.addCookie(userCo);
+            response.addCookie(pwdCo);
+        } catch (Exception e) {
+            logger.error(e);
+            e.printStackTrace();
+        }
         UserDto user = userService.findUserByUserNameAndPwd(userTemp);
-        if (user == null || user.getUserId() == null) {
-            attr.addFlashAttribute("errorMsg", "用户名或密码错误！");
-            av.setViewName("redirect:/home/login");
-            return av;
-        } else {
-            //记住密码
-            if (userTemp.isRememberMe()) {
-                try {
-                    Cookie userCo = new Cookie("userName", user.getUserName());
-                    userCo.setMaxAge(60 * 60 * 24 * 30);
+        //记住密码
+        if (userTemp.isRememberMe()) {
+            try {
+                Cookie userCo = new Cookie("userName", userTemp.getUserName());
+                userCo.setMaxAge(60 * 60 * 24 * 30);
+                response.addCookie(userCo);
+                if (user == null || user.getUserId() == null) {
+                    attr.addFlashAttribute("errorMsg", "用户名或密码错误！");
+                    av.setViewName("redirect:/home/login");
+                    return av;
+                } else {
                     Cookie pwdCo = new Cookie("password", user.getPassword());
                     pwdCo.setMaxAge(60 * 60 * 24 * 15);
-                    response.addCookie(userCo);
                     response.addCookie(pwdCo);
-                } catch (Exception e) {
-                    logger.error(e);
-                    e.printStackTrace();
                 }
-            } else {
-                try {
-                    Cookie userCo = new Cookie("userName", null);
-                    userCo.setMaxAge(0);
-                    Cookie pwdCo = new Cookie("password", null);
-                    pwdCo.setMaxAge(0);
-                    response.addCookie(userCo);
-                    response.addCookie(pwdCo);
-                } catch (Exception e) {
-                    logger.error(e);
-                    e.printStackTrace();
-                }
+            } catch (Exception e) {
+                logger.error(e);
+                e.printStackTrace();
             }
         }
         session.setAttribute("currentUser", user);
-        session.setAttribute("ip", ToolsUtils.getServiceIpAddr());
-        session.setAttribute("sessionId", session.getId());
+        //session.setAttribute("ip", ToolsUtils.getServiceIpAddr());
+        //session.setAttribute("sessionId", session.getId());
         //重定向，防止刷新跳出
         av.setViewName("redirect:/home/index");
         return av;
@@ -179,7 +177,7 @@ public class HomeController {
         UserDto loginUser = LoginHelper.getLoginUser(request);
         ServletContext servletContext = request.getServletContext();
         String contextPath = servletContext.getContextPath();
-        List<MenuDto> menus = menuService.findMenu(loginUser,contextPath);
+        List<MenuDto> menus = menuService.findMenu(loginUser, contextPath);
         return menus;
     }
 

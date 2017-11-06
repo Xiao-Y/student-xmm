@@ -52,16 +52,18 @@ public interface UserService extends BaseService<UserDto> {
      * 查询用户殂，包含角色
      *
      * @param userDto
+     * @param loginUser 登陆用户
      */
-    PageInfo<UserDto> queryUsers(UserDto userDto);
+    PageInfo<UserDto> queryUsers(UserDto loginUser, UserDto userDto);
 
     /**
      * 查询某个用户的信息和角色信息
      *
      * @param user
+     * @param loginUser 登陆用户
      * @return
      */
-    UserDto userEdit(UserDto user);
+    UserDto userEdit(UserDto loginUser,UserDto user);
 
     /**
      * 保存用户信息和角色信息

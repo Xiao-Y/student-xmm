@@ -19,4 +19,18 @@ public interface MenuService extends BaseService<MenuDto> {
      * @return
      */
     List<MenuDto> findMenu(UserDto loginUser, String contextPath);
+
+    /**
+     * 插入菜单信息，保存sa的权限信息
+     *
+     * @param menu
+     */
+    void insertMenu(MenuDto menu);
+
+    /**
+     * 删除菜单信息,同时删除sa的权限信息
+     *
+     * @param menu
+     */
+    void deleteMenu(MenuDto menu);
 }

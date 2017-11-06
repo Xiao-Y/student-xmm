@@ -42,4 +42,5 @@ public interface UserDao extends BaseDao<UserDto> {
      * @return
      */
     UserDto findUserByUserName(String userName);
+
 }

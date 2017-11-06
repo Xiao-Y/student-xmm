@@ -47,7 +47,7 @@ public class SysMenuController {
     }
 
     /**
-     * 添加/修改菜单信息，包含菜单权限
+     * 添加/修改菜单信息
      *
      * @param menu
      * @return
@@ -80,7 +80,7 @@ public class SysMenuController {
         String type = "";
         try {
             if (menu.getId() == null) {
-                menuService.insert(menu);
+                menuService.insertMenu(menu);
             } else {
                 menuService.updateByPrimaryKeySelective(menu);
             }
@@ -105,7 +105,7 @@ public class SysMenuController {
         boolean success = false;
         String message = "";
         try {
-            menuService.deleteByPrimaryKey(menu);
+            menuService.deleteMenu(menu);
             message = MessageTipsCst.DELETE_SUCCESS;
             success = true;
         } catch (Exception e) {

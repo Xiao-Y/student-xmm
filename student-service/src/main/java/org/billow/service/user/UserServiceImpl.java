@@ -2,6 +2,7 @@ package org.billow.service.user;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,6 +21,7 @@ import org.billow.service.base.BaseServiceImpl;
 import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +33,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
     private UserRoleDao userRoleDao;
     @Autowired
     private RoleDao roleDao;
+    @Value("${customerRole}")
+    private String roleName;
+    //超级系统管理员用户
+    @Value("${super.system.admin.user}")
+    private String superSystemAdminUser;
+    @Value("${super.system.admin.role}")
+    private String superSystemAdminRole;
 
     @Resource
     @Override
@@ -85,7 +94,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
     public void saveRegister(UserDto userDto) {
         userDao.insert(userDto);
         RoleDto roleDto = new RoleDto();
-        roleDto.setRoleName("customer");
+        roleDto.setRoleName(roleName);
         List<RoleDto> roleDtos = roleDao.selectAll(roleDto);
         if (ToolsUtils.isEmpty(roleDtos)) {
             throw new RuntimeException("customer:客户角色不存在了！");
@@ -97,11 +106,17 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
     }
 
     @Override
-    public PageInfo<UserDto> queryUsers(UserDto userDto) {
+    public PageInfo<UserDto> queryUsers(UserDto loginUser, UserDto userDto) {
+        //如果不是超级系统管理员不查询出自己
+        if (!superSystemAdminUser.equals(loginUser.getUserName())) {
+            userDto.setSuperSystemAdminUser(superSystemAdminUser);
+        }
         PageHelper.startPage();
         List<UserDto> users = userDao.selectAll(userDto);
         if (ToolsUtils.isNotEmpty(users)) {
-            for (UserDto user : users) {
+            Iterator<UserDto> iterator = users.iterator();
+            while (iterator.hasNext()) {
+                UserDto user = iterator.next();
                 UserDto dto = userDao.findRoleListByUserId(user.getUserId());
                 List<UserRoleDto> userRoleDtos = dto.getUserRoleDtos();
                 List<String> roles = new ArrayList<>();
@@ -130,7 +145,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
     }
 
     @Override
-    public UserDto userEdit(UserDto user) {
+    public UserDto userEdit(UserDto loginUser, UserDto user) {
         UserDto userDto = new UserDto();
         //查询所有角色信息
         List<RoleDto> roleDtos = roleDao.selectAll(null);
@@ -140,7 +155,14 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
             userDto = userDao.findRoleListByUserId(user.getUserId());
             List<UserRoleDto> userRoleDtos = userDto.getUserRoleDtos();
             if (ToolsUtils.isNotEmpty(userRoleDtos) && ToolsUtils.isNotEmpty(roleDtos)) {
-                for (RoleDto dto : roleDtos) {
+                Iterator<RoleDto> iterator = roleDtos.iterator();
+                while (iterator.hasNext()) {
+                    RoleDto dto = iterator.next();
+                    //如果不是超级系统管理员不查询出自己
+                    if (!superSystemAdminUser.equals(loginUser.getUserName()) && superSystemAdminRole.equals(dto.getRoleName())) {
+                        iterator.remove();
+                        continue;
+                    }
                     for (UserRoleDto userRoleDto : userRoleDtos) {
                         RoleDto temp = userRoleDto.getRoleDto();
                         //用户有角色信息时选中

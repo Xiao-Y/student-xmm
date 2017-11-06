@@ -15,6 +15,26 @@ public class UserDto extends UserBase {
     private List<RoleDto> roleDtos = new ArrayList<>();
     //角色信息显示的字符串
     private String roles;
+    //超级系统管理员用户名
+    private String superSystemAdminUser;
+
+    /**
+     * 超级系统管理员用户名
+     *
+     * @return
+     */
+    public String getSuperSystemAdminUser() {
+        return superSystemAdminUser;
+    }
+
+    /**
+     * 超级系统管理员用户名
+     *
+     * @param superSystemAdminUser
+     */
+    public void setSuperSystemAdminUser(String superSystemAdminUser) {
+        this.superSystemAdminUser = superSystemAdminUser;
+    }
 
     /**
      * 角色信息显示的字符串

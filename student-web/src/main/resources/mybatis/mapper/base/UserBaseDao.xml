@@ -34,6 +34,10 @@
             <if test="null != password">
                 and u.password = #{password}
             </if>
+            <if test="null != superSystemAdminUser">
+                and u.user_Name != #{superSystemAdminUser}
+            </if>
+
         </where>
     </sql>
 

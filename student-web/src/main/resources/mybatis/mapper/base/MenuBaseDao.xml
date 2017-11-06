@@ -27,7 +27,7 @@
 		delete from t_menu
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
-	<insert id="insert" parameterType="org.billow.model.expand.MenuDto">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.billow.model.expand.MenuDto">
 		insert into t_menu (id, title,
 		icon,
 		spread, href, pid, validind,

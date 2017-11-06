@@ -2,18 +2,25 @@ package org.billow.service.menu;
 
 import org.billow.api.menu.MenuService;
 import org.billow.dao.MenuDao;
+import org.billow.dao.RoleDao;
+import org.billow.dao.RolePermissionDao;
+import org.billow.dao.UserDao;
 import org.billow.dao.UserRoleDao;
 import org.billow.dao.base.BaseDao;
 import org.billow.model.domain.MenuBase;
 import org.billow.model.expand.MenuDto;
+import org.billow.model.expand.RoleDto;
+import org.billow.model.expand.RolePermissionDto;
 import org.billow.model.expand.UserDto;
 import org.billow.model.expand.UserRoleDto;
 import org.billow.service.base.BaseServiceImpl;
 import org.billow.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -26,6 +33,12 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuDto> implements MenuSer
     private MenuDao menuDao;
     @Autowired
     private UserRoleDao userRoleDao;
+    @Autowired
+    private RolePermissionDao rolePermissionDao;
+    @Autowired
+    private RoleDao roleDao;
+    @Value("${super.system.admin.role}")
+    private String superSystemAdminRole;
 
     @Resource
     @Override
@@ -45,61 +58,88 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuDto> implements MenuSer
 
     @Override
     public List<MenuDto> findMenu(UserDto loginUser, String contextPath) {
-        Integer userId = loginUser.getUserId();
-        //查询用户的角色
-        //List<UserRoleDto> userRoleDtos = userRoleDao.findUserRoleByUserId(userId);
+        //查询用户的菜单权限信息
+        List<Integer> menuIds = menuDao.findMenuIdsByUserId(loginUser.getUserId());
+        if (ToolsUtils.isEmpty(menuIds)) {
+            return null;
+        }
         MenuDto menu = new MenuDto();
         menu.setPid(0);
         List<MenuDto> selectAll = menuDao.selectAll(menu);
+        if (ToolsUtils.isEmpty(selectAll)) {
+            return null;
+        }
         Collections.sort(selectAll, this);
-        if (ToolsUtils.isNotEmpty(selectAll)) {
-            for (MenuBase temp : selectAll) {
-                List<MenuDto> childList = menuDao.getMenuChildList(temp.getId());
-                if (ToolsUtils.isNotEmpty(childList)) {
-                    Iterator<MenuDto> iterator = childList.iterator();
-                    while (iterator.hasNext()) {
-                        MenuBase tempChild = iterator.next();
-                        if (Long.compare(0, tempChild.getPid()) == 0) {
-                            iterator.remove();
-                        }
-                        String href = tempChild.getHref();
-                        if (ToolsUtils.isNotEmpty(href) && !(href.startsWith("https") || href.startsWith("http"))) {
-                            href = contextPath + href;
-                        }
-                        tempChild.setHref(href);
-                    }
-                }
-                Collections.sort(childList, this);
-                temp.setChildren(childList);
+        Iterator<MenuDto> parentIterator = selectAll.iterator();
+        while (parentIterator.hasNext()) {
+            MenuDto temp = parentIterator.next();
+            if (temp == null) {
+                continue;
             }
+            //没有权限的remove
+            if (!menuIds.contains(temp.getId())) {
+                parentIterator.remove();
+                continue;
+            }
+            List<MenuDto> childList = menuDao.getMenuChildList(temp.getId());
+            if (ToolsUtils.isEmpty(childList)) {
+                return null;
+            }
+            Iterator<MenuDto> iterator = childList.iterator();
+            while (iterator.hasNext()) {
+                MenuDto tempChild = iterator.next();
+                if (tempChild == null) {
+                    continue;
+                }
+                //没有权限的remove
+                if (!menuIds.contains(tempChild.getId())) {
+                    iterator.remove();
+                    continue;
+                }
+                if (Long.compare(0, tempChild.getPid()) == 0) {
+                    iterator.remove();
+                }
+                String href = tempChild.getHref();
+                if (ToolsUtils.isNotEmpty(href) && !(href.startsWith("https") || href.startsWith("http"))) {
+                    href = contextPath + href;
+                }
+                tempChild.setHref(href);
+            }
+            Collections.sort(childList, this);
+            temp.setChildren(childList);
         }
         return selectAll;
     }
 
-    public int deleteByPrimaryKey(MenuDto record) {
-        return menuDao.deleteByPrimaryKey(record);
+    @Override
+    public void insertMenu(MenuDto menu) {
+        menuDao.insert(menu);
+        RoleDto roleDto = new RoleDto();
+        roleDto.setRoleName(superSystemAdminRole);
+        List<RoleDto> roleDtos = roleDao.selectAll(roleDto);
+        if (ToolsUtils.isEmpty(roleDtos)) {
+            throw new RuntimeException("超级系统管理员:" + superSystemAdminRole + ",不存在!");
+        }
+        RolePermissionDto dto = new RolePermissionDto();
+        dto.setRoleId(roleDtos.get(0).getId());
+        dto.setMenuId(menu.getId());
+        rolePermissionDao.insert(dto);
     }
 
-    public int insert(MenuDto record) {
-        return menuDao.insert(record);
+    @Override
+    public void deleteMenu(MenuDto menu) {
+        menuDao.deleteByPrimaryKey(menu);
+        RoleDto roleDto = new RoleDto();
+        roleDto.setRoleName(superSystemAdminRole);
+        List<RoleDto> roleDtos = roleDao.selectAll(roleDto);
+        if (ToolsUtils.isEmpty(roleDtos)) {
+            throw new RuntimeException("超级系统管理员:" + superSystemAdminRole + ",不存在!");
+        }
+        RolePermissionDto dto = new RolePermissionDto();
+        dto.setRoleId(roleDtos.get(0).getId());
+        dto.setMenuId(menu.getId());
+        rolePermissionDao.deleteByRoleIdAndMenuId(dto);
     }
-
-    public int insertSelective(MenuDto record) {
-        return menuDao.insertSelective(record);
-    }
-
-    public MenuDto selectByPrimaryKey(MenuDto record) {
-        return menuDao.selectByPrimaryKey(record);
-    }
-
-    public int updateByPrimaryKeySelective(MenuDto record) {
-        return menuDao.updateByPrimaryKeySelective(record);
-    }
-
-    public int updateByPrimaryKey(MenuDto record) {
-        return menuDao.updateByPrimaryKey(record);
-    }
-
 
     /**
      * 菜单排序
