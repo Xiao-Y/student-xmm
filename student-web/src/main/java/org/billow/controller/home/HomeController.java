@@ -230,6 +230,7 @@ public class HomeController {
                 emailContent.append("&userName=");
                 emailContent.append(userDto.getUserName());
                 emailContent.append("\" target='_blank'>点击我重新设置密码</a>");
+                emailContent.append("<br><br>");
                 logger.info(emailContent.toString());
                 emailServer.singleMailSend(userDto.getMail(), "找回您的账户密码", emailContent.toString());
                 message = MessageTipsCst.SEND_SUCCESS;
