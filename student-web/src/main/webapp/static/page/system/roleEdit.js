@@ -44,7 +44,6 @@ function zTreeOnCheck(e, treeId, treeNode) {
         menuIds.push(nodes[i].id);
         //alert(nodes[i].id + "---" + nodes[i].isParent); //获取选中节点的值
     }
-    console.info(menuIds);
     $("#menuIds").val(menuIds);
     //alert(treeNode.tId + ", " + treeNode.name + "," + treeNode.checked);
 }
@@ -58,7 +57,6 @@ $(function () {
         type: "POST",
         dataType: "json",
         url: url,
-        //data: data,
         beforeSend: function (XHR) {
             tipBox = new TipBox({type: 'load', str: "加载中..."});
         },
@@ -66,8 +64,10 @@ $(function () {
             if (tipBox != null) {
                 tipBox.close();
             }
-            console.info(zNodes);
+            //初始化权限树
             $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            //初始化选中的权限
+            zTreeOnCheck();
         },
         error: function (obj) {
             if (tipBox != null) {

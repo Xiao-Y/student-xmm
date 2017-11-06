@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class UserController {
     public ModelAndView queryUsers(HttpServletRequest request, UserDto userDto) {
         UserDto loginUser = LoginHelper.getLoginUser(request);
         ModelAndView av = new ModelAndView();
-        PageInfo<UserDto> page = userService.queryUsers(loginUser,userDto);
+        PageInfo<UserDto> page = userService.queryUsers(loginUser, userDto);
         av.addObject("page", page);
         av.setViewName(PagePathCst.BASEPATH_USER + "userList");
         return av;
@@ -56,9 +57,9 @@ public class UserController {
      * @return
      */
     @RequestMapping("/userEdit")
-    public ModelAndView userEdit(HttpServletRequest request,UserDto user) {
+    public ModelAndView userEdit(HttpServletRequest request, UserDto user) {
         UserDto loginUser = LoginHelper.getLoginUser(request);
-        UserDto userDto = userService.userEdit(loginUser,user);
+        UserDto userDto = userService.userEdit(loginUser, user);
         ModelAndView av = new ModelAndView();
         // 用于修改后保持停留在页面
         userDto.setPageNo(user.getPageNo());
@@ -96,6 +97,12 @@ public class UserController {
         return json;
     }
 
+    /**
+     * 删除用户信息包含用户角色信息
+     *
+     * @param user
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/userDel")
     public JsonResult userDel(UserDto user) {
@@ -114,6 +121,52 @@ public class UserController {
         }
         json.setMessage(message);
         json.setType(type);
+        return json;
+    }
+
+    /**
+     * 个人信息
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/findPersonalInfo")
+    public ModelAndView findPersonalInfo(HttpServletRequest request) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
+        ModelAndView av = new ModelAndView();
+        av.addObject("user", loginUser);
+        av.setViewName(PagePathCst.BASEPATH_USER + "personalInfo");
+        return av;
+    }
+
+    /**
+     * 保存用户信息修改
+     *
+     * @param user 用户信息
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/savePersonalInfo")
+    public JsonResult savePersonalInfo(HttpServletRequest request, UserDto user) {
+        HttpSession session = request.getSession();
+        JsonResult json = new JsonResult();
+        String message = "";
+        String type = "";
+        try {
+            userService.updateByPrimaryKeySelective(user);
+            message = MessageTipsCst.HOME_AGAIN_LOGIN;
+            type = MessageTipsCst.TYPE_SUCCES;
+            //修改成功后,清除session
+            session.setAttribute("currentUser", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            message = MessageTipsCst.UPDATE_FAILURE;
+            type = MessageTipsCst.TYPE_ERROR;
+        }
+        json.setMessage(message);
+        json.setType(type);
+        json.setRoot("/home/login");
         return json;
     }
 }

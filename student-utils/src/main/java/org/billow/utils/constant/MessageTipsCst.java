@@ -72,20 +72,6 @@ public class MessageTipsCst {
     public static final String UPDATE_FAILURE = "更新失败！";
 
     /**
-     * 提示
-     */
-    public static final String HINT = "提示";
-
-    /**
-     * 部署失败
-     */
-    public static final String DEPLOY_FAILURE = "部署失败！";
-
-    /**
-     * 部署成功
-     */
-    public static final String DEPLOY_SUCCESS = "部署成功！";
-    /**
      * 提交成功
      */
     public static final String SUBMIT_SUCCESS = "提交成功！";
@@ -101,18 +87,6 @@ public class MessageTipsCst {
      * 提示失败
      */
     public static final String TYPE_ERROR = "error";
-    /**
-     * 提示信息
-     */
-    public static final String TYPE_TIP = "tip";
-    /**
-     * 签收成功
-     */
-    public static final String CLAIM_SUCCESS = "签收成功！";
-    /**
-     * 签收失败
-     */
-    public static final String CLAIM_FAILURE = "签收失败！";
 
     /**
      * 发送成功
@@ -154,4 +128,8 @@ public class MessageTipsCst {
      * 订单取消失败
      */
     public static final String ORDERFORM_CANCEL_FAILURE = "订单取消失败！";
+    /**
+     * 更新成功,请重新登陆！
+     */
+    public static final String HOME_AGAIN_LOGIN = "更新成功,请重新登陆！";
 }
