@@ -89,6 +89,8 @@ public class EmailServer {
             messageHelper.setSentDate(new Date());
             // 发送邮件
             javaMailSender.send(message);
+            logger.info("邮件主题-->" + subject);
+            logger.info("邮件内容-->" + content);
             logger.info("------------发送邮件完成----------");
         } catch (MessagingException e) {
             e.printStackTrace();
