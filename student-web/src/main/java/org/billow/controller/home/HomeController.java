@@ -63,11 +63,13 @@ public class HomeController {
         String password = "";
         Cookie[] cookies = request.getCookies();
         //对cookies中的数据进行遍历，找到用户名、密码的数据
-        for (int i = 0; i < cookies.length; i++) {
-            if ("userName".equals(cookies[i].getName())) {
-                userName = cookies[i].getValue();
-            } else if ("password".equals(cookies[i].getName())) {
-                password = cookies[i].getValue();
+        if(cookies != null){
+            for (int i = 0; i < cookies.length; i++) {
+                if ("userName".equals(cookies[i].getName())) {
+                    userName = cookies[i].getValue();
+                } else if ("password".equals(cookies[i].getName())) {
+                    password = cookies[i].getValue();
+                }
             }
         }
         ModelAndView av = new ModelAndView();
