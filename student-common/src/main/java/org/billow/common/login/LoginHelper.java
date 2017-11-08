@@ -20,6 +20,7 @@ public class LoginHelper {
         return userDto;
     }
 
+    @Deprecated
     public static Integer getLoginUserId() {
         HttpSession session = RequestUtils.getRequest().getSession();
         UserDto user = getLoginUser(session);
