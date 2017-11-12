@@ -29,6 +29,12 @@
             </div>
             <ul class="layui-nav admin-header-item">
                 <li class="layui-nav-item">
+                    <a href="${ctx }/fg/fgHome/index" target="_blank">
+                        <i class="fa fa-paper-plane-o fa-2x" aria-hidden="true"></i>
+                        进入商城
+                    </a>
+                </li>
+                <li class="layui-nav-item">
                     <a href="${ctx }/home/login">
                         <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
                         注销

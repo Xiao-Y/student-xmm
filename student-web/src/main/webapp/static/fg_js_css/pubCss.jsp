@@ -14,4 +14,4 @@
 <link rel="stylesheet" href="/static/fg_js_css/css/responsive.css">
 <!-- User style -->
 <link rel="stylesheet" href="/static/fg_js_css/css/custom.css">
-<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+<script src="/static/fg_js_css/js/vendor/modernizr-2.8.3.min.js"></script>

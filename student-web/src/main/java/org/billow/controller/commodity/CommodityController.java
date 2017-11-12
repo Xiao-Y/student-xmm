@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,6 +87,7 @@ public class CommodityController {
         String message = "";
         String type = "";
         try {
+            commodityDto.setUpdateTime(new Date());
             if (ToolsUtils.isEmpty(commodityDto.getId())) {
                 commodityDto.setId(UUID.generate());
                 commodityService.insert(commodityDto);

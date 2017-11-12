@@ -53,6 +53,20 @@
   top: 18px;
   z-index: 100;
 }
+.hot-label {
+  background: #f7814d none repeat scroll 0 0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  left: 0;
+  line-height: 25px;
+  min-width: 60px;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  top: 18px;
+  z-index: 100;
+}
 .product-action {
   background: rgba(255, 255, 255, 0.1) none repeat scroll 0 0;
   border: 1px solid #fff;

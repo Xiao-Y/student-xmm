@@ -55,10 +55,16 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">等级</label>
+            <label class="layui-form-label">产品分类</label>
             <div class="layui-input-block">
-                <input type="text" name="grade" value="${commodity.grade }" autocomplete="off" placeholder="这里输入等级"
-                       class="layui-input">
+                <%-- 产品分类，1-蔬菜，2-肉/鱼类，3-配料类，4-其它 --%>
+                <select name="grade" id="grade" lay-filter="grade">
+                    <option value="1">1-蔬菜类</option>
+                    <option value="2">2-肉/鱼类</option>
+                    <option value="3">3-配料类</option>
+                    <option value="4" selected="">4-其它</option>
+                </select>
+                <input type="hidden" id="grade_select" def="4" value="${commodity.grade }">
             </div>
         </div>
         <div class="layui-form-item">

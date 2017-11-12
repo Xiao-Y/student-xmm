@@ -2,6 +2,7 @@ package org.billow.model.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 import org.billow.model.base.BaseModel;
 
@@ -53,6 +54,35 @@ public class CommodityBase extends BaseModel implements Serializable {
     private String commodityName;
     // 状态：0-无货，1-有货
     private String status;
+    private Date updateTime;
+    //销售数量
+    private int quantity;
+
+    /**
+     * 销售数量
+     *
+     * @return
+     */
+    public int getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * 销售数量
+     *
+     * @param quantity
+     */
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     /**
      * 删除标志，0-删除，1-正常

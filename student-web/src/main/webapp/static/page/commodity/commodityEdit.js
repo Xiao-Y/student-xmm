@@ -7,6 +7,6 @@ layui.use('form', function() {
 	});
 	
 	//用于显示radio的选种
-	var arry = ['status_radio','valid_radio'];
+	var arry = ['status_radio','valid_radio','grade_select'];
 	pubPopForm.checkedDisplay(arry,form);
 });

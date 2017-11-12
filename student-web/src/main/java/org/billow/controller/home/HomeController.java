@@ -8,13 +8,16 @@ import org.billow.common.email.EmailServer;
 import org.billow.common.login.LoginHelper;
 import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.MenuDto;
+import org.billow.model.expand.RoleDto;
 import org.billow.model.expand.UserDto;
+import org.billow.model.expand.UserRoleDto;
 import org.billow.utils.RequestUtils;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.generator.Md5Encrypt;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +47,8 @@ public class HomeController {
     private MenuService menuService;
     @Autowired
     private UserService userService;
+    @Value("${customerRole}")
+    private String customerRole;
 
     // @Autowired
     // private DictionaryDao dictionaryDao;
@@ -64,7 +69,7 @@ public class HomeController {
         String password = "";
         Cookie[] cookies = request.getCookies();
         //对cookies中的数据进行遍历，找到用户名、密码的数据
-        if(cookies != null){
+        if (cookies != null) {
             for (int i = 0; i < cookies.length; i++) {
                 if ("userName".equals(cookies[i].getName())) {
                     userName = cookies[i].getValue();
@@ -127,8 +132,20 @@ public class HomeController {
         session.setAttribute("currentUser", user);
         //session.setAttribute("ip", ToolsUtils.getServiceIpAddr());
         //session.setAttribute("sessionId", session.getId());
-        //重定向，防止刷新跳出
-        av.setViewName("redirect:/home/index");
+        String viewName = "redirect:/home/index";
+        List<UserRoleDto> userRoleDtos = user.getUserRoleDtos();
+        if (ToolsUtils.isNotEmpty(userRoleDtos)) {
+            if (userRoleDtos.size() == 1) {
+                if (customerRole.equals(userRoleDtos.get(0).getRoleDto().getRoleName())) {
+                    //重定向，防止刷新跳出
+                    viewName = "redirect:/fg/fgHome/index";
+                }
+            }
+        } else {
+            //重定向，防止刷新跳出
+            viewName = "redirect:/fg/fgHome/index";
+        }
+        av.setViewName(viewName);
         return av;
     }
 
