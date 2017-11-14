@@ -128,10 +128,12 @@
                                                 <div class="product-img">
                                                     <a href="#"><img src="/static/fg_js_css/img/product/12.jpg" alt=""/></a>
                                                     <span class="new-label">New</span>
-                                                    <div class="product-action">
-                                                        <a href="#"><i class="pe-7s-cart"></i></a>
-                                                        <a href="#" data-toggle="modal" data-target="#productModal">
-                                                            <i class="pe-7s-look"></i></a>
+                                                    <div class="product-action commodityOption">
+                                                        <input type="hidden" value="${commodity.id}" name="commodityId">
+                                                        <a href="#" name="AddCart"><i class="pe-7s-cart"></i></a>
+                                                        <a href="#" name="modelView" data-toggle="modal" data-target="#productModal">
+                                                            <i class="pe-7s-look"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="product-content">
@@ -154,7 +156,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </c:forEach>
                                 </div>
@@ -165,135 +166,146 @@
             </div>
         </div>
     </div>
-    <br><br><br>
-    <%-- 热销商品--%>
+</div>
+<br><br>
+<%-- 热销商品--%>
+<div class="container">
+    <div class="row">
+        <div class="section-title text-center mb-20">
+            <h2>热销菜单</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="product-tab">
+                <!-- Nav tabs -->
+
+                <!-- Tab panes -->
+                <div class="row">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home">
+                            <div class="product-carousel">
+
+                                <c:forEach var="commodity" items="${hotList}">
+                                    <div class="col-md-12">
+                                        <div class="product-wrapper mb-40">
+                                            <div class="product-img">
+                                                <a href="#"><img src="/static/fg_js_css/img/product/12.jpg" alt=""/></a>
+                                                <span class="hot-label">Hot</span>
+                                                <div class="product-action commodityOption">
+                                                    <input type="hidden" value="${commodity.id}" name="commodityId">
+                                                    <a href="#" name="AddCart"><i class="pe-7s-cart"></i></a>
+                                                    <a href="#" name="modelView" data-toggle="modal" data-target="#productModal">
+                                                        <i class="pe-7s-look"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="product-content">
+                                                <div class="pro-title">
+                                                    <h3>
+                                                        <a href="product-details.html">${commodity.commodityName }</a>
+                                                    </h3>
+                                                </div>
+                                                <div class="price-reviews">
+                                                    <div class="price-box">
+                                                            <span class="price product-price">¥${commodity.unitPrice }/<span>${commodity.spec }</span>
+                                                    </div>
+                                                    <div class="pro-rating">
+                                                        <a href="#"><i class="fa fa-star"></i></a>
+                                                        <a href="#"><i class="fa fa-star"></i></a>
+                                                        <a href="#"><i class="fa fa-star"></i></a>
+                                                        <a href="#"><i class="fa fa-star"></i></a>
+                                                        <a href="#"><i class="fa fa-star-o"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- new-arrival-area end -->
+
+<!-- latest-blog-area 底部小图 start -->
+<div class="latest-blog-area ptb-60">
     <div class="container">
         <div class="row">
-            <div class="section-title text-center mb-20">
-                <h2>热销菜单</h2>
+            <div class="section-title text-center mb-50">
+                <h2>latest blog</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="product-tab">
-                    <!-- Nav tabs -->
-
-                    <!-- Tab panes -->
-                    <div class="row">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="home">
-                                <div class="product-carousel">
-
-                                    <c:forEach var="commodity" items="${hotList}">
-                                        <div class="col-md-12">
-                                            <div class="product-wrapper mb-40">
-                                                <div class="product-img">
-                                                    <a href="#"><img src="/static/fg_js_css/img/product/12.jpg" alt=""/></a>
-                                                    <span class="hot-label">Hot</span>
-                                                    <div class="product-action">
-                                                        <a href="#"><i class="pe-7s-cart"></i></a>
-                                                        <a href="#" data-toggle="modal" data-target="#productModal">
-                                                            <i class="pe-7s-look"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <div class="pro-title">
-                                                        <h3>
-                                                            <a href="product-details.html">${commodity.commodityName }</a>
-                                                        </h3>
-                                                    </div>
-                                                    <div class="price-reviews">
-                                                        <div class="price-box">
-                                                            <span class="price product-price">¥${commodity.unitPrice }/<span>${commodity.spec }</span>
-                                                        </div>
-                                                        <div class="pro-rating">
-                                                            <a href="#"><i class="fa fa-star"></i></a>
-                                                            <a href="#"><i class="fa fa-star"></i></a>
-                                                            <a href="#"><i class="fa fa-star"></i></a>
-                                                            <a href="#"><i class="fa fa-star"></i></a>
-                                                            <a href="#"><i class="fa fa-star-o"></i></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                            </div>
+            <div class="blog-active">
+                <div class="col-lg-12">
+                    <div class="blog-wrapper mb-40">
+                        <div class="blog-img">
+                            <a href="#"><img src="/static/fg_js_css/img/blog/1.jpg" alt=""/></a>
+                        </div>
+                        <div class="blog-info">
+                            <h3><a href="#">查看更多...</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="blog-wrapper mb-40">
+                        <div class="blog-img">
+                            <a href="#"><img src="/static/fg_js_css/img/blog/2.jpg" alt=""/></a>
+                        </div>
+                        <div class="blog-info">
+                            <h3><a href="#">查看更多...</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="blog-wrapper mb-40">
+                        <div class="blog-img">
+                            <a href="#"><img src="/static/fg_js_css/img/blog/1.jpg" alt=""/></a>
+                        </div>
+                        <div class="blog-info">
+                            <h3><a href="#">查看更多...</a></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="blog-wrapper mb-40">
+                        <div class="blog-img">
+                            <a href="#"><img src="/static/fg_js_css/img/blog/2.jpg" alt=""/></a>
+                        </div>
+                        <div class="blog-info">
+                            <h3><a href="#">查看更多...</a></h3>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- new-arrival-area end -->
+</div>
+<!-- latest-blog-area 底部小图 end -->
+<!-- footer start -->
+<jsp:include page="/WEB-INF/page/fg/pub/footer.jsp" flush="true"/>
+<!-- footer end -->
 
-    <!-- latest-blog-area 底部小图 start -->
-    <div class="latest-blog-area ptb-60">
-        <div class="container">
-            <div class="row">
-                <div class="section-title text-center mb-50">
-                    <h2>latest blog</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="blog-active">
-                    <div class="col-lg-12">
-                        <div class="blog-wrapper mb-40">
-                            <div class="blog-img">
-                                <a href="#"><img src="/static/fg_js_css/img/blog/1.jpg" alt=""/></a>
-                            </div>
-                            <div class="blog-info">
-                                <h3><a href="#">查看更多...</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="blog-wrapper mb-40">
-                            <div class="blog-img">
-                                <a href="#"><img src="/static/fg_js_css/img/blog/2.jpg" alt=""/></a>
-                            </div>
-                            <div class="blog-info">
-                                <h3><a href="#">查看更多...</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="blog-wrapper mb-40">
-                            <div class="blog-img">
-                                <a href="#"><img src="/static/fg_js_css/img/blog/1.jpg" alt=""/></a>
-                            </div>
-                            <div class="blog-info">
-                                <h3><a href="#">查看更多...</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="blog-wrapper mb-40">
-                            <div class="blog-img">
-                                <a href="#"><img src="/static/fg_js_css/img/blog/2.jpg" alt=""/></a>
-                            </div>
-                            <div class="blog-info">
-                                <h3><a href="#">查看更多...</a></h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- latest-blog-area 底部小图 end -->
+<!-- Modal start -->
+<jsp:include page="/WEB-INF/page/fg/pub/procuctModal.jsp" flush="true"/>
+<!-- Modal end -->
 
-    <!-- footer start -->
-    <jsp:include page="/WEB-INF/page/fg/pub/footer.jsp" flush="true"/>
-    <!-- footer end -->
+<jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
+<jsp:include page="/pub/pubTips.jsp" flush="true"/>
+<script>
+    $(function () {
+        $("[name='modelView']").on('click', function () {
+            var commodityId = $(this).parent(".commodityOption").find("input[name='commodityId']").val();
+            getProcutModalByCommodityId(commodityId);
+        });
+    });
+</script>
 
-    <!-- Modal start -->
-    <jsp:include page="/WEB-INF/page/fg/pub/procuctModal.jsp" flush="true"/>
-    <!-- Modal end -->
-
-    <jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
 </body>
 </html>
 
