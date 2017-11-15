@@ -63,8 +63,7 @@ public class HomeController {
     @RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request) {
         //先消除session
-        HttpSession session = RequestUtils.getSession(request);
-        session.setAttribute("currentUser", null);
+        LoginHelper.setLoginUser(request, null);
         String userName = "";
         String password = "";
         Cookie[] cookies = request.getCookies();
@@ -129,7 +128,7 @@ public class HomeController {
                 e.printStackTrace();
             }
         }
-        session.setAttribute("currentUser", user);
+        LoginHelper.setLoginUser(request, user);
         //session.setAttribute("ip", ToolsUtils.getServiceIpAddr());
         //session.setAttribute("sessionId", session.getId());
         String viewName = "redirect:/home/index";
@@ -158,9 +157,8 @@ public class HomeController {
      */
     @RequestMapping("/index")
     public ModelAndView index(HttpServletRequest request, RedirectAttributes attr) {
-        HttpSession session = RequestUtils.getSession(request);
         ModelAndView av = new ModelAndView();
-        UserDto user = (UserDto) session.getAttribute("currentUser");
+        UserDto user = LoginHelper.getLoginUser(request);
         if (user == null || user.getUserId() == null) {
             attr.addFlashAttribute("errorMsg", "用户登陆超时，请重新登陆！");
             av.setViewName("redirect:/home/login");

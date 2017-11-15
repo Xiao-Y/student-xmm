@@ -19,11 +19,12 @@ public interface ShoppingCartService extends BaseService<ShoppingCartDto> {
     /**
      * 商品添加到购物车,如果存在则数量加1,否则插入新数据
      *
-     * @param id      商品id
-     * @param userDto 用户信息
-     * @return
+     * @param id           商品id
+     * @param commodityNum 商品数量
+     * @param userDto      用户信息
+     * @return 商品总数量
      */
-    void addShoppingCart(String id, UserDto userDto);
+    int addShoppingCart(ShoppingCartDto shoppingCartDto, UserDto userDto);
 
     /**
      * 查询我的购物车

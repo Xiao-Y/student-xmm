@@ -50,19 +50,23 @@ public class ShoppingCartController {
      */
     @ResponseBody
     @RequestMapping("/addShoppingCart/{id}")
-    public JsonResult addShoppingCart(HttpServletRequest request, @PathVariable("id") String id) {
+    public JsonResult addShoppingCart(HttpServletRequest request, @PathVariable("id") String id, ShoppingCartDto shoppingCartDto) {
         HttpSession session = request.getSession();
         UserDto userDto = LoginHelper.getLoginUser(session);
         JsonResult json = new JsonResult();
         String message = "";
         String type = "";
+        Long total = 0L;
         if (userDto == null) {
             json.setMessage("您还没有登陆,请登陆!");
             json.setType(MessageTipsCst.TYPE_ERROR);
             return json;
         }
         try {
-            shoppingCartService.addShoppingCart(id, userDto);
+            shoppingCartDto.setCommodityId(id);
+            int shoppingCount = shoppingCartService.addShoppingCart(shoppingCartDto, userDto);
+            LoginHelper.setShoppingCount(request, shoppingCount);
+            total = new Long(shoppingCount);
             message = MessageTipsCst.COMMODITY_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {
@@ -71,6 +75,7 @@ public class ShoppingCartController {
             message = MessageTipsCst.COMMODITY_FAILURE;
             type = MessageTipsCst.TYPE_ERROR;
         }
+        json.setTotal(total);
         json.setMessage(message);
         json.setType(type);
         return json;

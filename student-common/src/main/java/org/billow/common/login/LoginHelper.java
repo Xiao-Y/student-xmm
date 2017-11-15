@@ -9,38 +9,66 @@ import org.billow.utils.ToolsUtils;
 
 public class LoginHelper {
 
+    public static UserDto getLoginUser() {
+        HttpSession session = RequestUtils.getRequest().getSession();
+        UserDto userDto = (UserDto) session.getAttribute("currentUser");
+        return userDto;
+    }
+
+    /**
+     * 获取用户登陆信息
+     *
+     * @param session
+     * @return
+     */
     public static UserDto getLoginUser(HttpSession session) {
         UserDto userDto = (UserDto) session.getAttribute("currentUser");
         return userDto;
     }
 
+    /**
+     * 获取用户登陆信息
+     *
+     * @param request
+     * @return
+     */
     public static UserDto getLoginUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
         UserDto userDto = (UserDto) session.getAttribute("currentUser");
         return userDto;
     }
 
-    @Deprecated
-    public static Integer getLoginUserId() {
-        HttpSession session = RequestUtils.getRequest().getSession();
-        UserDto user = getLoginUser(session);
-        Integer userId = null;
-        if (user != null) {
-            if (user.getUserName().equals("employee")) {
-                userId = 1;
-            } else if (user.getUserName().equals("admin")) {
-                userId = 2;
-            } else if (user.getUserName().equals("sa")) {
-                userId = 3;
-            } else if (user.getUserName().equals("Manager")) {
-                userId = 4;
-            } else if (user.getUserName().equals("General manager")) {
-                userId = 5;
-            } else if (user.getUserName().equals("Board Chairman")) {
-                userId = 6;
-            }
-            // userId = user.getUserId();
-        }
-        return userId;
+    /**
+     * 设置用户登陆信息
+     *
+     * @param request
+     * @param userDto
+     */
+    public static void setLoginUser(HttpServletRequest request, UserDto userDto) {
+        HttpSession session = request.getSession();
+        session.setAttribute("currentUser", userDto);
+    }
+
+    /**
+     * 获取购物车数量
+     *
+     * @param request
+     * @return
+     */
+    public static int getShoppingCount(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        int shoppingCount = (int) session.getAttribute("shoppingCount");
+        return shoppingCount;
+    }
+
+    /**
+     * 设置购物车数量
+     *
+     * @param request
+     * @param shoppingCount
+     */
+    public static void setShoppingCount(HttpServletRequest request, int shoppingCount) {
+        HttpSession session = request.getSession();
+        session.setAttribute("shoppingCount", shoppingCount);
     }
 }

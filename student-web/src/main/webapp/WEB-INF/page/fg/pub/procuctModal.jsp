@@ -50,6 +50,42 @@
 </div>
 
 <script>
+    $(function () {
+
+        $("[name='modelView']").on('click', function () {
+            var commodityId = $(this).parent(".commodityOption").find("input[name='commodityId']").val();
+            getProcutModalByCommodityId(commodityId);
+        });
+
+        $("[name='addCart']").on('click', function () {
+            var commodityId = $(this).parent(".commodityOption").find("input[name='commodityId']").val();
+            addCart(commodityId);
+        });
+    });
+
+    //商品加入购物车
+    function addCart(id) {
+        var url = path + '/shoppingCart/addShoppingCart/' + id;
+        var tipBox = null;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (XHR) {
+                tipBox = new TipBox({type: 'load', str: "正在加入购物车..."});
+            },
+            success: function (data) {
+                tipBox.close();
+                new TipBox({type: data.type, str: data.message, hasBtn: true, setTime: 1500});
+                $("#myShoppingCart").html("<b>我的购物车</b>(" + data.total + ")");
+            },
+            error: function () {
+                new TipBox({type: 'error', str: '系统错误,请稍后!', hasBtn: true});
+            }
+        });
+    }
+
+    //查看商品详细信息
     function getProcutModalByCommodityId(commodityId) {
         var url = path + '/commodity/procuctModal?id=' + commodityId;
         $.ajax({

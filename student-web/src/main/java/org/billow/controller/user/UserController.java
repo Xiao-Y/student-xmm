@@ -157,7 +157,7 @@ public class UserController {
             message = MessageTipsCst.HOME_AGAIN_LOGIN;
             type = MessageTipsCst.TYPE_SUCCES;
             //修改成功后,清除session
-            session.setAttribute("currentUser", null);
+            LoginHelper.setLoginUser(request, null);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e);

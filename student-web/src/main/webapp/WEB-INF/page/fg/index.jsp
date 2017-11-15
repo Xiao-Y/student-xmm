@@ -130,8 +130,8 @@
                                                     <span class="new-label">New</span>
                                                     <div class="product-action commodityOption">
                                                         <input type="hidden" value="${commodity.id}" name="commodityId">
-                                                        <a href="#" name="AddCart"><i class="pe-7s-cart"></i></a>
-                                                        <a href="#" name="modelView" data-toggle="modal" data-target="#productModal">
+                                                        <a href="javascript:void(0);" name="addCart"><i class="pe-7s-cart"></i></a>
+                                                        <a href="javascript:void(0);" name="modelView" data-toggle="modal" data-target="#productModal">
                                                             <i class="pe-7s-look"></i>
                                                         </a>
                                                     </div>
@@ -194,8 +194,8 @@
                                                 <span class="hot-label">Hot</span>
                                                 <div class="product-action commodityOption">
                                                     <input type="hidden" value="${commodity.id}" name="commodityId">
-                                                    <a href="#" name="AddCart"><i class="pe-7s-cart"></i></a>
-                                                    <a href="#" name="modelView" data-toggle="modal" data-target="#productModal">
+                                                    <a href="javascript:void(0);" name="addCart"><i class="pe-7s-cart"></i></a>
+                                                    <a href="javascript:void(0);" name="modelView" data-toggle="modal" data-target="#productModal">
                                                         <i class="pe-7s-look"></i>
                                                     </a>
                                                 </div>
@@ -291,20 +291,12 @@
 <jsp:include page="/WEB-INF/page/fg/pub/footer.jsp" flush="true"/>
 <!-- footer end -->
 
+<jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
+<jsp:include page="/pub/pubTips.jsp" flush="true"/>
+
 <!-- Modal start -->
 <jsp:include page="/WEB-INF/page/fg/pub/procuctModal.jsp" flush="true"/>
 <!-- Modal end -->
-
-<jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
-<jsp:include page="/pub/pubTips.jsp" flush="true"/>
-<script>
-    $(function () {
-        $("[name='modelView']").on('click', function () {
-            var commodityId = $(this).parent(".commodityOption").find("input[name='commodityId']").val();
-            getProcutModalByCommodityId(commodityId);
-        });
-    });
-</script>
 
 </body>
 </html>

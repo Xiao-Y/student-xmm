@@ -40,20 +40,38 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCartDto> im
     }
 
     @Override
-    public void addShoppingCart(String id, UserDto userDto) {
+    public int addShoppingCart(ShoppingCartDto shoppingCartDto, UserDto userDto) {
+        String commodityId = shoppingCartDto.getCommodityId();
+        Integer commodityNum = shoppingCartDto.getCommodityNum() == null ? 1 : shoppingCartDto.getCommodityNum();
+
+        //商品数量
+        int shoppingCount = 0;
+        //是否存在这个商品在购物车
+        boolean flag = false;
         ShoppingCartDto dto = new ShoppingCartDto();
         dto.setId(userDto.getUserId().toString());
-        dto.setCommodityId(id);
-        ShoppingCartDto shoppingCartDto = shoppingCartDao.selectByPrimaryKey(dto);
-        if (shoppingCartDto == null) {
-            dto.setCommodityNum(1);//默认为1
+        List<ShoppingCartDto> shoppingCartDtos = shoppingCartDao.selectAll(dto);
+        if (ToolsUtils.isNotEmpty(shoppingCartDtos)) {
+            for (ShoppingCartDto cartDto : shoppingCartDtos) {
+                if (cartDto.getCommodityId().equals(commodityId)) {//如果商品存在更新商品数量
+                    cartDto.setCommodityNum(cartDto.getCommodityNum() + commodityNum);
+                    cartDto.setUpdateTime(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
+                    shoppingCartDao.updateByPrimaryKeySelective(cartDto);
+                    //商品存在
+                    flag = true;
+                }
+                shoppingCount += cartDto.getCommodityNum();
+            }
+        }
+
+        if (!flag) {
+            dto.setCommodityId(commodityId);
+            dto.setCommodityNum(commodityNum);//默认为1
             dto.setUpdateTime(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
             shoppingCartDao.insert(dto);
-        } else {
-            shoppingCartDto.setCommodityNum(shoppingCartDto.getCommodityNum() + 1);
-            shoppingCartDto.setUpdateTime(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
-            shoppingCartDao.updateByPrimaryKeySelective(shoppingCartDto);
+            shoppingCount += commodityNum;
         }
+        return shoppingCount;
     }
 
     @Override

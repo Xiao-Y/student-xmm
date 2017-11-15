@@ -2,13 +2,20 @@ package org.billow.controller.fg;
 
 import com.github.pagehelper.PageInfo;
 import org.billow.api.commodity.CommodityService;
+import org.billow.api.orderForm.ShoppingCartService;
+import org.billow.common.login.LoginHelper;
 import org.billow.model.expand.CommodityDto;
+import org.billow.model.expand.ShoppingCartDto;
+import org.billow.model.expand.UserDto;
 import org.billow.utils.PageHelper;
+import org.billow.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -17,6 +24,8 @@ public class FgHome {
 
     @Autowired
     private CommodityService commodityService;
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     /**
      * 商城首页
@@ -25,7 +34,10 @@ public class FgHome {
      * @return
      */
     @RequestMapping("/index")
-    public ModelAndView index(CommodityDto commodityDto) {
+    public ModelAndView index(HttpServletRequest request, CommodityDto commodityDto) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
+        HttpSession session = request.getSession();
+
         commodityDto.setDeleFlag("1");
         commodityDto.setStatus("1");
         //首页显示
@@ -40,6 +52,18 @@ public class FgHome {
         commodityDto.setObjectOrderBy("hot");
         List<CommodityDto> hotList = commodityService.selectAll(commodityDto);
         av.addObject("hotList", hotList);
+
+        //查询购物车总数量
+        int shoppingCount = 0;
+        ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
+        shoppingCartDto.setId(loginUser.getUserId().toString());
+        List<ShoppingCartDto> shoppingCartDtos = shoppingCartService.selectAll(shoppingCartDto);
+        if (ToolsUtils.isNotEmpty(shoppingCartDtos)) {
+            for (ShoppingCartDto cartDto : shoppingCartDtos) {
+                shoppingCount += cartDto.getCommodityNum();
+            }
+        }
+        LoginHelper.setShoppingCount(request, shoppingCount);
         av.setViewName("/page/fg/index");
         return av;
     }

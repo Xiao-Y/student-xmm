@@ -48,7 +48,7 @@
                     <!-- 搜索end -->
                     <!-- 购物车start -->
                     <div class="shopping-cart ml-20 display-inline">
-                        <a href="/fg/fgHome/shoppingCart"><b>我的购物车</b>(2)</a>
+                        <a href="/fg/fgHome/shoppingCart" id="myShoppingCart"><b>我的购物车</b>(${shoppingCount})</a>
                         <%--<ul>
                             <li>
                                 <div class="cart-img">
