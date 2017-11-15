@@ -26,10 +26,9 @@
                         <%--<span class="old">$80.11</span>--%>
                     </div>
                     <p id="commodityInfo">商品信息</p>
-                    <form action="#">
-                        <input type="number" value="1"/>
-                        <button>加入购物车</button>
-                    </form>
+                    <input id="commodityId" name="commodityId" type="hidden"/>
+                    <input id="commodityNum" name="commodityNum" type="number" value="1"/>
+                    <button id="addCartModal">加入购物车</button>
                     <div class="product_meta">
                         <span id="quantity" class="tagged_as">已售出</span>
                         <br/>
@@ -60,6 +59,23 @@
         $("[name='addCart']").on('click', function () {
             var commodityId = $(this).parent(".commodityOption").find("input[name='commodityId']").val();
             addCart(commodityId);
+        });
+        $("#addCartModal").on('click', function () {
+            var url = path + '/shoppingCart/addShoppingCart/' + $("#commodityId").val() + "?commodityNum=" + $("#commodityNum").val();
+            $.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    $("#buttonClose").click();
+                    new TipBox({type: data.type, str: data.message, hasBtn: true, setTime: 1500});
+                    $("#myShoppingCart").html("<b>我的购物车</b>(" + data.total + ")");
+                },
+                error: function () {
+                    $("#buttonClose").click();
+                    new TipBox({type: 'error', str: '系统错误,请稍后!', hasBtn: true});
+                }
+            });
         });
     });
 
@@ -99,6 +115,7 @@
                 $("#commodityInfo").html("商品信息：" + commodity.commodityInfo);
                 $("#packing").html("包装：" + commodity.packing);
                 $("#quantity").html("已售出：" + commodity.quantity);
+                $("#commodityId").val(commodity.id);
             },
             error: function (obj) {
                 $("#buttonClose").click();

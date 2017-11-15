@@ -72,9 +72,10 @@
                                                 <div class="product-img">
                                                     <a href="#"><img src="/static/fg_js_css/img/product/5.jpg" alt=""/></a>
                                                     <span class="new-label">New</span>
-                                                    <div class="product-action">
-                                                        <a href="#"><i class="pe-7s-cart"></i></a>
-                                                        <a href="#" data-toggle="modal" data-target="#productModal">
+                                                    <div class="product-action commodityOption">
+                                                        <input type="hidden" value="${commodity.id}" name="commodityId">
+                                                        <a href="javascript:void(0);" name="addCart"><i class="pe-7s-cart"></i></a>
+                                                        <a href="javascript:void(0);" name="modelView" data-toggle="modal" data-target="#productModal">
                                                             <i class="pe-7s-look"></i>
                                                         </a>
                                                     </div>
@@ -141,10 +142,10 @@
                                                         <c:otherwise>${commodity.commodityInfo}</c:otherwise>
                                                     </c:choose>
                                                 </p>
-                                                <div class="product-action">
-                                                    <a class="cart" href="#"><span>加入购物车</span></a>
-                                                    <a href="#" title="查看商品" data-toggle="modal"
-                                                       data-target="#productModal">
+                                                <div class="product-action commodityOption">
+                                                    <input type="hidden" value="${commodity.id}" name="commodityId">
+                                                    <a class="cart" href="javascript:void(0);" name="addCart"><span>加入购物车</span></i></a>
+                                                    <a href="javascript:void(0);" name="modelView" data-toggle="modal" data-target="#productModal">
                                                         <i class="pe-7s-look"></i>
                                                     </a>
                                                 </div>
@@ -180,11 +181,13 @@
 <jsp:include page="/WEB-INF/page/fg/pub/footer.jsp" flush="true"/>
 <!-- footer end -->
 
+<jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
+<jsp:include page="/pub/pubTips.jsp" flush="true"/>
+
 <!-- Modal start -->
 <jsp:include page="/WEB-INF/page/fg/pub/procuctModal.jsp" flush="true"/>
 <!-- Modal end -->
 
-<jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
 <script type="text/javascript" src="${ctx }/static/plugins/pagination/jquery.pagination.js"></script>
 <script>
     //分页使用
