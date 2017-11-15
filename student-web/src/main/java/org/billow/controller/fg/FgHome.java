@@ -2,13 +2,16 @@ package org.billow.controller.fg;
 
 import com.github.pagehelper.PageInfo;
 import org.billow.api.commodity.CommodityService;
+import org.billow.api.orderForm.AddressService;
 import org.billow.api.orderForm.ShoppingCartService;
 import org.billow.common.login.LoginHelper;
+import org.billow.model.expand.AddressDto;
 import org.billow.model.expand.CommodityDto;
 import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
+import org.billow.utils.constant.PagePathCst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,8 @@ public class FgHome {
     private CommodityService commodityService;
     @Autowired
     private ShoppingCartService shoppingCartService;
+    @Autowired
+    private AddressService addressService;
 
     /**
      * 商城首页
@@ -83,8 +88,31 @@ public class FgHome {
     }
 
     @RequestMapping("/shoppingCart")
-    public String shoppingCart() {
-        return "/page/fg/shopping_cart";
+    public ModelAndView shoppingCart(HttpServletRequest request) {
+        ModelAndView av = new ModelAndView();
+        HttpSession session = request.getSession();
+        UserDto userDto = LoginHelper.getLoginUser(session);
+        List<ShoppingCartDto> list = shoppingCartService.myShoppingCart(userDto);
+        AddressDto address = null;
+        AddressDto addressDto = new AddressDto();
+        addressDto.setUserId(userDto.getUserId());
+        List<AddressDto> addressDtos = addressService.selectAll(addressDto);
+        if (ToolsUtils.isNotEmpty(addressDtos)) {
+            for (AddressDto dto : addressDtos) {
+                if ("1".equals(dto.getStatus())) {
+                    address = dto;
+                    break;
+                }
+            }
+            if (address == null) {
+                address = addressDtos.get(0);
+            }
+        }
+        av.addObject("list", list);
+        av.addObject("address", address);
+        av.addObject("addressDtos", addressDtos);
+        av.setViewName("/page/fg/shopping_cart");
+        return av;
     }
 
     @RequestMapping("/order")

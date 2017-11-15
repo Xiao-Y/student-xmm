@@ -60,6 +60,8 @@
             var commodityId = $(this).parent(".commodityOption").find("input[name='commodityId']").val();
             addCart(commodityId);
         });
+
+        //模板中添加到购物车
         $("#addCartModal").on('click', function () {
             var url = path + '/shoppingCart/addShoppingCart/' + $("#commodityId").val() + "?commodityNum=" + $("#commodityNum").val();
             $.ajax({
