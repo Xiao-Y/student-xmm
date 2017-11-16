@@ -81,6 +81,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             orderFormDetailDto.setOrderFormId(orderFormId);
             orderFormDetailDto.setId(UUID.generate());
             orderFormDetailDto.setCommodityNum(new Integer(commodityNums[i]));
+            orderFormDetailDto.setCommodityId(dto.getId());
             //计算订单金额
             orderFormAmount = orderFormAmount.add(new BigDecimal(commodityNums[i]).multiply(dto.getUnitPrice()));
             detailes.add(orderFormDetailDto);

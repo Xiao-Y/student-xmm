@@ -96,6 +96,9 @@
      * @param commodityId 商品id
      */
     function addCart(commodityId) {
+        if (typeof(commodityId) == 'undefined' || commodityId == '') {
+            new TipBox({type: 'error', str: '商品不存在或已经下架!', hasBtn: true});
+        }
         var url = path + '/shoppingCart/addShoppingCart/' + commodityId;
         var tipBox = null;
         $.ajax({
@@ -121,22 +124,30 @@
      * @param commodityId 商品id
      */
     function getProcutModalByCommodityId(commodityId) {
-        var url = path + '/commodity/procuctModal?id=' + commodityId;
+        if (typeof(commodityId) == 'undefined' || commodityId == '') {
+            new TipBox({type: 'error', str: '商品不存在或已经下架!', hasBtn: true});
+        }
+        var url = path + '/fg/fgHome/procuctModal?id=' + commodityId;
         $.ajax({
             type: "POST",
             dataType: "json",
             url: url,
             success: function (commodity) {
-                $("#commodityImag").attr("src", "/static/fg_js_css/img/product/12.jpg");
-                $("#commodityName").html("<a href='#'>" + commodity.commodityName + "</a>");
-                $("#unitPrice").html('¥' + commodity.unitPrice + '/' + commodity.spec);
-                $("#commodityInfo").html("商品信息：" + commodity.commodityInfo);
-                $("#packing").html("包装：" + commodity.packing);
-                $("#quantity").html("已售出：" + commodity.quantity);
-                $("#commodityId").val(commodity.id);
+                console.info(commodity.id);
+                if (commodity.id == null || commodity.id == "null" || commodity.id == "") {
+                    new TipBox({type: 'error', str: '商品不存在或已经下架!', hasBtn: true});
+                } else {
+                    $("#commodityImag").attr("src", "/static/fg_js_css/img/product/12.jpg");
+                    $("#commodityName").html("<a href='#'>" + commodity.commodityName + "</a>");
+                    $("#unitPrice").html('¥' + commodity.unitPrice + '/' + commodity.spec);
+                    $("#commodityInfo").html("商品信息：" + commodity.commodityInfo);
+                    $("#packing").html("包装：" + commodity.packing);
+                    $("#quantity").html("已售出：" + commodity.quantity);
+                    $("#commodityId").val(commodity.id);
+                    $("#productModal").modal('show');
+                }
             },
             error: function (obj) {
-                $("#productModal").modal('hide');
                 new TipBox({type: 'error', str: '网络错误', hasBtn: true})
             }
         });

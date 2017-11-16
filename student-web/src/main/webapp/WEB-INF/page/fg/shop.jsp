@@ -75,7 +75,7 @@
                                                     <div class="product-action commodityOption">
                                                         <input type="hidden" value="${commodity.id}" name="commodityId">
                                                         <a href="javascript:void(0);" name="addCart"><i class="pe-7s-cart"></i></a>
-                                                        <a href="javascript:void(0);" name="modelView" data-toggle="modal" data-target="#productModal">
+                                                        <a href="javascript:void(0);" name="modelView">
                                                             <i class="pe-7s-look"></i>
                                                         </a>
                                                     </div>
@@ -145,7 +145,7 @@
                                                 <div class="product-action commodityOption">
                                                     <input type="hidden" value="${commodity.id}" name="commodityId">
                                                     <a class="cart" href="javascript:void(0);" name="addCart"><span>加入购物车</span></i></a>
-                                                    <a href="javascript:void(0);" name="modelView" data-toggle="modal" data-target="#productModal">
+                                                    <a href="javascript:void(0);" name="modelView">
                                                         <i class="pe-7s-look"></i>
                                                     </a>
                                                 </div>

@@ -1,6 +1,6 @@
 ﻿<!doctype html>
 <html class="no-js" lang="en">
-
+<%@ include file="/pub/taglib.jsp" %>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -27,8 +27,8 @@
 <div class="breadcrumb-area">
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-home"></i></a></li>
-            <li><a href="#">我的订单</a></li>
+            <li><a href="/fg/fgHome/index"><i class="fa fa-home"></i></a></li>
+            <li><a href="/fg/fgHome/order?pageNo=${pageNo }">我的订单</a></li>
             <li class="active">订单详细</li>
         </ol>
     </div>
@@ -52,20 +52,37 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="product-thumbnail"><a href="#"><img src="/static/fg_js_css/img/product/1.jpg" alt=""/></a></td>
-                                <td class="product-name"><a href="#">Vestibulum suscipit</a></td>
-                                <td class="product-price"><span class="amount">£165.00</span></td>
-                                <td class="product-quantity"><input type="number" value="1" readonly/></td>
-                                <td class="product-subtotal">£165.00</td>
-                            </tr>
-                            <tr>
-                                <td class="product-thumbnail"><a href="#"><img src="/static/fg_js_css/img/product/2.jpg" alt=""/></a></td>
+                            <c:forEach var="orderFormDetail" items="${list}">
+                                <tr>
+                                    <td class="product-thumbnail commodityOption">
+                                        <input type="hidden" value="${orderFormDetail.commodityId}" name="commodityId">
+                                        <a href="#" name="modelView">
+                                            <img src="/static/fg_js_css/img/product/1.jpg" alt=""/>
+                                        </a>
+                                    </td>
+                                    <td class="product-name">
+                                        <a href="#">${orderFormDetail.commodityName }</a>
+                                    </td>
+                                    <td class="product-price">
+                                        <span class="amount">${orderFormDetail.unitPrice }/${orderFormDetail.spec }</span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <input type="number" value="${orderFormDetail.commodityNum }" readonly/>
+                                    </td>
+                                    <td class="product-subtotal">
+                                        <fmt:formatNumber type="currency"
+                                                          value="${orderFormDetail.unitPrice * orderFormDetail.commodityNum }"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            <%--<tr>
+                                <td class="product-thumbnail"><a href="#"><img src="/static/fg_js_css/img/product/2.jpg"
+                                                                               alt=""/></a></td>
                                 <td class="product-name"><a href="#">Vestibulum dictum magna</a></td>
                                 <td class="product-price"><span class="amount">£50.00</span></td>
                                 <td class="product-quantity"><input type="number" value="1" readonly/></td>
                                 <td class="product-subtotal">£50.00</td>
-                            </tr>
+                            </tr>--%>
                             </tbody>
                         </table>
                     </div>
@@ -76,15 +93,15 @@
                             <div class="coupon">
                                 <h3>
                                     <strong>收货人：</strong>
-                                    <span style="color:#ffae00;">billow</span>
+                                    <span style="color:#ffae00;">${orderForm.consignee}</span>
                                 </h3>
                                 <h3>
                                     <strong>手机号码：</strong>
-                                    <span style="color:#ffae00;">15507529497</span>
+                                    <span style="color:#ffae00;">${orderForm.consigneePhone}</span>
                                 </h3>
                                 <h3>
                                     <strong>详细地址：</strong>
-                                    <span style="color:#ffae00;">上海上海上海上海上海上海上海上海上海上海上海上海</span>
+                                    <span style="color:#ffae00;">${orderForm.consigneeAddress}</span>
                                 </h3>
                             </div>
                         </div>
@@ -96,17 +113,27 @@
                                     <tbody>
                                     <tr class="cart-subtotal">
                                         <th>订单号</th>
-                                        <td><span class="amount">E20171107084048655001</span></td>
+                                        <td><span class="amount">${orderForm.id}</span></td>
                                     </tr>
                                     <tr class="cart-subtotal">
                                         <th>下单时间</th>
                                         <td>
-                                            <strong><span class="amount">2017-11-07 08:40:48</span></strong>
+                                            <strong>
+                                                <span class="amount">
+                                                    <fmt:formatDate value="${orderForm.createDate }"
+                                                                    pattern="yyyy-MM-dd HH:mm:ss"/>
+                                                </span>
+                                            </strong>
                                         </td>
                                     </tr>
                                     <tr class="order-total">
                                         <th>订单总计</th>
-                                        <td><span class="amount">￥215.00</span></td>
+                                        <td>
+                                            <span class="amount">
+                                                <fmt:formatNumber type="currency"
+                                                                  value="${orderForm.orderformAmount }"/>
+                                            </span>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -123,57 +150,13 @@
 <jsp:include page="/WEB-INF/page/fg/pub/footer.jsp" flush="true"/>
 <!-- footer end -->
 
-<!-- Modal -->
-<div class="modal fade" id="productModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">x</span></button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-img">
-                    <a href="shop.html"><img src="/static/fg_js_css/img/product/1.jpg" alt=""/></a>
-                </div>
-                <div class="modal-pro-content">
-                    <h3><a href="#">Phasellus Vel Hendrerit</a></h3>
-                    <div class="pro-rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <span>(2 customer reviews)</span>
-                    <div class="price">
-                        <span>$70.00</span>
-                        <span class="old">$80.11</span>
-                    </div>
-                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
-                        Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet.</p>
-                    <form action="#">
-                        <input type="number" value="1"/>
-                        <button>Add to cart</button>
-                    </form>
-                    <div class="product_meta">
-                        <span class="posted_in">Categories: <a rel="tag" href="#">Albums</a>, <a rel="tag" href="#">Music</a></span>
-                        <span class="tagged_as">Tags: <a rel="tag" href="#">Albums</a>, <a rel="tag" href="#">Music</a></span>
-                    </div>
-                    <div class="social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-google-plus"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                        <a href="#"><i class="fa fa-pinterest"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
+<jsp:include page="/pub/pubTips.jsp" flush="true"/>
+
+<!-- Modal start -->
+<jsp:include page="/WEB-INF/page/fg/pub/procuctModal.jsp" flush="true"/>
 <!-- Modal end -->
 
-<jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
 </body>
 
 </html>

@@ -277,7 +277,7 @@
                 return;
             }
 
-            var tipBox = new TipBox({type: 'load', str: "加载中..."});
+            var tipBox = new TipBox({type: 'load', str: "正在提交订单..."});
             //要购买的商品
             var commodityIds = new Array();
             //要购买的商品数量
@@ -308,6 +308,7 @@
                     if (type == 'success') {
                         new TipBox({
                             type: type, str: message, hasBtn: true, setTime: 1500, callBack: function () {
+                                new TipBox({type: 'load', str: "页面加载中..."});
                                 location.reload();
                             }
                         });

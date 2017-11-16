@@ -56,7 +56,7 @@
                 and dele_Flag = #{deleFlag}
             </if>
         </where>
-        /* 热销和最新商品 */
+        <!--热销和最新商品-->
         <if test="'new' == objectOrderBy">
             ORDER BY update_time desc
         </if>

@@ -130,8 +130,10 @@
                                                     <span class="new-label">New</span>
                                                     <div class="product-action commodityOption">
                                                         <input type="hidden" value="${commodity.id}" name="commodityId">
-                                                        <a href="javascript:void(0);" name="addCart"><i class="pe-7s-cart"></i></a>
-                                                        <a href="javascript:void(0);" name="modelView" data-toggle="modal" data-target="#productModal">
+                                                        <a href="javascript:void(0);" name="addCart"><i
+                                                                class="pe-7s-cart"></i></a>
+                                                        <a href="javascript:void(0);" name="modelView"
+                                                           data-toggle="modal" data-target="#productModal">
                                                             <i class="pe-7s-look"></i>
                                                         </a>
                                                     </div>
@@ -194,8 +196,10 @@
                                                 <span class="hot-label">Hot</span>
                                                 <div class="product-action commodityOption">
                                                     <input type="hidden" value="${commodity.id}" name="commodityId">
-                                                    <a href="javascript:void(0);" name="addCart"><i class="pe-7s-cart"></i></a>
-                                                    <a href="javascript:void(0);" name="modelView" data-toggle="modal" data-target="#productModal">
+                                                    <a href="javascript:void(0);" name="addCart">
+                                                        <i class="pe-7s-cart"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" name="modelView">
                                                         <i class="pe-7s-look"></i>
                                                     </a>
                                                 </div>

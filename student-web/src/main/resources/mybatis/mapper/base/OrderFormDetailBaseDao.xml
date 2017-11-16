@@ -10,9 +10,10 @@
         <result column="spec" property="spec" jdbcType="VARCHAR"/>
         <result column="commodity_name" property="commodityName" jdbcType="VARCHAR"/>
         <result column="commodity_num" property="commodityNum" jdbcType="INTEGER"/>
+        <result column="commodity_id" property="commodityId" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="base_column_list">
-		commodity_info,order_form_id,id,unit_price,packing,spec,commodity_name,commodity_num
+		commodity_info,order_form_id,id,unit_price,packing,spec,commodity_name,commodity_num,commodity_id
 	</sql>
     <!-- 公用查询条件 -->
     <sql id="selectCondition">
@@ -40,6 +41,9 @@
             </if>
             <if test="null != commodityNum and '' != commodityNum">
                 and commodity_num = #{commodityNum}
+            </if>
+            <if test="null != commodityId and '' != commodityId">
+                and commodity_id = #{commodityId}
             </if>
         </where>
     </sql>
@@ -69,7 +73,7 @@
 		and id = #{id}
 	</delete>
     <insert id="insert" parameterType="org.billow.model.expand.OrderFormDetailDto">
-		insert into t_order_form_detail (commodity_info,order_form_id,id,unit_price,packing,spec,commodity_name,commodity_num)
+		insert into t_order_form_detail (commodity_info,order_form_id,id,unit_price,packing,spec,commodity_name,commodity_num,commodity_id)
 		values (
 			#{commodityInfo,jdbcType=VARCHAR},
 			#{orderFormId,jdbcType=VARCHAR},
@@ -78,7 +82,8 @@
 			#{packing,jdbcType=VARCHAR},
 			#{spec,jdbcType=VARCHAR},
 			#{commodityName,jdbcType=VARCHAR},
-			#{commodityNum,jdbcType=INTEGER}
+			#{commodityNum,jdbcType=INTEGER},
+			#{commodityId,jdbcType=VARCHAR}
 		)
 	</insert>
     <insert id="insertSelective" parameterType="org.billow.model.expand.OrderFormDetailDto">
@@ -108,6 +113,9 @@
             <if test="null != commodityNum">
                 commodity_num,
             </if>
+            <if test="null != commodityId">
+                commodity_id,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="null != commodityInfo">
@@ -133,6 +141,9 @@
             </if>
             <if test="null != commodityNum">
                 #{commodity_num,jdbcType=INTEGER},
+            </if>
+            <if test="null != commodityId">
+                #{commodity_id,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -163,6 +174,9 @@
             <if test="null != commodityNum">
                 commodity_num = #{commodityNum,jdbcType=INTEGER},
             </if>
+            <if test="null != commodityId">
+                commodity_id = #{commodityId,jdbcType=VARCHAR},
+            </if>
         </set>
         where 1=1
         and id = #{id}
@@ -176,7 +190,8 @@
 			packing = #{packing,jdbcType=VARCHAR},
 			spec = #{spec,jdbcType=VARCHAR},
 			commodity_name = #{commodityName,jdbcType=VARCHAR},
-			commodity_num = #{commodityNum,jdbcType=VARCHAR}
+			commodity_num = #{commodityNum,jdbcType=INTEGER},
+			commodity_id = #{commodityId,jdbcType=VARCHAR}
 		where 1=1
 		and id = #{id}
 	</update>

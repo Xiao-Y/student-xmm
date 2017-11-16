@@ -154,16 +154,4 @@ public class CommodityController {
         return av;
     }
 
-    /**
-     * 进入商品修改页面
-     *
-     * @param commodity
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/procuctModal")
-    public CommodityDto procuctModal(CommodityDto commodity) {
-        CommodityDto commodityDto = commodityService.selectByPrimaryKey(commodity);
-        return commodityDto;
-    }
 }

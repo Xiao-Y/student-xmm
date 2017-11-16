@@ -3,10 +3,14 @@ package org.billow.controller.fg;
 import com.github.pagehelper.PageInfo;
 import org.billow.api.commodity.CommodityService;
 import org.billow.api.orderForm.AddressService;
+import org.billow.api.orderForm.OrderFormDetailService;
+import org.billow.api.orderForm.OrderFormService;
 import org.billow.api.orderForm.ShoppingCartService;
 import org.billow.common.login.LoginHelper;
 import org.billow.model.expand.AddressDto;
 import org.billow.model.expand.CommodityDto;
+import org.billow.model.expand.OrderFormDetailDto;
+import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.PageHelper;
@@ -15,6 +19,7 @@ import org.billow.utils.constant.PagePathCst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +36,10 @@ public class FgHome {
     private ShoppingCartService shoppingCartService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private OrderFormService orderFormService;
+    @Autowired
+    private OrderFormDetailService orderFormDetailService;
 
     /**
      * 商城首页
@@ -73,6 +82,12 @@ public class FgHome {
         return av;
     }
 
+    /**
+     * 商品列表页面
+     *
+     * @param commodityDto
+     * @return
+     */
     @RequestMapping("/shop")
     public ModelAndView shop(CommodityDto commodityDto) {
         commodityDto.setDeleFlag("1");
@@ -87,6 +102,12 @@ public class FgHome {
         return av;
     }
 
+    /**
+     * 查看购物车
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping("/shoppingCart")
     public ModelAndView shoppingCart(HttpServletRequest request) {
         ModelAndView av = new ModelAndView();
@@ -115,28 +136,76 @@ public class FgHome {
         return av;
     }
 
+    /**
+     * 查看订单信息
+     *
+     * @param request
+     * @param orderFormDto
+     * @return
+     */
     @RequestMapping("/order")
-    public String order() {
-        return "/page/fg/order";
+    public ModelAndView order(HttpServletRequest request, OrderFormDto orderFormDto) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
+        PageHelper.startPage(3);
+        orderFormDto.setUserId(loginUser.getUserId());
+        orderFormDto.setDelFlag("0");
+        List<OrderFormDto> list = orderFormService.selectAll(orderFormDto);
+        PageInfo<OrderFormDto> page = new PageInfo<>(list);
+        ModelAndView av = new ModelAndView();
+        av.addObject("page", page);
+        av.setViewName("/page/fg/order");
+        //查询条件--start
+        av.addObject("id", orderFormDto.getId());
+        av.addObject("status", orderFormDto.getStatus());
+        //查询条件--end
+        return av;
     }
 
     @RequestMapping("/orderDetail")
-    public String orderDetail() {
-        return "/page/fg/order_detail";
+    public ModelAndView orderDetail(HttpServletRequest request, OrderFormDetailDto orderFormDetailDto) {
+        List<OrderFormDetailDto> orderFormDetailDtos = orderFormDetailService.selectAll(orderFormDetailDto);
+        OrderFormDto orderFormDto = orderFormService.selectByPrimaryKey(new OrderFormDto(orderFormDetailDto.getOrderFormId()));
+        ModelAndView av = new ModelAndView();
+        av.addObject("orderFormId", orderFormDetailDto.getOrderFormId());
+        av.addObject("handleType", orderFormDetailDto.getHandleType());
+        av.addObject("pageNo", orderFormDetailDto.getPageNo());
+        av.addObject("list", orderFormDetailDtos);
+        av.addObject("orderForm", orderFormDto);
+        av.setViewName("/page/fg/order_detail");
+        return av;
     }
 
     @RequestMapping("/userInfo")
-    public String userInfo() {
+    public String userInfo(HttpServletRequest request, UserDto userDto) {
         return "/page/fg/user_info";
     }
 
     @RequestMapping("/address")
-    public String address() {
+    public String address(HttpServletRequest request, AddressDto addressDto) {
         return "/page/fg/address";
     }
 
     @RequestMapping("/addressEdit")
-    public String addressEdit() {
+    public String addressEdit(HttpServletRequest request, AddressDto addressDto) {
         return "/page/fg/address_edit";
+    }
+
+    /**
+     * 进入商品Modal
+     *
+     * @param commodity
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/procuctModal")
+    public CommodityDto procuctModal(CommodityDto commodity) {
+        CommodityDto commodityDto = new CommodityDto();
+        commodity.setValid("1");
+        commodity.setStatus("1");
+        List<CommodityDto> commodityDtos = commodityService.selectAll(commodity);
+        if (ToolsUtils.isNotEmpty(commodityDtos)) {
+            commodityDto = commodityDtos.get(0);
+        }
+        return commodityDto;
     }
 }
