@@ -60,6 +60,10 @@ public class MessageTipsCst {
      * 保存成功！
      */
     public static final String SAVE_SUCCESS = "保存成功！";
+    /**
+     * 保存失败！
+     */
+    public static final String SAVE_FAILURE = "保存失败！";
 
     /**
      * 更新成功！

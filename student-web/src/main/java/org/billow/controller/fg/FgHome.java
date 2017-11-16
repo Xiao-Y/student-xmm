@@ -19,6 +19,7 @@ import org.billow.model.expand.UserDto;
 import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
+import org.billow.utils.generator.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -282,14 +284,123 @@ public class FgHome {
         return json;
     }
 
+    /**
+     * 收货地址列表
+     *
+     * @param request
+     * @param addressDto
+     * @return
+     */
     @RequestMapping("/address")
-    public String address(HttpServletRequest request, AddressDto addressDto) {
-        return "/page/fg/address";
+    public ModelAndView address(HttpServletRequest request, AddressDto addressDto) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
+        addressDto.setUserId(loginUser.getUserId());
+        List<AddressDto> list = addressService.selectAll(addressDto);
+        ModelAndView av = new ModelAndView();
+        av.addObject("addressDtos", list);
+        av.setViewName("/page/fg/address");
+        return av;
     }
 
-    @RequestMapping("/addressEdit")
-    public String addressEdit(HttpServletRequest request, AddressDto addressDto) {
-        return "/page/fg/address_edit";
+    /**
+     * 进入收货地址编辑/添加页面
+     *
+     * @param request
+     * @param addressDto
+     * @return
+     */
+    @RequestMapping("/editAddress")
+    public ModelAndView editAddress(HttpServletRequest request, AddressDto addressDto) {
+        ModelAndView av = new ModelAndView();
+        String viewName = "/page/fg/address_edit";
+        UserDto loginUser = LoginHelper.getLoginUser(request);
+        addressDto.setUserId(loginUser.getUserId());
+        String type = addressDto.getType();
+        if ("add".equals(type)) {
+            int count = addressService.selectAllCount(addressDto);
+            if (count >= 4) {
+                viewName = "redirect:/fg/fgHome/address";
+            }
+        } else {
+            AddressDto dto = addressService.selectByPrimaryKey(addressDto);
+            av.addObject("address", dto);
+        }
+        av.setViewName(viewName);
+        av.addObject("type", type);
+        return av;
+    }
+
+    /**
+     * 保存/更新收货地址
+     *
+     * @param request
+     * @param addressDto
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/saveAddress")
+    public JsonResult saveAddress(HttpServletRequest request, AddressDto addressDto) {
+        String type = addressDto.getType();
+        JsonResult json = new JsonResult();
+        String message = "";
+        String typeJ = "";
+        try {
+            UserDto loginUser = LoginHelper.getLoginUser(request);
+            addressDto.setUserId(loginUser.getUserId());
+            if ("add".equals(type)) {
+                addressDto.setId(UUID.generate());
+                addressDto.setUpdateTime(new Date());
+                addressDto.setCreateTime(new Date());
+                addressService.insert(addressDto);
+                message = MessageTipsCst.SAVE_SUCCESS;
+            } else {
+                addressDto.setUpdateTime(new Date());
+                addressService.updateByPrimaryKeySelective(addressDto);
+                message = MessageTipsCst.UPDATE_SUCCESS;
+            }
+            typeJ = MessageTipsCst.TYPE_SUCCES;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            if ("add".equals(type)) {
+                message = MessageTipsCst.SAVE_FAILURE;
+            } else {
+                message = MessageTipsCst.UPDATE_FAILURE;
+            }
+            typeJ = MessageTipsCst.TYPE_ERROR;
+        }
+        json.setMessage(message);
+        json.setType(typeJ);
+        json.setRoot("/fg/fgHome/address");
+        return json;
+    }
+
+    /**
+     * 删除收货地址
+     *
+     * @param request
+     * @param addressDto
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/deleteAddress")
+    public JsonResult deleteAddress(HttpServletRequest request, AddressDto addressDto) {
+        JsonResult json = new JsonResult();
+        String message = "";
+        String typeJ = "";
+        try {
+            addressService.deleteByPrimaryKey(addressDto);
+            message = MessageTipsCst.DELETE_SUCCESS;
+            typeJ = MessageTipsCst.TYPE_SUCCES;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            message = MessageTipsCst.DELETE_FAILURE;
+            typeJ = MessageTipsCst.TYPE_ERROR;
+        }
+        json.setMessage(message);
+        json.setType(typeJ);
+        return json;
     }
 
     /**

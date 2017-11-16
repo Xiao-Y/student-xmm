@@ -1,7 +1,7 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html class="no-js" lang="en">
-
+<%@ include file="/pub/taglib.jsp" %>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -42,6 +42,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <form action="#">
+                    <h4 style="color: #1AA094">最多添加4个收货地址！！</h4>
                     <div class="table-content table-responsive">
                         <table>
                             <thead>
@@ -53,14 +54,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="product-consignee">billow</td>
-                                <td class="product-phone">15507529497</td>
-                                <td class="product-status">武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉</td>
-                                <td class="product-remove"><a href="/fg/fgHome/addressEdit">修改</a><a href="#">删除</a>
-                                </td>
-                            </tr>
-                            <tr>
+                            <c:forEach var="address" items="${addressDtos}">
+                                <tr>
+                                    <td class="product-consignee">${address.consignee }</td>
+                                    <td class="product-phone">${address.consigneePhone }</td>
+                                    <td class="product-status">${address.consigneeAddress }</td>
+                                    <td class="product-remove">
+                                        <a href="/fg/fgHome/editAddress?type=edit&id=${address.id }"
+                                           class="btn-primary btn-sm">修改</a>
+                                        <a class="btn-danger btn-sm" href="#" name="del"
+                                           url="/fg/fgHome/deleteAddress?id=${address.id }">删除</a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            <%--<tr>
                                 <td class="product-consignee">billow</td>
                                 <td class="product-phone">15507529497</td>
                                 <td class="product-status">武汉</td>
@@ -73,7 +80,7 @@
                                 <td class="product-status">武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉武汉</td>
                                 <td class="product-remove"><a href="/fg/fgHome/addressEdit">修改</a><a href="#">删除</a>
                                 </td>
-                            </tr>
+                            </tr>--%>
                             </tbody>
                         </table>
                     </div>
@@ -88,6 +95,41 @@
 <!-- footer end -->
 
 <jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
+<jsp:include page="/pub/pubTips.jsp" flush="true"/>
+
+<script>
+    $("[name='del']").click(function () {
+        var $this = $(this);
+        var url = $this.attr("url");
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            beforeSend: function (XHR) {
+                tipBox = new TipBox({type: 'load', str: "加载中..."});
+            },
+            success: function (obj) {
+                if (tipBox != null) {
+                    tipBox.close();
+                }
+                var message = obj.message;
+                var type = obj.type;
+                if (type == 'success') {
+                    new TipBox({type: type, str: message, hasBtn: true, setTime: 1500});
+                    $this.parents("tr").remove();
+                } else {
+                    new TipBox({type: type, str: message, hasBtn: true});
+                }
+            },
+            error: function (obj) {
+                if (tipBox != null) {
+                    tipBox.close();
+                }
+                new TipBox({type: 'error', str: '网络错误', hasBtn: true});
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
