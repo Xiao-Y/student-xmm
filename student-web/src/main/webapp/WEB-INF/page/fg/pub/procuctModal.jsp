@@ -63,27 +63,40 @@
 
         //模板中添加到购物车
         $("#addCartModal").on('click', function () {
-            var url = path + '/shoppingCart/addShoppingCart/' + $("#commodityId").val() + "?commodityNum=" + $("#commodityNum").val();
-            $.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                success: function (data) {
-                    $("#buttonClose").click();
-                    new TipBox({type: data.type, str: data.message, hasBtn: true, setTime: 1500});
-                    $("#myShoppingCart").html("<b>我的购物车</b>(" + data.total + ")");
-                },
-                error: function () {
-                    $("#buttonClose").click();
-                    new TipBox({type: 'error', str: '系统错误,请稍后!', hasBtn: true});
-                }
-            });
+            var commodityId = $("#commodityId").val();
+            var commodityNum = $("#commodityNum").val();
+            addCartModal(commodityId, commodityNum);
         });
     });
 
-    //商品加入购物车
-    function addCart(id) {
-        var url = path + '/shoppingCart/addShoppingCart/' + id;
+    /**
+     * 模板中添加到购物车
+     * @param commodityId 商品id
+     * @param commodityNum 商品数量
+     */
+    function addCartModal(commodityId, commodityNum) {
+        $("#productModal").modal('hide');
+        var url = path + '/shoppingCart/addShoppingCart/' + commodityId + "?commodityNum=" + commodityNum;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                new TipBox({type: data.type, str: data.message, hasBtn: true, setTime: 1500});
+                $("#myShoppingCart").html("<b>我的购物车</b>(" + data.total + ")");
+            },
+            error: function () {
+                new TipBox({type: 'error', str: '系统错误,请稍后!', hasBtn: true});
+            }
+        });
+    }
+
+    /**
+     * 商品列表加入购物车
+     * @param commodityId 商品id
+     */
+    function addCart(commodityId) {
+        var url = path + '/shoppingCart/addShoppingCart/' + commodityId;
         var tipBox = null;
         $.ajax({
             url: url,
@@ -103,7 +116,10 @@
         });
     }
 
-    //查看商品详细信息
+    /**
+     * 查看商品详细信息
+     * @param commodityId 商品id
+     */
     function getProcutModalByCommodityId(commodityId) {
         var url = path + '/commodity/procuctModal?id=' + commodityId;
         $.ajax({
@@ -120,7 +136,7 @@
                 $("#commodityId").val(commodity.id);
             },
             error: function (obj) {
-                $("#buttonClose").click();
+                $("#productModal").modal('hide');
                 new TipBox({type: 'error', str: '网络错误', hasBtn: true})
             }
         });
