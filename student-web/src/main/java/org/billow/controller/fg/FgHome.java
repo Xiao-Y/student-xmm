@@ -168,6 +168,13 @@ public class FgHome {
         return av;
     }
 
+    /**
+     * 查询订单详细
+     *
+     * @param request
+     * @param orderFormDetailDto
+     * @return
+     */
     @RequestMapping("/orderDetail")
     public ModelAndView orderDetail(HttpServletRequest request, OrderFormDetailDto orderFormDetailDto) {
         List<OrderFormDetailDto> orderFormDetailDtos = orderFormDetailService.selectAll(orderFormDetailDto);
@@ -182,6 +189,12 @@ public class FgHome {
         return av;
     }
 
+    /**
+     * 获取当前登陆用户信息
+     *
+     * @param request
+     * @return
+     */
     @RequestMapping("/userInfo")
     public ModelAndView userInfo(HttpServletRequest request) {
         UserDto loginUser = LoginHelper.getLoginUser(request);
@@ -199,11 +212,13 @@ public class FgHome {
      */
     @ResponseBody
     @RequestMapping("/updateUserInfo")
-    public JsonResult updateUserInfo(UserDto userDto) {
+    public JsonResult updateUserInfo(HttpServletRequest request, UserDto userDto) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
         JsonResult json = new JsonResult();
         String message = "";
         String type = "";
         try {
+            userDto.setUserId(loginUser.getUserId());
             userService.updateByPrimaryKeySelective(userDto);
             message = MessageTipsCst.UPDATE_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
@@ -215,7 +230,55 @@ public class FgHome {
         }
         json.setMessage(message);
         json.setType(type);
-        json.setRoot("/fg/fgHome/userInfo");
+        return json;
+    }
+
+    /**
+     * 进入更新密码页面
+     *
+     * @return
+     */
+    @RequestMapping("/editPassword")
+    public String editPassword() {
+        return "/page/fg/password_edit";
+    }
+
+    /**
+     * 更新密码
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/updatePassword")
+    public JsonResult updatePassword(HttpServletRequest request, UserDto userDto) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
+        JsonResult json = new JsonResult();
+        String message = "";
+        String type = "";
+        try {
+            UserDto query = new UserDto();
+            query.setUserName(loginUser.getUserName());
+            query.setPassword(userDto.getOldPassword());
+            //校验密码是否正确
+            UserDto temp = userService.findUserByUserNameAndPwd(query);
+            if (temp != null) {
+                userDto.setUserId(loginUser.getUserId());
+                userService.updateByPrimaryKeySelective(userDto);
+                message = MessageTipsCst.HOME_AGAIN_LOGIN;
+                type = MessageTipsCst.TYPE_SUCCES;
+            } else {
+                message = MessageTipsCst.UPDATE_PASSWORD_ERROR;
+                type = MessageTipsCst.TYPE_ERROR;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            message = MessageTipsCst.UPDATE_FAILURE;
+            type = MessageTipsCst.TYPE_ERROR;
+        }
+        json.setMessage(message);
+        json.setType(type);
+        json.setRoot("/home/login");
         return json;
     }
 

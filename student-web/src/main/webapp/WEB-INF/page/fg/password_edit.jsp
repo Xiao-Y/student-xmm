@@ -1,16 +1,17 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html class="no-js" lang="en">
-
+<%@ include file="/pub/taglib.jsp" %>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>个人信息</title>
+    <title>个人中心</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
     ============================================ -->
     <jsp:include page="/static/fg_js_css/pubCss.jsp" flush="true"/>
+    <link rel="stylesheet" href="/static/plugins/bootstrapValidator/bootstrapValidator.min.css">
 
 </head>
 
@@ -30,8 +31,8 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-home"></i></a></li>
-            <li><a href="#">Shop</a></li>
-            <li class="active">我的订单</li>
+            <li><a href="#">个人中心</a></li>
+            <li class="active">修改密码</li>
         </ol>
     </div>
 </div>
@@ -41,48 +42,28 @@
     <div class="container">
         <div class="row">
             <div id="content" class="col-sm-12">
-                <h2 class="title">我的个人信息</h2>
+                <h2 class="title">修改密码</h2>
                 <p>注意：<br/>
                     <strong style="color: red;">*</strong>为必填项<br/>
-                    电子邮箱将用于以后的密码的找回，请保证邮箱的正确性！！！<br/>
-                    用户名注册后不可以更改，请牢记用户名！！！<br/>
+                    注意保护个人密码！！！<br/>
+                    修改密码后需要重新登陆系统！！！<br/>
                 </p>
-                <form action="" method="post" class="form-horizontal account-register clearfix">
-                    <input type="hidden" id="userId" name="userId" value="${user.userId }">
-                    <fieldset id="account">
-                        <legend>信息修改</legend>
-                        <div class="form-group required">
-                            <label class="col-sm-2 control-label" for="userName"><strong
-                                    style="color: red;">*</strong>用户名</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="userName" required placeholder="这里输入用户名"
-                                       class="form-control" id="userName" value="${user.userName }">
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label class="col-sm-2 control-label" for="phoneNumber"><strong
-                                    style="color: red;">*</strong>手机号码</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="phoneNumber" required
-                                       placeholder="这里输入手机号码" class="form-control" id="phoneNumber"
-                                       value="${user.phoneNumber }">
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label class="col-sm-2 control-label" for="mail"><strong style="color: red;">*</strong>电子邮箱</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="mail" required placeholder="这里输入电子邮箱"
-                                       id="mail" class="form-control" value="${user.mail }">
-                            </div>
-                        </div>
-                    </fieldset>
+                <form id="updatePassword" action="" method="post" class="form-horizontal account-register clearfix">
                     <fieldset>
                         <legend>密码修改</legend>
+                        <div class="form-group required">
+                            <label class="col-sm-2 control-label" for="oldPassword"><strong
+                                    style="color: red;">*</strong>原密码</label>
+                            <div class="col-sm-10">
+                                <input type="password" name="oldPassword" placeholder="这里输入密码"
+                                       required class="form-control" id="oldPassword">
+                            </div>
+                        </div>
                         <div class="form-group required">
                             <label class="col-sm-2 control-label" for="password"><strong style="color: red;">*</strong>新密码</label>
                             <div class="col-sm-10">
                                 <input type="password" name="password" placeholder="这里输入密码"
-                                       required class="form-control" id="password" value="${user.password }">
+                                       required class="form-control" id="password">
                             </div>
                         </div>
                         <div class="form-group required">
@@ -90,14 +71,14 @@
                                     style="color: red;">*</strong>确认密码</label>
                             <div class="col-sm-10">
                                 <input type="password" name="rePassword" placeholder="这里输入密码"
-                                       required class="form-control" id="rePassword" value="${user.password }">
+                                       required class="form-control" id="rePassword">
                             </div>
                         </div>
                     </fieldset>
                     <div class="buttons">
                         <div class="pull-right">
                             <div class="buttons-cart">
-                                <input type="submit" value="提交信息"/>
+                                <input type="button" id="submitBtn" value="提交信息"/>
                             </div>
                         </div>
                     </div>
@@ -112,6 +93,78 @@
 <!-- footer end -->
 
 <jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
+<jsp:include page="/pub/pubTips.jsp" flush="true"/>
+
+<script src="/static/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
+<script src="/static/plugins/bootstrapValidator/zh_CN.js"></script>
+
+<script>
+    //表单验证器
+    $('#updatePassword').bootstrapValidator({
+        message: '表单还没有验证',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            rePassword: {
+                validators: {
+                    identical: {
+                        field: 'password',
+                        message: '两次密码不同请重新输入'
+                    }
+                }
+            }
+        }
+    });
+
+    //提交表单
+    $('#submitBtn').click(function () {
+        //校验表单
+        $('#updatePassword').bootstrapValidator('validate');
+        var flag = $("#updatePassword").data('bootstrapValidator').isValid();
+        //校验通过
+        if (flag) {
+            var tipBox = null;
+            var url = path + "/fg/fgHome/updatePassword";
+            var data = $("#updatePassword").serialize();
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: url,
+                data: data,
+                beforeSend: function (XHR) {
+                    tipBox = new TipBox({type: 'load', str: "加载中..."});
+                },
+                success: function (obj) {
+                    if (tipBox != null) {
+                        tipBox.close();
+                    }
+                    var message = obj.message;
+                    var type = obj.type;
+                    var root = obj.root;
+                    if (type == 'success') {
+                        new TipBox({
+                            type: type, str: message, hasBtn: true, setTime: 1500, callBack: function () {
+                                $(window.location).attr('href', path + root);
+                            }
+                        });
+                    } else {
+                        new TipBox({type: type, str: message, hasBtn: true});
+                    }
+                },
+                error: function (obj) {
+                    if (tipBox != null) {
+                        tipBox.close();
+                    }
+                    //$('#updatePassword').data('bootstrapValidator').resetForm(true);
+                    new TipBox({type: 'error', str: '网络错误', hasBtn: true});
+                }
+            });
+        }
+    });
+</script>
 </body>
 
 </html>

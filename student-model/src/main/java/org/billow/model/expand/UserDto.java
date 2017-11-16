@@ -9,6 +9,10 @@ public class UserDto extends UserBase {
 
     private static final long serialVersionUID = -4013903577078716039L;
 
+    //旧密码
+    private String oldPassword;
+    //确认密码
+    private String rePassword;
     private boolean rememberMe;
 
     private List<UserRoleDto> userRoleDtos = new ArrayList<>();
@@ -17,6 +21,42 @@ public class UserDto extends UserBase {
     private String roles;
     //超级系统管理员用户名
     private String superSystemAdminUser;
+
+    /**
+     * 旧密码
+     *
+     * @return
+     */
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    /**
+     * 旧密码
+     *
+     * @param oldPassword
+     */
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    /**
+     * 确认密码
+     *
+     * @return
+     */
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    /**
+     * 确认密码
+     *
+     * @param rePassword
+     */
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
+    }
 
     /**
      * 超级系统管理员用户名

@@ -132,4 +132,8 @@ public class MessageTipsCst {
      * 更新成功,请重新登陆！
      */
     public static final String HOME_AGAIN_LOGIN = "更新成功,请重新登陆！";
+    /**
+     * 原始密码错误，请重新输入！
+     */
+    public static final String UPDATE_PASSWORD_ERROR = "原始密码错误，请重新输入！";
 }

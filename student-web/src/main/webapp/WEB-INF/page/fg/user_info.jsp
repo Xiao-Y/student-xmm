@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>个人信息</title>
+    <title>个人中心</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
@@ -31,8 +31,8 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-home"></i></a></li>
-            <li><a href="#">Shop</a></li>
-            <li class="active">我的订单</li>
+            <li><a href="#">个人中心</a></li>
+            <li class="active">修改个人信息</li>
         </ol>
     </div>
 </div>
@@ -49,7 +49,6 @@
                     用户名注册后不可以更改，请牢记用户名！！！<br/>
                 </p>
                 <form id="userInfoForm" action="" method="post" class="form-horizontal account-register clearfix">
-                    <input type="hidden" id="userId" name="userId" value="${user.userId }">
                     <fieldset id="account">
                         <legend>信息修改</legend>
                         <div class="form-group required">
@@ -135,8 +134,8 @@
 
     //点“修改信息”后，显示“提交信息”，隐藏“修改信息”
     $("#editBtn").click(function () {
-        $("#phoneNumber").attr("readonly",false);
-        $("#mail").attr("readonly",false);
+        $("#phoneNumber").attr("readonly", false);
+        $("#mail").attr("readonly", false);
         $(this).hide();
         $("#submitBtn").show();
     });
@@ -167,13 +166,13 @@
                     var message = obj.message;
                     var type = obj.type;
                     if (type == 'success') {
-                        $("#phoneNumber").attr("readonly",true);
-                        $("#mail").attr("readonly",true);
+                        $("#phoneNumber").attr("readonly", true);
+                        $("#mail").attr("readonly", true);
                         $("#submitBtn").hide();
                         $("#editBtn").show();
                         new TipBox({type: type, str: message, hasBtn: true, setTime: 2000});
                     } else {
-                        new TipBox({type: type, str: message, hasBtn: true})
+                        new TipBox({type: type, str: message, hasBtn: true});
                     }
                 },
                 error: function (obj) {
