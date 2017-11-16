@@ -19,7 +19,7 @@
                                     <div class="mega-menu">
                                         <ul>
                                             <li><a href="/fg/fgHome/order">我的订单</a></li>
-                                            <li><a href="/fg/fgHome/userInfo">修改个人信息</a></li>
+                                            <li><a href="/fg/fgHome/userInfo">修改信息</a></li>
                                             <li><a href="/fg/fgHome/editPassword">修改密码</a></li>
                                         </ul>
                                     </div>

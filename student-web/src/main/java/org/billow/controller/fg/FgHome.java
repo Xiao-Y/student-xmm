@@ -1,12 +1,15 @@
 package org.billow.controller.fg;
 
 import com.github.pagehelper.PageInfo;
+import org.apache.log4j.Logger;
 import org.billow.api.commodity.CommodityService;
 import org.billow.api.orderForm.AddressService;
 import org.billow.api.orderForm.OrderFormDetailService;
 import org.billow.api.orderForm.OrderFormService;
 import org.billow.api.orderForm.ShoppingCartService;
+import org.billow.api.user.UserService;
 import org.billow.common.login.LoginHelper;
+import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.AddressDto;
 import org.billow.model.expand.CommodityDto;
 import org.billow.model.expand.OrderFormDetailDto;
@@ -15,7 +18,7 @@ import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
-import org.billow.utils.constant.PagePathCst;
+import org.billow.utils.constant.MessageTipsCst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +33,8 @@ import java.util.List;
 @RequestMapping("/fg/fgHome")
 public class FgHome {
 
+    private static final Logger logger = Logger.getLogger(FgHome.class);
+
     @Autowired
     private CommodityService commodityService;
     @Autowired
@@ -40,6 +45,8 @@ public class FgHome {
     private OrderFormService orderFormService;
     @Autowired
     private OrderFormDetailService orderFormDetailService;
+    @Autowired
+    private UserService userService;
 
     /**
      * 商城首页
@@ -176,8 +183,40 @@ public class FgHome {
     }
 
     @RequestMapping("/userInfo")
-    public String userInfo(HttpServletRequest request, UserDto userDto) {
-        return "/page/fg/user_info";
+    public ModelAndView userInfo(HttpServletRequest request) {
+        UserDto loginUser = LoginHelper.getLoginUser(request);
+        UserDto userDto = userService.findUserById(loginUser.getUserId());
+        ModelAndView av = new ModelAndView();
+        av.addObject("user", userDto);
+        av.setViewName("/page/fg/user_info");
+        return av;
+    }
+
+    /**
+     * 更新用户信息
+     *
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/updateUserInfo")
+    public JsonResult updateUserInfo(UserDto userDto) {
+        JsonResult json = new JsonResult();
+        String message = "";
+        String type = "";
+        try {
+            userService.updateByPrimaryKeySelective(userDto);
+            message = MessageTipsCst.UPDATE_SUCCESS;
+            type = MessageTipsCst.TYPE_SUCCES;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            message = MessageTipsCst.UPDATE_FAILURE;
+            type = MessageTipsCst.TYPE_ERROR;
+        }
+        json.setMessage(message);
+        json.setType(type);
+        json.setRoot("/fg/fgHome/userInfo");
+        return json;
     }
 
     @RequestMapping("/address")
