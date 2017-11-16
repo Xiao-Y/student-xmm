@@ -25,8 +25,7 @@
                             <c:forEach var="address" items="${addressDtos}">
                                 <tr>
                                     <td>
-                                        <input style="width:20px;" name="address" type="radio">
-                                        <input type="hidden" name="addressId" value="${address.id}">
+                                        <input style="width:20px;" name="addressId" type="radio" value="${address.id}">
                                     </td>
                                     <td class="product-consignee">${address.consignee}</td>
                                     <td class="product-phone">${address.consigneePhone}</td>
@@ -37,7 +36,7 @@
                         </table>
                     </c:if>
                     <div class="buttons-cart">
-                        <input type="button" onclick="test();" value="确定">
+                        <input type="button" name="updateAddress" value="确定">
                         <input type="button" data-dismiss="modal" aria-label="Close" value="关闭">
                     </div>
                 </div>
@@ -47,7 +46,31 @@
 </div>
 
 <script>
-    function test() {
-        $("#addressModal").modal('hide');
-    }
+    $(function () {
+
+        //更换收货地址
+        $("input[name='updateAddress']").on("click", function () {
+            var addressIdChecked = $("[name='addressId']:checked");
+            var addressId = addressIdChecked.val();
+            if (typeof(addressId) == 'undefined' || addressId == '') {
+                $("#addressModal").modal('hide');
+                new TipBox({
+                    type: 'tip', str: '请选择一个收货地址！', hasBtn: false, setTime: 1500, callBack: function () {
+                        $("#addressModal").modal('show');
+                    }
+                });
+            } else {
+                var tr = addressIdChecked.parents("tr");
+                var consignee = tr.find(".product-consignee").text();
+                var phone = tr.find(".product-phone").text();
+                var address = tr.find(".product-address").text();
+
+                $("#addressId").val(addressId);
+                $("#consignee").text(consignee);
+                $("#consigneePhone").text(phone);
+                $("#consigneeAddress").text(address);
+                $("#addressModal").modal('hide');
+            }
+        });
+    });
 </script>

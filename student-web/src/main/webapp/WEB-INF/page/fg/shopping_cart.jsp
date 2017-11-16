@@ -127,15 +127,16 @@
                                 <input type="button" onclick="javascript:location.reload();" value="刷新购物车"/>
                                 <a href="#" data-toggle="modal" data-target="#addressModal">更换收货地址</a>
                             </div>
-                            <div class="coupon">
+                            <div class="coupon address">
                                 <c:if test="${empty address}">
                                     <h3>还没有收货地址，请在“收货地址”-“添加新的收货地址”中添加...</h3>
                                 </c:if>
                                 <c:if test="${not empty address}">
-                                    <input type="hidden" name="addressId" value="${address.id}">
+                                    <input type="hidden" id="addressId" name="addressId" value="${address.id}">
                                     <h3>
                                         <strong>收货人：</strong>
-                                        <span style="color:#ffae00;" id="consignee">${address.consignee}</span>
+                                        <span style="color:#ffae00;"
+                                              id="consignee">${address.consignee}</span>
                                     </h3>
                                     <h3>
                                         <strong>手机号码：</strong>
@@ -163,7 +164,7 @@
                                     </tbody>
                                 </table>
                                 <div class="wc-proceed-to-checkout">
-                                    <a href="#">提交订单</a>
+                                    <a href="#" id="submitOrder">提交订单</a>
                                 </div>
                             </div>
                         </div>
@@ -270,7 +271,7 @@
                 return;
             }
             //收货地址id
-            var addressId = $("input[name='addressId']").val();
+            var addressId = $("#addressId").val();
             if (typeof(addressId) == 'undefined' || addressId == '') {
                 new TipBox({type: 'error', str: '请选择收货地址!', hasBtn: true});
                 return;
@@ -307,7 +308,7 @@
                     if (type == 'success') {
                         new TipBox({
                             type: type, str: message, hasBtn: true, setTime: 1500, callBack: function () {
-                                $(window.location).attr('href', path + "/shoppingCart/myShoppingCart");
+                                location.reload();
                             }
                         });
                     } else {
