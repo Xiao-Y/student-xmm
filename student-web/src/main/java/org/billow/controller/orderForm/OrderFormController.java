@@ -4,13 +4,16 @@ import com.github.pagehelper.PageInfo;
 import org.apache.log4j.Logger;
 import org.billow.api.orderForm.OrderFormDetailService;
 import org.billow.api.orderForm.OrderFormService;
+import org.billow.api.orderForm.ShoppingCartService;
 import org.billow.common.email.EmailServer;
 import org.billow.common.login.LoginHelper;
 import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.OrderFormDetailDto;
 import org.billow.model.expand.OrderFormDto;
+import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.PageHelper;
+import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.constant.PagePathCst;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +48,8 @@ public class OrderFormController {
     @Autowired
     private OrderFormDetailService orderFormDetailService;
     @Autowired
+    private ShoppingCartService shoppingCartService;
+    @Autowired
     private EmailServer emailServer;
     @Value("${mail.auto.send}")
     private boolean emailAutoSend;
@@ -76,6 +81,17 @@ public class OrderFormController {
         String type = "";
         try {
             Map<String, String> map = orderFormService.saveOrderForm(loginUser, addressId, commodityIds, commodityNums);
+            //更新页面购物车显示的数量
+            ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
+            shoppingCartDto.setId(loginUser.getUserId().toString());
+            int shoppingCount = 0;
+            List<ShoppingCartDto> shoppingCartDtos = shoppingCartService.selectAll(shoppingCartDto);
+            if (ToolsUtils.isNotEmpty(shoppingCartDtos)) {
+                for (ShoppingCartDto cartDto : shoppingCartDtos) {
+                    shoppingCount += cartDto.getCommodityNum();
+                }
+            }
+            LoginHelper.setShoppingCount(request, shoppingCount);
             // 4、邮件通知商家
             if (emailAutoSend) {
                 try {
@@ -188,9 +204,9 @@ public class OrderFormController {
                     e.printStackTrace();
                     logger.error(e);
                 }
-            }else if ("2".equals(orderFormDto.getStatus())) {
+            } else if ("2".equals(orderFormDto.getStatus())) {
                 message = "确认订单成功！";
-            }else if ("5".equals(orderFormDto.getStatus())) {
+            } else if ("5".equals(orderFormDto.getStatus())) {
                 message = "交易成功！";
             }
             type = MessageTipsCst.TYPE_SUCCES;
@@ -201,9 +217,9 @@ public class OrderFormController {
                 message = MessageTipsCst.DELETE_FAILURE;
             } else if ("3".equals(orderFormDto.getStatus()) || "4".equals(orderFormDto.getStatus())) {
                 message = MessageTipsCst.ORDERFORM_CANCEL_FAILURE;
-            }else if ("2".equals(orderFormDto.getStatus())) {
+            } else if ("2".equals(orderFormDto.getStatus())) {
                 message = "确认订单失败！";
-            }else if ("5".equals(orderFormDto.getStatus())) {
+            } else if ("5".equals(orderFormDto.getStatus())) {
                 message = "交易完成失败！";
             }
             type = MessageTipsCst.TYPE_ERROR;

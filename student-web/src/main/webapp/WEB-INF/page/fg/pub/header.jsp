@@ -133,12 +133,26 @@
                     <div class="mobile-menu">
                         <nav id="mobile-menu-active">
                             <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="shop.html">Sofa</a></li>
-                                <li><a href="#">Elements</a></li>
-                                <li><a href="shop.html">Lighting</a></li>
-                                <li><a href="#">Pages</a></li>
-                                <li><a href="#">What's New</a></li>
+                                <li><a href="/fg/fgHome/index">首页</a></li>
+                                <li><a href="/fg/fgHome/shop">商品列表</a></li>
+                                <li>
+                                    <a href="/fg/fgHome/order">个人中心</a>
+                                    <div class="mega-menu">
+                                        <ul>
+                                            <li><a href="/fg/fgHome/order">我的订单</a></li>
+                                            <li><a href="/fg/fgHome/userInfo">修改个人信息</a></li>
+                                            <li><a href="/fg/fgHome/editPassword">修改密码</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="/fg/fgHome/address">收货地址</a>
+                                    <div class="mega-menu">
+                                        <ul>
+                                            <li><a href="/fg/fgHome/address">我的收货地址</a></li>
+                                            <li><a href="/fg/fgHome/editAddress?type=add">添加新收货地址</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </nav>
                     </div>
