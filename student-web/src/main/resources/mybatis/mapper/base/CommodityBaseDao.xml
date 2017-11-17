@@ -15,9 +15,10 @@
         <result column="dele_Flag" property="deleFlag" jdbcType="VARCHAR"/>
         <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="quantity" property="quantity" jdbcType="INTEGER"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="base_column_list">
-		commodity_info,valid,grade,id,unit_price,locality_growth,packing,spec,commodity_name,status,dele_Flag,UPDATE_TIME,quantity
+		commodity_info,valid,grade,id,unit_price,locality_growth,packing,spec,commodity_name,status,dele_Flag,UPDATE_TIME,quantity,img
 	</sql>
     <!-- 公用查询条件 -->
     <sql id="selectCondition">
@@ -55,6 +56,9 @@
             <if test="null != deleFlag and '' != deleFlag">
                 and dele_Flag = #{deleFlag}
             </if>
+            <if test="null != img and '' != img">
+                and img = #{img}
+            </if>
         </where>
         <!--热销和最新商品-->
         <if test="'new' == objectOrderBy">
@@ -89,7 +93,7 @@
 	</delete>
     <insert id="insert" parameterType="org.billow.model.expand.CommodityDto">
 		insert into t_commodity (commodity_info,valid,grade,id,unit_price,locality_growth,
-		packing,spec,commodity_name,status,dele_Flag,UPDATE_TIME,quantity)
+		packing,spec,commodity_name,status,dele_Flag,UPDATE_TIME,quantity,img)
 		values (
 			#{commodityInfo,jdbcType=VARCHAR},
 			#{valid,jdbcType=VARCHAR},
@@ -103,7 +107,8 @@
 			#{status,jdbcType=VARCHAR},
 			#{deleFlag,jdbcType=VARCHAR},
 			#{updateTime,jdbcType=VARCHAR},
-			#{quantity,jdbcType=INTEGER}
+			#{quantity,jdbcType=INTEGER},
+			#{img,jdbcType=VARCHAR}
 		)
 	</insert>
     <insert id="insertSelective" parameterType="org.billow.model.expand.CommodityDto">
@@ -148,6 +153,9 @@
             <if test="null != quantity">
                 quantity,
             </if>
+            <if test="null != img">
+                img,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="null != commodityInfo">
@@ -188,6 +196,9 @@
             </if>
             <if test="null != quantity">
                 #{quantity,jdbcType=INTEGER},
+            </if>
+            <if test="null != img">
+                #{img,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -231,7 +242,10 @@
                 UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
             </if>
             <if test="null != quantity">
-                quantity = #{updateTime,jdbcType=INTEGER},
+                quantity = #{quantity,jdbcType=INTEGER},
+            </if>
+            <if test="null != img">
+                img = #{img,jdbcType=VARCHAR},
             </if>
         </set>
         where 1=1
@@ -251,7 +265,8 @@
 			status = #{status,jdbcType=VARCHAR},
 			dele_Flag = #{deleFlag,jdbcType=VARCHAR},
 			UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
-			quantity = #{quantity,jdbcType=VARCHAR}
+			quantity = #{quantity,jdbcType=INTEGER},
+			img = #{img,jdbcType=VARCHAR}
 		where 1=1
 		and id = #{id}
 	</update>

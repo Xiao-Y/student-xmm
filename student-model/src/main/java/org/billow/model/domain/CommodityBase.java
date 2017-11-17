@@ -57,6 +57,24 @@ public class CommodityBase extends BaseModel implements Serializable {
     private Date updateTime;
     //销售数量
     private int quantity;
+    //商品图片名称
+    private String img;
+
+    /**
+     * 商品图片名称
+     * @return
+     */
+    public String getImg() {
+        return img;
+    }
+
+    /**
+     * 商品图片名称
+     * @param img
+     */
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     /**
      * 销售数量

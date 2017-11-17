@@ -10,13 +10,17 @@ import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.constant.PagePathCst;
 import org.billow.utils.generator.UUID;
+import org.billow.utils.image.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +39,12 @@ public class CommodityController {
 
     @Autowired
     private CommodityService commodityService;
+    //商品图片路径
+    @Value("${commodiity.img.upload}")
+    private String upload;
+    //默认图片名称
+    @Value("${commodiity.img.default}")
+    private String defaultImg;
 
     /**
      * 进入商品修改列表页面
@@ -154,4 +164,62 @@ public class CommodityController {
         return av;
     }
 
+    /**
+     * 打开商品图片编辑页面
+     *
+     * @param request
+     * @param commodityDto
+     * @return
+     */
+    @RequestMapping(value = "/getCommodityImg")
+    public ModelAndView getCommodityImg(HttpServletRequest request, CommodityDto commodityDto) {
+        String path = request.getSession().getServletContext().getRealPath(upload);
+        String imgPath = "/" + upload + "/" + defaultImg;
+
+        //获取商品图片的名称
+        String img = commodityDto.getImg();
+        if (ToolsUtils.isNotEmpty(img)) {
+            String imgPathTemp = path + "\\" + img;
+            File targetFile = new File(imgPathTemp);
+            if (targetFile.exists()) {
+                imgPath = "/" + upload + "/" + img;
+            }
+        }
+        ModelAndView av = new ModelAndView();
+        commodityDto.setImg(imgPath);
+        av.addObject("commodityDto", commodityDto);
+        av.setViewName(PagePathCst.BASEPATH_COMMODITY + "commodityImg");
+        return av;
+    }
+
+    /**
+     * 图片上传，更新商品图片
+     *
+     * @param commodityId
+     * @param imgBase64
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/uploadCommodityImg/{commodityId}")
+    public JsonResult uploadCommodityImgBase64(@PathVariable("commodityId") String commodityId,
+                                               String imgBase64, HttpServletRequest request) {
+        JsonResult json = new JsonResult();
+        String message = "";
+        String type = "";
+        try {
+            String path = request.getSession().getServletContext().getRealPath(upload);
+            commodityService.updateCommodityImg(imgBase64, path, commodityId);
+            message = MessageTipsCst.UPLOAD_SUCCESS;
+            type = MessageTipsCst.TYPE_SUCCES;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e);
+            message = MessageTipsCst.UPLOAD_FAILURE;
+            type = MessageTipsCst.TYPE_ERROR;
+        }
+        json.setMessage(message);
+        json.setType(type);
+        return json;
+    }
 }

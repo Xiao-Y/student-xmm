@@ -5,7 +5,7 @@ layui.use('form', function() {
 	form.on('submit(*)', function(data) {
 		return submitFormNewTip(data);
 	});
-	
+
 	//用于显示radio的选种
 	var arry = ['status_radio','valid_radio','grade_select'];
 	pubPopForm.checkedDisplay(arry,form);

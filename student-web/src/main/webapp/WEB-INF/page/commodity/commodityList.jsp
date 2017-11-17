@@ -52,12 +52,14 @@
                             <c:if test="${commodity.valid == '1'}"> 有效 </c:if>
                             <c:if test="${commodity.valid == '0'}"> 无效 </c:if>
                         </td>
-                        <td>
+                        <td style="width: 180px">
                             <a href="${ctx }/commodity/commodityEdit?id=${commodity.id }&pageNo=${page.pageNum }"
                                class="layui-btn layui-btn-mini">编辑</a>
                             <a href="javascript:;" data-opt="del"
                                url="${ctx }/commodity/commodityDel?id=${commodity.id }"
                                class="layui-btn layui-btn-danger layui-btn-mini">删除</a>
+                            <a href="${ctx }/commodity/getCommodityImg?id=${commodity.id }&img=${commodity.img }"
+                               target="_blank" class="layui-btn layui-btn-mini">查看图片</a>
                         </td>
                     </tr>
                 </c:forEach>
