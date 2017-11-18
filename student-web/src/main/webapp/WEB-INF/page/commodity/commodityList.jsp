@@ -31,7 +31,7 @@
                     <th>商品名称</th>
                     <th>单价</th>
                     <th>规格</th>
-                    <th>包装</th>
+                    <th>图片</th>
                     <th>状态</th>
                     <th>有效性</th>
                     <th>操作</th>
@@ -43,7 +43,14 @@
                         <td>${commodity.commodityName }</td>
                         <td>${commodity.unitPrice }</td>
                         <td>${commodity.spec }</td>
-                        <td>${commodity.packing }</td>
+                        <td>
+                            <c:if test="${empty commodity.img }">
+                                无
+                            </c:if>
+                            <c:if test="${ not empty commodity.img }">
+                                有
+                            </c:if>
+                        </td>
                         <td>
                             <c:if test="${commodity.status == '1'}"> 有货 </c:if>
                             <c:if test="${commodity.status == '0'}"> 无货 </c:if>

@@ -126,7 +126,14 @@
                                         <div class="col-md-12">
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
-                                                    <a href="#"><img src="/static/fg_js_css/img/product/12.jpg" alt=""/></a>
+                                                    <a href="#">
+                                                        <c:if test="${empty commodity.img }">
+                                                            <img src="/upload/default.jpg" alt="商品图片"/>
+                                                        </c:if>
+                                                        <c:if test="${ not empty commodity.img }">
+                                                            <img src="/upload/${commodity.img }" alt="商品图片"/>
+                                                        </c:if>
+                                                    </a>
                                                     <span class="new-label">New</span>
                                                     <div class="product-action commodityOption">
                                                         <input type="hidden" value="${commodity.id}" name="commodityId">
@@ -192,7 +199,14 @@
                                     <div class="col-md-12">
                                         <div class="product-wrapper mb-40">
                                             <div class="product-img">
-                                                <a href="#"><img src="/static/fg_js_css/img/product/12.jpg" alt=""/></a>
+                                                <a href="#">
+                                                    <c:if test="${empty commodity.img }">
+                                                        <img src="/upload/default.jpg" alt="商品图片"/>
+                                                    </c:if>
+                                                    <c:if test="${ not empty commodity.img }">
+                                                        <img src="/upload/${commodity.img }" alt="商品图片"/>
+                                                    </c:if>
+                                                </a>
                                                 <span class="hot-label">Hot</span>
                                                 <div class="product-action commodityOption">
                                                     <input type="hidden" value="${commodity.id}" name="commodityId">

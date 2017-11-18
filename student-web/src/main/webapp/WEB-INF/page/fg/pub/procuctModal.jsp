@@ -9,7 +9,9 @@
             </div>
             <div class="modal-body">
                 <div class="modal-img">
-                    <a href="shop.html"><img id="commodityImag" src="/static/fg_js_css/img/product/1.jpg" alt=""/></a>
+                    <a href="shop.html">
+                        <img id="commodityImag" src="/upload/default.jpg" alt="商品图片"/>
+                    </a>
                 </div>
                 <div class="modal-pro-content">
                     <h3 id="commodityName"><a href="#">商品名称</a></h3>
@@ -133,11 +135,14 @@
             dataType: "json",
             url: url,
             success: function (commodity) {
-                console.info(commodity.id);
                 if (commodity.id == null || commodity.id == "null" || commodity.id == "") {
                     new TipBox({type: 'error', str: '商品不存在或已经下架!', hasBtn: true});
                 } else {
-                    $("#commodityImag").attr("src", "/static/fg_js_css/img/product/12.jpg");
+                    if (typeof commodity.img != "undefindc" && commodity.img != null && commodity.img != '') {
+                        $("#commodityImag").attr("src", "/upload/" + commodity.img);
+                    } else {
+                        $("#commodityImag").attr("src", "/upload/default.jpg");
+                    }
                     $("#commodityName").html("<a href='#'>" + commodity.commodityName + "</a>");
                     $("#unitPrice").html('¥' + commodity.unitPrice + '/' + commodity.spec);
                     $("#commodityInfo").html("商品信息：" + commodity.commodityInfo);

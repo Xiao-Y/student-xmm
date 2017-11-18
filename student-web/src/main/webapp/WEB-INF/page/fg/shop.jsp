@@ -70,11 +70,19 @@
                                         <div class="col-md-3 col-sm-6">
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
-                                                    <a href="#"><img src="/static/fg_js_css/img/product/5.jpg" alt=""/></a>
+                                                    <a href="#">
+                                                        <c:if test="${empty commodity.img }">
+                                                            <img src="/upload/default.jpg" alt="商品图片"/>
+                                                        </c:if>
+                                                        <c:if test="${ not empty commodity.img }">
+                                                            <img src="/upload/${commodity.img }" alt="商品图片"/>
+                                                        </c:if>
+                                                    </a>
                                                     <span class="new-label">New</span>
                                                     <div class="product-action commodityOption">
                                                         <input type="hidden" value="${commodity.id}" name="commodityId">
-                                                        <a href="javascript:void(0);" name="addCart"><i class="pe-7s-cart"></i></a>
+                                                        <a href="javascript:void(0);" name="addCart"><i
+                                                                class="pe-7s-cart"></i></a>
                                                         <a href="javascript:void(0);" name="modelView">
                                                             <i class="pe-7s-look"></i>
                                                         </a>
@@ -113,7 +121,14 @@
                                         <div class="col-xs-5 col-sm-5 col-md-3">
                                             <div class="product-wrapper">
                                                 <div class="product-img">
-                                                    <a href="#"><img src="/static/fg_js_css/img/product/1.jpg" alt=""/></a>
+                                                    <a href="#">
+                                                        <c:if test="${empty commodity.img }">
+                                                            <img src="/upload/default.jpg" alt="商品图片"/>
+                                                        </c:if>
+                                                        <c:if test="${ not empty commodity.img }">
+                                                            <img src="/upload/${commodity.img }" alt="商品图片"/>
+                                                        </c:if>
+                                                    </a>
                                                     <span class="new-label">New</span>
                                                 </div>
                                             </div>
@@ -144,7 +159,8 @@
                                                 </p>
                                                 <div class="product-action commodityOption">
                                                     <input type="hidden" value="${commodity.id}" name="commodityId">
-                                                    <a class="cart" href="javascript:void(0);" name="addCart"><span>加入购物车</span></i></a>
+                                                    <a class="cart" href="javascript:void(0);" name="addCart"><span>加入购物车</span></i>
+                                                    </a>
                                                     <a href="javascript:void(0);" name="modelView">
                                                         <i class="pe-7s-look"></i>
                                                     </a>

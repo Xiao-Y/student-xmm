@@ -65,7 +65,14 @@
                                         </c:if>
                                     </td>
                                     <td class="product-thumbnail">
-                                        <a href="#"><img src="/static/fg_js_css/img/product/1.jpg" alt=""/></a>
+                                        <a href="#">
+                                            <c:if test="${empty commodity.img }">
+                                                <img src="/upload/default.jpg" alt="商品图片"/>
+                                            </c:if>
+                                            <c:if test="${ not empty commodity.img }">
+                                                <img src="/upload/${commodity.img }" alt="商品图片"/>
+                                            </c:if>
+                                        </a>
                                     </td>
                                     <td class="product-name">
                                         <input type="hidden" name="commodityId" value="${shoppingCartDto.commodityId }">
