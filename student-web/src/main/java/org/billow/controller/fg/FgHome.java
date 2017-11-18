@@ -102,7 +102,7 @@ public class FgHome {
         commodityDto.setDeleFlag("1");
         commodityDto.setStatus("1");
         ModelAndView av = new ModelAndView();
-        PageHelper.startPage(120);
+        PageHelper.startPage(12);
         List<CommodityDto> commodityList = commodityService.selectAll(commodityDto);
         PageInfo<CommodityDto> page = new PageInfo<>(commodityList);
         av.addObject("page", page);

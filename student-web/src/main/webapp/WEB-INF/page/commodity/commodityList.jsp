@@ -44,10 +44,10 @@
                         <td>${commodity.unitPrice }</td>
                         <td>${commodity.spec }</td>
                         <td>
-                            <c:if test="${empty commodity.img }">
+                            <c:if test="${commodity.img == 'default.png' }">
                                 无
                             </c:if>
-                            <c:if test="${ not empty commodity.img }">
+                            <c:if test="${commodity.img != 'default.png'}">
                                 有
                             </c:if>
                         </td>
