@@ -127,7 +127,8 @@
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
                                                     <a href="#">
-                                                        <img src="/upload/${commodity.img }" alt="商品图片"/>
+                                                        <img class="lazy" alt="商品图片"
+                                                             data-original="/upload/${commodity.img }"/>
                                                     </a>
                                                     <span class="new-label">New</span>
                                                     <div class="product-action commodityOption">
@@ -195,7 +196,8 @@
                                         <div class="product-wrapper mb-40">
                                             <div class="product-img">
                                                 <a href="#">
-                                                    <img src="/upload/${commodity.img }" alt="商品图片"/>
+                                                    <img class="lazy" alt="商品图片"
+                                                         data-original="/upload/${commodity.img }"/>
                                                 </a>
                                                 <span class="hot-label">Hot</span>
                                                 <div class="product-action commodityOption">
@@ -253,7 +255,9 @@
                 <div class="col-lg-12">
                     <div class="blog-wrapper mb-40">
                         <div class="blog-img">
-                            <a href="#"><img src="/static/fg_js_css/img/blog/1.jpg" alt=""/></a>
+                            <a href="#">
+                                <img class="lazy" alt="商品图片" data-original="/static/fg_js_css/img/blog/1.jpg"/>
+                            </a>
                         </div>
                         <div class="blog-info">
                             <h3><a href="#">查看更多...</a></h3>
@@ -263,7 +267,9 @@
                 <div class="col-lg-12">
                     <div class="blog-wrapper mb-40">
                         <div class="blog-img">
-                            <a href="#"><img src="/static/fg_js_css/img/blog/2.jpg" alt=""/></a>
+                            <a href="#">
+                                <img class="lazy" alt="商品图片" data-original="/static/fg_js_css/img/blog/2.jpg"/>
+                            </a>
                         </div>
                         <div class="blog-info">
                             <h3><a href="#">查看更多...</a></h3>
@@ -305,7 +311,15 @@
 <!-- Modal start -->
 <jsp:include page="/WEB-INF/page/fg/pub/procuctModal.jsp" flush="true"/>
 <!-- Modal end -->
+<script src="/static/plugins/tuupola-jquery_lazyload/jquery.lazyload.js"></script>
 
+<script>
+
+    $("img.lazy").lazyload({
+        placeholder: "/upload/load.gif",
+        effect: "fadeIn"
+    });
+</script>
 </body>
 </html>
 

@@ -71,7 +71,8 @@
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
                                                     <a href="#">
-                                                        <img src="/upload/${commodity.img }" alt="商品图片"/>
+                                                        <img class="lazy" alt="商品图片"
+                                                             data-original="/upload/${commodity.img }"/>
                                                     </a>
                                                     <c:if test="${commodity.quantity < 10}">
                                                         <span class="new-label">新品</span>
@@ -125,7 +126,8 @@
                                             <div class="product-wrapper">
                                                 <div class="product-img">
                                                     <a href="#">
-                                                        <img src="/upload/${commodity.img }" alt="商品图片"/>
+                                                        <img class="lazy" alt="商品图片"
+                                                             data-original="/upload/${commodity.img }"/>
                                                     </a>
                                                     <span class="new-label">New</span>
                                                 </div>
@@ -203,7 +205,15 @@
 <!-- Modal end -->
 
 <script type="text/javascript" src="${ctx }/static/plugins/pagination/jquery.pagination.js"></script>
+<script src="/static/plugins/tuupola-jquery_lazyload/jquery.lazyload.js"></script>
+
 <script>
+
+    $("img.lazy").lazyload({
+        placeholder: "/upload/load.gif",
+        effect: "fadeIn"
+    });
+
     //分页使用
     $('.M-box').pagination({
         coping: true,
