@@ -49,6 +49,26 @@ public class OrderFormDetailBase extends BaseModel implements Serializable {
     private Integer commodityNum;
     //商品id
     private String commodityId;
+    //商品图片名称
+    private String commodityImg;
+
+    /**
+     * 商品图片名称
+     *
+     * @return
+     */
+    public String getCommodityImg() {
+        return commodityImg;
+    }
+
+    /**
+     * 商品图片名称
+     *
+     * @param commodityImg
+     */
+    public void setCommodityImg(String commodityImg) {
+        this.commodityImg = commodityImg;
+    }
 
     /**
      * 商品id

@@ -127,12 +127,7 @@
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
                                                     <a href="#">
-                                                        <c:if test="${empty commodity.img }">
-                                                            <img src="/upload/default.jpg" alt="商品图片"/>
-                                                        </c:if>
-                                                        <c:if test="${ not empty commodity.img }">
-                                                            <img src="/upload/${commodity.img }" alt="商品图片"/>
-                                                        </c:if>
+                                                        <img src="/upload/${commodity.img }" alt="商品图片"/>
                                                     </a>
                                                     <span class="new-label">New</span>
                                                     <div class="product-action commodityOption">
@@ -200,12 +195,7 @@
                                         <div class="product-wrapper mb-40">
                                             <div class="product-img">
                                                 <a href="#">
-                                                    <c:if test="${empty commodity.img }">
-                                                        <img src="/upload/default.jpg" alt="商品图片"/>
-                                                    </c:if>
-                                                    <c:if test="${ not empty commodity.img }">
-                                                        <img src="/upload/${commodity.img }" alt="商品图片"/>
-                                                    </c:if>
+                                                    <img src="/upload/${commodity.img }" alt="商品图片"/>
                                                 </a>
                                                 <span class="hot-label">Hot</span>
                                                 <div class="product-action commodityOption">

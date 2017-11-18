@@ -71,14 +71,17 @@
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
                                                     <a href="#">
-                                                        <c:if test="${empty commodity.img }">
-                                                            <img src="/upload/default.jpg" alt="商品图片"/>
-                                                        </c:if>
-                                                        <c:if test="${ not empty commodity.img }">
-                                                            <img src="/upload/${commodity.img }" alt="商品图片"/>
-                                                        </c:if>
+                                                        <img src="/upload/${commodity.img }" alt="商品图片"/>
                                                     </a>
-                                                    <span class="new-label">New</span>
+                                                    <c:if test="${commodity.quantity < 10}">
+                                                        <span class="new-label">新品</span>
+                                                    </c:if>
+                                                    <c:if test="${commodity.quantity >= 10 || commodity.quantity >= 30}">
+                                                        <span class="pop-label">人气</span>
+                                                    </c:if>
+                                                    <c:if test="${commodity.quantity > 30}">
+                                                        <span class="hot-label">热销</span>
+                                                    </c:if>
                                                     <div class="product-action commodityOption">
                                                         <input type="hidden" value="${commodity.id}" name="commodityId">
                                                         <a href="javascript:void(0);" name="addCart"><i
@@ -122,12 +125,7 @@
                                             <div class="product-wrapper">
                                                 <div class="product-img">
                                                     <a href="#">
-                                                        <c:if test="${empty commodity.img }">
-                                                            <img src="/upload/default.jpg" alt="商品图片"/>
-                                                        </c:if>
-                                                        <c:if test="${ not empty commodity.img }">
-                                                            <img src="/upload/${commodity.img }" alt="商品图片"/>
-                                                        </c:if>
+                                                        <img src="/upload/${commodity.img }" alt="商品图片"/>
                                                     </a>
                                                     <span class="new-label">New</span>
                                                 </div>

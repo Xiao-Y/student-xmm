@@ -53,8 +53,22 @@
   top: 18px;
   z-index: 100;
 }
-.hot-label {
+.pop-label {
   background: #f7814d none repeat scroll 0 0;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  left: 0;
+  line-height: 25px;
+  min-width: 60px;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  top: 18px;
+  z-index: 100;
+}
+.hot-label {
+  background: #cd0a0a none repeat scroll 0 0;
   color: #fff;
   font-size: 12px;
   font-weight: 600;

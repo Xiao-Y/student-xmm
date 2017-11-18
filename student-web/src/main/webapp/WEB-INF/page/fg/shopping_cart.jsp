@@ -66,12 +66,7 @@
                                     </td>
                                     <td class="product-thumbnail">
                                         <a href="#">
-                                            <c:if test="${empty commodity.img }">
-                                                <img src="/upload/default.jpg" alt="商品图片"/>
-                                            </c:if>
-                                            <c:if test="${ not empty commodity.img }">
-                                                <img src="/upload/${commodity.img }" alt="商品图片"/>
-                                            </c:if>
+                                            <img src="/upload/${commodity.img }" alt="商品图片"/>
                                         </a>
                                     </td>
                                     <td class="product-name">

@@ -82,6 +82,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             orderFormDetailDto.setId(UUID.generate());
             orderFormDetailDto.setCommodityNum(new Integer(commodityNums[i]));
             orderFormDetailDto.setCommodityId(dto.getId());
+            orderFormDetailDto.setCommodityImg(dto.getImg());
             //计算订单金额
             orderFormAmount = orderFormAmount.add(new BigDecimal(commodityNums[i]).multiply(dto.getUnitPrice()));
             detailes.add(orderFormDetailDto);
@@ -91,6 +92,9 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             shoppingCartDto.setId(loginUser.getUserId().toString());
             shoppingCartDto.setCommodityId(dto.getId());
             shoppingCartDao.deleteByPrimaryKey(shoppingCartDto);
+            //4更新商品销售数量
+            dto.setQuantity(dto.getQuantity() + new Integer(commodityNums[i]));
+            commodityDao.updateByPrimaryKeySelective(dto);
         }
         // 1、保存订单信息
         //查询地址信息

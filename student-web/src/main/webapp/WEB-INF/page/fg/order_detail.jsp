@@ -57,7 +57,7 @@
                                     <td class="product-thumbnail commodityOption">
                                         <input type="hidden" value="${orderFormDetail.commodityId}" name="commodityId">
                                         <a href="#" name="modelView">
-                                            <img src="/static/fg_js_css/img/product/1.jpg" alt=""/>
+                                            <img src="/upload/${orderFormDetail.commodityImg}" alt="商品图片"/>
                                         </a>
                                     </td>
                                     <td class="product-name">

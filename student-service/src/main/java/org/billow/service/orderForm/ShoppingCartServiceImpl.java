@@ -1,5 +1,6 @@
 package org.billow.service.orderForm;
 
+import org.billow.api.commodity.CommodityService;
 import org.billow.api.orderForm.ShoppingCartService;
 import org.billow.dao.CommodityDao;
 import org.billow.dao.ShoppingCartDao;
@@ -31,7 +32,7 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCartDto> im
     @Resource
     private ShoppingCartDao shoppingCartDao;
     @Autowired
-    private CommodityDao commodityDao;
+    private CommodityService commodityService;
 
     @Resource
     @Override
@@ -85,7 +86,7 @@ public class ShoppingCartServiceImpl extends BaseServiceImpl<ShoppingCartDto> im
                 String commodityId = cartDto.getCommodityId();
                 CommodityDto commodityDto = new CommodityDto();
                 commodityDto.setId(commodityId);
-                CommodityDto commodity = commodityDao.selectByPrimaryKey(commodityDto);
+                CommodityDto commodity = commodityService.selectByPrimaryKey(commodityDto);
                 cartDto.setCommodityDto(commodity);
             }
         }
