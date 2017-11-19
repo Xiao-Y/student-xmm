@@ -76,6 +76,10 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             commodityDto.setId(commodityIds[i]);
             //查询商品信息
             CommodityDto dto = commodityDao.selectByPrimaryKey(commodityDto);
+            //如果是无货或者已下架商品不出单
+            if ("0".equals(dto.getStatus()) || "0".equals(dto.getValid())) {
+                continue;
+            }
             OrderFormDetailDto orderFormDetailDto = new OrderFormDetailDto();
             BeanUtils.copyProperties(dto, orderFormDetailDto);
             orderFormDetailDto.setOrderFormId(orderFormId);

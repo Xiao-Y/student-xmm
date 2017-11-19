@@ -84,7 +84,7 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">商品信息</label>
             <div class="layui-input-block">
-                <textarea placeholder="这里输入商品信息" name="commodityInfo"
+                <textarea placeholder="这里输入商品信息" name="commodityInfo" maxlength="250"
                           class="layui-textarea">${commodity.commodityInfo }</textarea>
             </div>
         </div>

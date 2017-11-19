@@ -63,6 +63,8 @@ public class FgHome {
 
         commodityDto.setDeleFlag("1");
         commodityDto.setStatus("1");
+        commodityDto.setValid("1");
+
         //首页显示
         ModelAndView av = new ModelAndView();
         //最新商品
@@ -100,9 +102,9 @@ public class FgHome {
     @RequestMapping("/shop")
     public ModelAndView shop(CommodityDto commodityDto) {
         commodityDto.setDeleFlag("1");
-        commodityDto.setStatus("1");
+        commodityDto.setValid("1");
         ModelAndView av = new ModelAndView();
-        PageHelper.startPage(12);
+        PageHelper.startPage(16);
         List<CommodityDto> commodityList = commodityService.selectAll(commodityDto);
         PageInfo<CommodityDto> page = new PageInfo<>(commodityList);
         av.addObject("page", page);
@@ -155,7 +157,7 @@ public class FgHome {
     @RequestMapping("/order")
     public ModelAndView order(HttpServletRequest request, OrderFormDto orderFormDto) {
         UserDto loginUser = LoginHelper.getLoginUser(request);
-        PageHelper.startPage(3);
+        PageHelper.startPage(6);
         orderFormDto.setUserId(loginUser.getUserId());
         orderFormDto.setDelFlag("0");
         List<OrderFormDto> list = orderFormService.selectAll(orderFormDto);
@@ -413,8 +415,6 @@ public class FgHome {
     @RequestMapping("/procuctModal")
     public CommodityDto procuctModal(CommodityDto commodity) {
         CommodityDto commodityDto = new CommodityDto();
-        commodity.setValid("1");
-        commodity.setStatus("1");
         List<CommodityDto> commodityDtos = commodityService.selectAll(commodity);
         if (ToolsUtils.isNotEmpty(commodityDtos)) {
             commodityDto = commodityDtos.get(0);

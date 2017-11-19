@@ -12,6 +12,7 @@
                     <a href="shop.html">
                         <img id="commodityImag" src="" alt="商品图片"/>
                     </a>
+                    <div id="statusLael"></div>
                 </div>
                 <div class="modal-pro-content">
                     <h3 id="commodityName"><a href="#">商品名称</a></h3>
@@ -129,6 +130,7 @@
         if (typeof(commodityId) == 'undefined' || commodityId == '') {
             new TipBox({type: 'error', str: '商品不存在或已经下架!', hasBtn: true});
         }
+        $("#statusLael").empty();
         var url = path + '/fg/fgHome/procuctModal?id=' + commodityId;
         $.ajax({
             type: "POST",
@@ -138,6 +140,20 @@
                 if (commodity.id == null || commodity.id == "null" || commodity.id == "") {
                     new TipBox({type: 'error', str: '商品不存在或已经下架!', hasBtn: true});
                 } else {
+                    if (commodity.valid == '0') {
+                        $("#addCartModal").attr("disabled", true);
+                        $("#addCartModal").text("商品已下架");
+                        $("#statusLael").html('<span class="hot-label">已下架</span>');
+                    } else {
+                        if (commodity.status == '0') {
+                            $("#addCartModal").attr("disabled", true);
+                            $("#addCartModal").text("商品无货");
+                            $("#statusLael").html('<span class="hot-label">无货</span>');
+                        } else {
+                            $("#addCartModal").attr("disabled", false);
+                            $("#addCartModal").text("加入购物车");
+                        }
+                    }
                     $("#commodityImag").attr("src", "/upload/" + commodity.img);
                     $("#commodityName").html("<a href='#'>" + commodity.commodityName + "</a>");
                     $("#unitPrice").html('¥' + commodity.unitPrice + '/' + commodity.spec);
@@ -145,6 +161,7 @@
                     $("#packing").html("包装：" + commodity.packing);
                     $("#quantity").html("已售出：" + commodity.quantity);
                     $("#commodityId").val(commodity.id);
+                    $("#commodityNum").val("1");
                     $("#productModal").modal('show');
                 }
             },

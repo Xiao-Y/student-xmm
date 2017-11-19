@@ -50,8 +50,6 @@
                                 <th class="product-price">商品单价</th>
                                 <th class="product-quantity">商品数量</th>
                                 <th class="product-subtotal">商品小计</th>
-                                <th>是否有货</th>
-                                <th>是否有效</th>
                                 <th class="product-remove">操作</th>
                             </tr>
                             </thead>
@@ -65,9 +63,22 @@
                                         </c:if>
                                     </td>
                                     <td class="product-thumbnail">
-                                        <a href="#">
-                                            <img src="/upload/${commodity.img }" alt="商品图片"/>
-                                        </a>
+                                            <%--<img class="lazy" alt="商品图片"
+                                                 data-original="/upload/${commodity.img }"/>--%>
+                                        <div class="product-img">
+                                            <a href="#">
+                                                <img class="lazy" alt="商品图片"
+                                                     data-original="/upload/${commodity.img }"/>
+                                            </a>
+                                            <c:if test="${commodity.valid == '0'}">
+                                                <span class="hot-label">已下架</span>
+                                            </c:if>
+                                            <c:if test="${commodity.valid == '1'}">
+                                                <c:if test="${commodity.status == '0'}">
+                                                    <span class="hot-label">无货</span>
+                                                </c:if>
+                                            </c:if>
+                                        </div>
                                     </td>
                                     <td class="product-name">
                                         <input type="hidden" name="commodityId" value="${shoppingCartDto.commodityId }">
@@ -80,26 +91,6 @@
                                                value="${shoppingCartDto.commodityNum }"/>
                                     </td>
                                     <td class="product-subtotal">${commodity.unitPrice * shoppingCartDto.commodityNum }</td>
-                                    <td style="text-align:center;" class="status" title="${commodity.status}">
-                                        <c:if test="${commodity.status == '1'}">
-                                            <i class="fa fa-check-circle fa-lg" aria-hidden="true"
-                                               style="color:green;"></i>
-                                        </c:if>
-                                        <c:if test="${commodity.status == '0'}">
-                                            <i class="fa fa-times-circle fa-lg" aria-hidden="true"
-                                               style="color:red;"></i>
-                                        </c:if>
-                                    </td>
-                                    <td class="valid" title="${commodity.valid}">
-                                        <c:if test="${commodity.valid == '1'}">
-                                            <i class="fa fa-check-circle fa-lg" aria-hidden="true"
-                                               style="color:green;"></i>
-                                        </c:if>
-                                        <c:if test="${commodity.valid == '0'}">
-                                            <i class="fa fa-times-circle fa-lg" aria-hidden="true"
-                                               style="color:red;"></i>
-                                        </c:if>
-                                    </td>
                                     <td class="product-remove">
                                         <a href="javascript:void(0);" name="removeCommodity"
                                            url="${ctx }/shoppingCart/deleteShoppingCart/${shoppingCartDto.commodityId }">
@@ -188,8 +179,15 @@
 <!-- Modal end -->
 
 <script type="text/javascript" src="${ctx }/static/js/common/dataTool.js"></script>
+<script src="/static/plugins/tuupola-jquery_lazyload/jquery.lazyload.js"></script>
 
 <script>
+
+    $("img.lazy").lazyload({
+        placeholder: "/upload/load.gif",
+        effect: "fadeIn"
+    });
+
     $(function () {
 
         total();

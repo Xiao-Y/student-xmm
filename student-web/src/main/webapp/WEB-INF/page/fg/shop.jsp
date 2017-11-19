@@ -74,14 +74,19 @@
                                                         <img class="lazy" alt="商品图片"
                                                              data-original="/upload/${commodity.img }"/>
                                                     </a>
-                                                    <c:if test="${commodity.quantity < 10}">
-                                                        <span class="new-label">新品</span>
+                                                    <c:if test="${commodity.status == '0'}">
+                                                        <span class="hot-label">无货</span>
                                                     </c:if>
-                                                    <c:if test="${commodity.quantity >= 10 || commodity.quantity >= 30}">
-                                                        <span class="pop-label">人气</span>
-                                                    </c:if>
-                                                    <c:if test="${commodity.quantity > 30}">
-                                                        <span class="hot-label">热销</span>
+                                                    <c:if test="${commodity.status == '1'}">
+                                                        <c:if test="${commodity.quantity < 10}">
+                                                            <span class="new-label">新品</span>
+                                                        </c:if>
+                                                        <c:if test="${commodity.quantity >= 10 || commodity.quantity >= 30}">
+                                                            <span class="pop-label">人气</span>
+                                                        </c:if>
+                                                        <c:if test="${commodity.quantity > 30}">
+                                                            <span class="hot-label">热销</span>
+                                                        </c:if>
                                                     </c:if>
                                                     <div class="product-action commodityOption">
                                                         <input type="hidden" value="${commodity.id}" name="commodityId">

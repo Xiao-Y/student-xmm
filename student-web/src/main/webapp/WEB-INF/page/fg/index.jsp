@@ -130,7 +130,7 @@
                                                         <img class="lazy" alt="商品图片"
                                                              data-original="/upload/${commodity.img }"/>
                                                     </a>
-                                                    <span class="new-label">New</span>
+                                                    <span class="new-label">新品</span>
                                                     <div class="product-action commodityOption">
                                                         <input type="hidden" value="${commodity.id}" name="commodityId">
                                                         <a href="javascript:void(0);" name="addCart"><i
@@ -199,7 +199,7 @@
                                                     <img class="lazy" alt="商品图片"
                                                          data-original="/upload/${commodity.img }"/>
                                                 </a>
-                                                <span class="hot-label">Hot</span>
+                                                <span class="hot-label">热销</span>
                                                 <div class="product-action commodityOption">
                                                     <input type="hidden" value="${commodity.id}" name="commodityId">
                                                     <a href="javascript:void(0);" name="addCart">
