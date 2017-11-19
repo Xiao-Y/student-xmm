@@ -136,7 +136,7 @@
     $("#editBtn").click(function () {
         $("#phoneNumber").attr("readonly", false);
         $("#mail").attr("readonly", false);
-        $(this).hide();
+        $("#editBtn").hide();
         $("#submitBtn").show();
     });
 

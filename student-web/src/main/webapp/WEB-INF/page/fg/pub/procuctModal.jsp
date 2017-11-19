@@ -16,12 +16,12 @@
                 </div>
                 <div class="modal-pro-content">
                     <h3 id="commodityName"><a href="#">商品名称</a></h3>
-                    <div class="pro-rating">
+                    <div class="pro-rating" id="pro-rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star"></i>
                     </div>
                     <%--<span>(2 customer reviews)</span>--%>
                     <div class="price">
@@ -137,6 +137,14 @@
             dataType: "json",
             url: url,
             success: function (commodity) {
+
+                var htmlStr =
+                    '<i class="fa fa-star"></i>' +
+                    '<i class="fa fa-star"></i>' +
+                    '<i class="fa fa-star"></i>' +
+                    '<i class="fa fa-star"></i>' +
+                    '<i class="fa fa-star"></i>';
+
                 if (commodity.id == null || commodity.id == "null" || commodity.id == "") {
                     new TipBox({type: 'error', str: '商品不存在或已经下架!', hasBtn: true});
                 } else {
@@ -149,11 +157,34 @@
                             $("#addCartModal").attr("disabled", true);
                             $("#addCartModal").text("商品无货");
                             $("#statusLael").html('<span class="hot-label">无货</span>');
+                            htmlStr =
+                                '<i class="fa fa-star-o"></i>' +
+                                '<i class="fa fa-star-o"></i>' +
+                                '<i class="fa fa-star-o"></i>' +
+                                '<i class="fa fa-star-o"></i>' +
+                                '<i class="fa fa-star-o"></i>';
                         } else {
                             $("#addCartModal").attr("disabled", false);
                             $("#addCartModal").text("加入购物车");
+
+                            if (commodity.quantity < 10) {
+                                htmlStr =
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star-o"></i>' +
+                                    '<i class="fa fa-star-o"></i>';
+                            } else if (commodity.quantity >= 10 && commodity.quantity <= 30) {
+                                htmlStr =
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star"></i>' +
+                                    '<i class="fa fa-star-o"></i>';
+                            }
                         }
                     }
+                    $("#pro-rating").html(htmlStr);
                     $("#commodityImag").attr("src", "/upload/" + commodity.img);
                     $("#commodityName").html("<a href='#'>" + commodity.commodityName + "</a>");
                     $("#unitPrice").html('¥' + commodity.unitPrice + '/' + commodity.spec);

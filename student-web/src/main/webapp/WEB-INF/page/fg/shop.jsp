@@ -70,7 +70,7 @@
                                         <div class="col-md-3 col-sm-6">
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
-                                                    <a href="#">
+                                                    <a href="javascript:void(0);">
                                                         <img class="lazy" alt="商品图片"
                                                              data-original="/upload/${commodity.img }"/>
                                                     </a>
@@ -81,7 +81,7 @@
                                                         <c:if test="${commodity.quantity < 10}">
                                                             <span class="new-label">新品</span>
                                                         </c:if>
-                                                        <c:if test="${commodity.quantity >= 10 || commodity.quantity >= 30}">
+                                                        <c:if test="${commodity.quantity >= 10 && commodity.quantity <= 30}">
                                                             <span class="pop-label">人气</span>
                                                         </c:if>
                                                         <c:if test="${commodity.quantity > 30}">
@@ -108,11 +108,36 @@
                                                             <span class="price product-price">¥${commodity.unitPrice }/<span>${commodity.spec }</span>
                                                         </div>
                                                         <div class="pro-rating">
-                                                            <a href="#"><i class="fa fa-star"></i></a>
-                                                            <a href="#"><i class="fa fa-star"></i></a>
-                                                            <a href="#"><i class="fa fa-star-o"></i></a>
-                                                            <a href="#"><i class="fa fa-star-o"></i></a>
-                                                            <a href="#"><i class="fa fa-star-o"></i></a>
+                                                            <c:if test="${commodity.status == '0'}">
+                                                                <a href="#"><i class="fa fa-star-o"></i></a>
+                                                                <a href="#"><i class="fa fa-star-o"></i></a>
+                                                                <a href="#"><i class="fa fa-star-o"></i></a>
+                                                                <a href="#"><i class="fa fa-star-o"></i></a>
+                                                                <a href="#"><i class="fa fa-star-o"></i></a>
+                                                            </c:if>
+                                                            <c:if test="${commodity.status == '1'}">
+                                                                <c:if test="${commodity.quantity < 10}">
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star-o"></i></a>
+                                                                    <a href="#"><i class="fa fa-star-o"></i></a>
+                                                                </c:if>
+                                                                <c:if test="${commodity.quantity >= 10 && commodity.quantity <= 30}">
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star-o"></i></a>
+                                                                </c:if>
+                                                                <c:if test="${commodity.quantity > 30}">
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                                </c:if>
+                                                            </c:if>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -130,11 +155,24 @@
                                         <div class="col-xs-5 col-sm-5 col-md-3">
                                             <div class="product-wrapper">
                                                 <div class="product-img">
-                                                    <a href="#">
+                                                    <a href="javascript:void(0);">
                                                         <img class="lazy" alt="商品图片"
                                                              data-original="/upload/${commodity.img }"/>
                                                     </a>
-                                                    <span class="new-label">New</span>
+                                                    <c:if test="${commodity.status == '0'}">
+                                                        <span class="hot-label">无货</span>
+                                                    </c:if>
+                                                    <c:if test="${commodity.status == '1'}">
+                                                        <c:if test="${commodity.quantity < 10}">
+                                                            <span class="new-label">新品</span>
+                                                        </c:if>
+                                                        <c:if test="${commodity.quantity >= 10 && commodity.quantity <= 30}">
+                                                            <span class="pop-label">人气</span>
+                                                        </c:if>
+                                                        <c:if test="${commodity.quantity > 30}">
+                                                            <span class="hot-label">热销</span>
+                                                        </c:if>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                         </div>
@@ -149,11 +187,36 @@
                                                         <span class="price product-price">¥${commodity.unitPrice }/<span>${commodity.spec }</span>
                                                     </div>
                                                     <div class="pro-rating">
-                                                        <a href="#"><i class="fa fa-star-o"></i></a>
-                                                        <a href="#"><i class="fa fa-star-o"></i></a>
-                                                        <a href="#"><i class="fa fa-star-o"></i></a>
-                                                        <a href="#"><i class="fa fa-star-o"></i></a>
-                                                        <a href="#"><i class="fa fa-star-o"></i></a>
+                                                        <c:if test="${commodity.status == '0'}">
+                                                            <a href="#"><i class="fa fa-star-o"></i></a>
+                                                            <a href="#"><i class="fa fa-star-o"></i></a>
+                                                            <a href="#"><i class="fa fa-star-o"></i></a>
+                                                            <a href="#"><i class="fa fa-star-o"></i></a>
+                                                            <a href="#"><i class="fa fa-star-o"></i></a>
+                                                        </c:if>
+                                                        <c:if test="${commodity.status == '1'}">
+                                                            <c:if test="${commodity.quantity < 10}">
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-star-o"></i></a>
+                                                                <a href="#"><i class="fa fa-star-o"></i></a>
+                                                            </c:if>
+                                                            <c:if test="${commodity.quantity >= 10 && commodity.quantity <= 30}">
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-sta"></i></a>
+                                                                <a href="#"><i class="fa fa-star-o"></i></a>
+                                                            </c:if>
+                                                            <c:if test="${commodity.quantity > 30}">
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                                <a href="#"><i class="fa fa-star"></i></a>
+                                                            </c:if>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                                 <p>

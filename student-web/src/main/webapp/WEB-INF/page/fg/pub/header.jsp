@@ -15,20 +15,27 @@
                                 <li><a href="/fg/fgHome/index">首页</a></li>
                                 <li><a href="/fg/fgHome/shop">商品列表</a></li>
                                 <li>
-                                    <a href="/fg/fgHome/order">个人中心</a>
-                                    <div class="mega-menu">
+                                    <a href="/fg/fgHome/order">订单管理</a>
+                                    <%--<div class="mega-menu">
                                         <ul>
                                             <li><a href="/fg/fgHome/order">我的订单</a></li>
-                                            <li><a href="/fg/fgHome/userInfo">修改个人信息</a></li>
-                                            <li><a href="/fg/fgHome/editPassword">修改密码</a></li>
                                         </ul>
-                                    </div>
+                                    </div>--%>
                                 </li>
                                 <li><a href="/fg/fgHome/address">收货地址</a>
                                     <div class="mega-menu">
                                         <ul>
                                             <li><a href="/fg/fgHome/address">我的收货地址</a></li>
                                             <li><a href="/fg/fgHome/editAddress?type=add">添加新收货地址</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="#">${currentUser.userName }</a>
+                                    <div class="mega-menu">
+                                        <ul>
+                                            <li><a href="/home/login">注销登陆</a></li>
+                                            <li><a href="/fg/fgHome/userInfo">修改个人信息</a></li>
+                                            <li><a href="/fg/fgHome/editPassword">修改密码</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -136,20 +143,29 @@
                                 <li><a href="/fg/fgHome/index">首页</a></li>
                                 <li><a href="/fg/fgHome/shop">商品列表</a></li>
                                 <li>
-                                    <a href="/fg/fgHome/order">个人中心</a>
-                                    <div class="mega-menu">
+                                    <a href="/fg/fgHome/order">订单管理</a>
+                                   <%-- <div class="mega-menu">
                                         <ul>
                                             <li><a href="/fg/fgHome/order">我的订单</a></li>
                                             <li><a href="/fg/fgHome/userInfo">修改个人信息</a></li>
                                             <li><a href="/fg/fgHome/editPassword">修改密码</a></li>
                                         </ul>
-                                    </div>
+                                    </div>--%>
                                 </li>
                                 <li><a href="/fg/fgHome/address">收货地址</a>
                                     <div class="mega-menu">
                                         <ul>
                                             <li><a href="/fg/fgHome/address">我的收货地址</a></li>
                                             <li><a href="/fg/fgHome/editAddress?type=add">添加新收货地址</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="#">${currentUser.userName }</a>
+                                    <div class="mega-menu">
+                                        <ul>
+                                            <li><a href="/home/login">注销登陆</a></li>
+                                            <li><a href="/fg/fgHome/userInfo">修改个人信息</a></li>
+                                            <li><a href="/fg/fgHome/editPassword">修改密码</a></li>
                                         </ul>
                                     </div>
                                 </li>

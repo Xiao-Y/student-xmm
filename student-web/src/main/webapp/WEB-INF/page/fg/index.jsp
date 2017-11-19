@@ -126,7 +126,7 @@
                                         <div class="col-md-12">
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
-                                                    <a href="#">
+                                                    <a href="javascript:void(0);">
                                                         <img class="lazy" alt="商品图片"
                                                              data-original="/upload/${commodity.img }"/>
                                                     </a>
@@ -154,7 +154,7 @@
                                                         <div class="pro-rating">
                                                             <a href="#"><i class="fa fa-star"></i></a>
                                                             <a href="#"><i class="fa fa-star"></i></a>
-                                                            <a href="#"><i class="fa fa-star-o"></i></a>
+                                                            <a href="#"><i class="fa fa-star"></i></a>
                                                             <a href="#"><i class="fa fa-star-o"></i></a>
                                                             <a href="#"><i class="fa fa-star-o"></i></a>
                                                         </div>
@@ -195,7 +195,7 @@
                                     <div class="col-md-12">
                                         <div class="product-wrapper mb-40">
                                             <div class="product-img">
-                                                <a href="#">
+                                                <a href="javascript:void(0);">
                                                     <img class="lazy" alt="商品图片"
                                                          data-original="/upload/${commodity.img }"/>
                                                 </a>
@@ -225,7 +225,7 @@
                                                         <a href="#"><i class="fa fa-star"></i></a>
                                                         <a href="#"><i class="fa fa-star"></i></a>
                                                         <a href="#"><i class="fa fa-star"></i></a>
-                                                        <a href="#"><i class="fa fa-star-o"></i></a>
+                                                        <a href="#"><i class="fa fa-star"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
