@@ -81,3 +81,18 @@ selectByPrimaryKey
 	MessageObject msg = rabbitMQConsume.receiveToMessageObject();
 	
 	
+
+系统配置：
+1、可以直接使用
+spring/applicationContext.properties
+修改：
+spring/applicationContext.xml
+locations为：
+<value>classpath:spring/applicationContext.properties</value>
+2、使用
+student-web/src/main/env
+选择开发或生产添加为resourcess发布到claesses下
+修改：
+spring/applicationContext.xml
+locations为：
+<value>classpath:env.properties</value>
