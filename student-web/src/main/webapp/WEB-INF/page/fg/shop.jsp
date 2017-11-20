@@ -67,7 +67,7 @@
                                 <div class="row">
 
                                     <c:forEach var="commodity" items="${page.list}">
-                                        <div class="col-md-3 col-sm-6">
+                                        <div class="col-md-2 col-sm-6">
                                             <div class="product-wrapper mb-40">
                                                 <div class="product-img">
                                                     <a href="javascript:void(0);">
@@ -245,7 +245,9 @@
                             <!-- 商品显示2 end -->
                             <%-- 分页数据 start --%>
                             <div class="content-sortpagibar">
-                                <div class="product-count display-inline">每页${page.pageSize }条,共${page.pages }页</div>
+                                <div class="product-count display-inline">
+                                    共${page.total }条数据,每页${page.pageSize }条,共${page.pages }页
+                                </div>
                                 <div class="M-box"></div>
                                 <input type="hidden" value="${page.pages }" id="pages">
                                 <input type="hidden" value="${page.pageNum }" id="pageNum">
@@ -286,7 +288,7 @@
     $('.M-box').pagination({
         coping: true,
         jump: true,//是否开启跳转到指定页数
-        isHide: false,//总页数为0或1时隐藏分页控件
+        isHide: true,//总页数为0或1时隐藏分页控件
         homePage: '首页',
         endPage: '末页',
         prevContent: '上页',

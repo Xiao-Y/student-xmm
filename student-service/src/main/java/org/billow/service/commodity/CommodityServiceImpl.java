@@ -27,7 +27,7 @@ public class CommodityServiceImpl extends BaseServiceImpl<CommodityDto> implemen
 
     @Resource
     private CommodityDao commodityDao;
-    @Value("${commodiity.img.default}")
+    @Value("${commodity.img.default}")
     private String defaultImg;
 
     @Resource

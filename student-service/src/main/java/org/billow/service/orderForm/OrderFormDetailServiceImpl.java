@@ -27,7 +27,7 @@ public class OrderFormDetailServiceImpl extends BaseServiceImpl<OrderFormDetailD
 
     @Resource
     private OrderFormDetailDao orderFormDetailDao;
-    @Value("${commodiity.img.default}")
+    @Value("${commodity.img.default}")
     private String defaultImg;
 
     @Resource

@@ -40,10 +40,10 @@ public class CommodityController {
     @Autowired
     private CommodityService commodityService;
     //商品图片路径
-    @Value("${commodiity.img.upload}")
+    @Value("${commodity.img.upload}")
     private String upload;
     //默认图片名称
-    @Value("${commodiity.img.default}")
+    @Value("${commodity.img.default}")
     private String defaultImg;
 
     /**

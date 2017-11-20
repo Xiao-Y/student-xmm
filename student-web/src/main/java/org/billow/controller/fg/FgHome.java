@@ -21,6 +21,7 @@ import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,6 +50,8 @@ public class FgHome {
     private OrderFormDetailService orderFormDetailService;
     @Autowired
     private UserService userService;
+    @Value("${commodity.shop.pageSize}")
+    private int shopPageSize;
 
     /**
      * 商城首页
@@ -104,7 +107,7 @@ public class FgHome {
         commodityDto.setDeleFlag("1");
         commodityDto.setValid("1");
         ModelAndView av = new ModelAndView();
-        PageHelper.startPage(16);
+        PageHelper.startPage(shopPageSize);
         List<CommodityDto> commodityList = commodityService.selectAll(commodityDto);
         PageInfo<CommodityDto> page = new PageInfo<>(commodityList);
         av.addObject("page", page);
