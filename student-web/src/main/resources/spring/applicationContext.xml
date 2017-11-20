@@ -25,7 +25,8 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:spring/applicationContext.properties</value>
+                <!--<value>classpath:spring/applicationContext.properties</value>-->
+                <value>classpath:env.properties</value>
                 <value>classpath:spring/druid.properties</value>
             </list>
         </property>
