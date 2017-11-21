@@ -13,8 +13,9 @@
 <body style="padding: 10px;">
 <blockquote class="layui-elem-quote">
     注意：<br><font style="color: red">*</font>为必填项<br>
-    电子邮箱将用于以后的密码的找回，请保证邮箱的正确性！！！<br>
-    用户名注册后不可以更改，请牢记用户名！！！
+    电子邮箱将用于以后的密码的找回和用户验证，请保证邮箱的正确性！！！<br>
+    用户名注册后不可以更改，请牢记用户名！！！<br>
+    用户注册成功后，需要邮箱验证通过才能登陆！！！<br>
 </blockquote>
 <div style="margin: 30px 400px 30px 400px;">
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">

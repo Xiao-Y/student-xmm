@@ -9,7 +9,6 @@ import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.MenuDto;
 import org.billow.model.expand.UserDto;
 import org.billow.model.expand.UserRoleDto;
-import org.billow.utils.RequestUtils;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.generator.Md5Encrypt;
@@ -28,7 +27,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -45,11 +43,9 @@ public class HomeController {
     private MenuService menuService;
     @Autowired
     private UserService userService;
+    //客户角色
     @Value("${customerRole}")
     private String customerRole;
-
-    // @Autowired
-    // private DictionaryDao dictionaryDao;
 
     /**
      * 登陆
@@ -91,32 +87,31 @@ public class HomeController {
     @RequestMapping("/homeIndex")
     public ModelAndView homeIndex(UserDto userTemp, HttpServletRequest request, HttpServletResponse response, RedirectAttributes attr) {
         ModelAndView av = new ModelAndView();
-        try {
-            Cookie userCo = new Cookie("userName", null);
-            userCo.setMaxAge(0);
-            response.addCookie(userCo);
-        } catch (Exception e) {
-            logger.error(e);
-            e.printStackTrace();
-        }
-        userTemp.setPassword(LoginHelper.md5PasswordTwo(userTemp.getPassword()));
-        UserDto user = userService.findUserByUserNameAndPwd(userTemp);
-        //记住密码
+        //记住用户名
         if (userTemp.isRememberMe()) {
             try {
                 Cookie userCo = new Cookie("userName", userTemp.getUserName());
                 userCo.setMaxAge(60 * 60 * 24 * 30);
                 response.addCookie(userCo);
-                if (user == null || user.getUserId() == null) {
-                    attr.addFlashAttribute("errorMsg", "用户名或密码错误！");
-                    av.setViewName("redirect:/home/login");
-                    return av;
-                }
             } catch (Exception e) {
                 logger.error(e);
                 e.printStackTrace();
             }
         }
+
+        userTemp.setPassword(LoginHelper.md5PasswordTwo(userTemp.getPassword()));
+        UserDto user = userService.findUserByUserNameAndPwd(userTemp);
+        //验证的合法性
+        if (user == null || user.getUserId() == null) {
+            attr.addFlashAttribute("errorMsg", "用户名或密码错误！");
+            av.setViewName("redirect:/home/login");
+            return av;
+        } else if ("0".equals(user.getVaild())) {
+            attr.addFlashAttribute("errorMsg", "对不起，该用户没有通过验证！");
+            av.setViewName("redirect:/home/login");
+            return av;
+        }
+
         LoginHelper.setLoginUser(request, user);
         String viewName = "redirect:/home/index";
         List<UserRoleDto> userRoleDtos = user.getUserRoleDtos();
@@ -215,7 +210,7 @@ public class HomeController {
             } else {
                 //更新校验码
                 String secretKey = UUID.generate();
-                userDto.setOpenID(secretKey);
+                userDto.setSecretKey(secretKey);
                 userService.updateByPrimaryKeySelective(userDto);
                 String digitalSignature = Md5Encrypt.md5(secretKey);// 数字签名
                 //发送邮件
@@ -262,7 +257,7 @@ public class HomeController {
         if (ToolsUtils.isNotEmpty(sid)) {
             UserDto userDto = userService.findUserByUserName(userName);
             if (userDto != null) {
-                String secretKey = userDto.getOpenID();
+                String secretKey = userDto.getSecretKey();
                 if (ToolsUtils.isNotEmpty(secretKey)) {
                     String digitalSignature = Md5Encrypt.md5(secretKey);// 数字签名
                     if (digitalSignature.equals(sid)) {
@@ -292,14 +287,14 @@ public class HomeController {
         try {
             UserDto dto = userService.findUserByUserName(userDto.getUserName());
             if (dto != null) {
-                String secretKey = dto.getOpenID();
+                String secretKey = dto.getSecretKey();
                 String digitalSignature = Md5Encrypt.md5(secretKey);// 数字签名
                 if (!sid.equals(digitalSignature)) {
                     message = "签名错误，请不要修改邮件链接！";
                     type = MessageTipsCst.TYPE_ERROR;
                 } else {
                     dto.setPassword(LoginHelper.md5PasswordTwo(userDto.getPassword()));
-                    dto.setOpenID(null);
+                    dto.setSecretKey(null);
                     userService.updateByPrimaryKey(dto);
                     message = MessageTipsCst.UPDATE_SUCCESS;
                     type = MessageTipsCst.TYPE_SUCCES;

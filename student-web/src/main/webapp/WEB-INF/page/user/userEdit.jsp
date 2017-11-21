@@ -71,6 +71,14 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label">有效性</label>
+            <div class="layui-input-block">
+                <input type="radio" name="vaild" value="0" title="无效">
+                <input type="radio" name="vaild" value="1" title="有效">
+                <input type="hidden" id="vaild_radio" name="vaild_radio" def="1" value="${user.vaild}">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
                 <button class="layui-btn layui-btn-primary" type="reset">重置</button>

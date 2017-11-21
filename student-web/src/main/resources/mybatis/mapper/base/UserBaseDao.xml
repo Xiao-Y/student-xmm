@@ -10,10 +10,12 @@
         <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR"/>
         <result column="open_id" property="openID" jdbcType="VARCHAR"/>
         <result column="mail" property="mail" jdbcType="VARCHAR"/>
+        <result column="vaild" property="vaild" jdbcType="VARCHAR"/>
+        <result column="secret_key" property="secretKey" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-		user_id, user_name, age, password, phone_number,open_id,mail
+		user_id, user_name, age, password, phone_number,open_id,mail,vaild,secret_key
 	</sql>
 
     <!-- 公用查询条件 -->
@@ -37,7 +39,12 @@
             <if test="null != superSystemAdminUser">
                 and u.user_Name != #{superSystemAdminUser}
             </if>
-
+            <if test="null != vaild">
+                and u.vaild = #{vaild}
+            </if>
+            <if test="null != secretKey">
+                and u.secret_key = #{secretKey}
+            </if>
         </where>
     </sql>
 
@@ -57,14 +64,16 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="org.billow.model.expand.UserDto">
 		insert into t_user (user_id,
 		user_name, age,
-		password, phone_number,open_id,mail)
+		password, phone_number,open_id,mail,vaild,secret_key)
 		values
 		(#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR},
 		#{age,jdbcType=INTEGER},
 		#{password,jdbcType=VARCHAR},
 		#{phoneNumber,jdbcType=VARCHAR},
 		#{openID,jdbcType=VARCHAR},
-		#{mail,jdbcType=VARCHAR})
+		#{mail,jdbcType=VARCHAR}),
+		#{vaild,jdbcType=VARCHAR}),
+		#{secret_key,jdbcType=VARCHAR})
 	</insert>
 
     <insert id="insertSelective" parameterType="org.billow.model.expand.UserDto">
@@ -91,6 +100,12 @@
             <if test="mail != null">
                 mail,
             </if>
+            <if test="vaild != null">
+                vaild,
+            </if>
+            <if test="secretKey != null">
+                secret_key,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">
@@ -113,6 +128,12 @@
             </if>
             <if test="mail != null">
                 #{mail,jdbcType=VARCHAR},
+            </if>
+            <if test="vaild != null">
+                #{vaild,jdbcType=VARCHAR},
+            </if>
+            <if test="secretKey != null">
+                #{secretKey,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -138,6 +159,12 @@
             <if test="mail != null">
                 mail = #{mail,jdbcType=VARCHAR},
             </if>
+            <if test="vaild != null">
+                vaild = #{vaild,jdbcType=VARCHAR},
+            </if>
+            <if test="secretKey != null">
+                secret_key = #{secretKey,jdbcType=VARCHAR},
+            </if>
         </set>
         where user_id = #{userId,jdbcType=INTEGER}
     </update>
@@ -151,7 +178,9 @@
 		password = #{password,jdbcType=VARCHAR},
 		phone_number = #{phoneNumber,jdbcType=VARCHAR},
 		open_id = #{openID,jdbcType=VARCHAR},
-		mail = #{mail,jdbcType=VARCHAR}
+		mail = #{mail,jdbcType=VARCHAR},
+		vaild = #{vaild,jdbcType=VARCHAR},
+		secret_key = #{secretKey,jdbcType=VARCHAR}
 		where
 		user_id =
 		#{userId,jdbcType=INTEGER}

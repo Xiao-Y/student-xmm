@@ -32,6 +32,7 @@
                     <th>联系方式</th>
                     <th>电子邮箱</th>
                     <th>角色</th>
+                    <th>有效性</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -43,6 +44,10 @@
                         <td>${user.phoneNumber }</td>
                         <td>${user.mail }</td>
                         <td>${user.roles }</td>
+                        <td>
+                            <c:if test="${user.vaild == '0'}">无效</c:if>
+                            <c:if test="${user.vaild == '1'}">有效</c:if>
+                        </td>
                         <td>
                             <a href="${ctx }/user/userEdit?userId=${user.userId }&pageNo=${page.pageNum }"
                                class="layui-btn layui-btn-mini">编辑</a>

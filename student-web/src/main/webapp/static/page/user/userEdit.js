@@ -62,6 +62,10 @@ layui.use('form', function () {
         }
     });
 
+    //用于显示radio的选种
+    var arry = ['vaild_radio'];
+    pubPopForm.checkedDisplay(arry, form);
+
     //监听提交
     form.on('submit(*)', function (data) {
         return submitFormNewTip(data);

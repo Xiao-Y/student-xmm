@@ -55,7 +55,7 @@ public class LoginSessionFilter extends OncePerRequestFilter {
             if (!notFilter.contains(uri)) {// 执行过滤
                 // 从session中获取登录者实体
                 UserDto loginUser = LoginHelper.getLoginUser(request);
-                if (null == loginUser) {
+                if (null == loginUser || "0".equals(loginUser.getVaild())) {
                     response.sendRedirect("/home/login");
                 } else {
                     // 如果session中存在登录者实体，则继续
