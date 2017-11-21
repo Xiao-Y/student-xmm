@@ -57,11 +57,15 @@ public class HomeController {
     @RequestMapping("/login")
     public ModelAndView login(HttpServletRequest request) {
         //先消除session
-        LoginHelper.setLoginUser(request, null);
+        UserDto loginUser = LoginHelper.getLoginUser(request);
+        if (loginUser != null) {
+            LoginHelper.removeUserSession(loginUser.getUserId());
+        }
+
         String userName = "";
         String password = "";
         Cookie[] cookies = request.getCookies();
-        //对cookies中的数据进行遍历，找到用户名、密码的数据
+        //对cookies中的数据进行遍历，找到用户名
         if (cookies != null) {
             for (int i = 0; i < cookies.length; i++) {
                 if ("userName".equals(cookies[i].getName())) {

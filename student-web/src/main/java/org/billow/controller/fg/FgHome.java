@@ -227,7 +227,8 @@ public class FgHome {
         try {
             userDto.setUserId(loginUser.getUserId());
             userService.updateByPrimaryKeySelective(userDto);
-            message = MessageTipsCst.UPDATE_SUCCESS;
+            LoginHelper.removeUserSession(userDto.getUserId());
+            message = MessageTipsCst.HOME_AGAIN_LOGIN;
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {
             e.printStackTrace();
@@ -237,6 +238,7 @@ public class FgHome {
         }
         json.setMessage(message);
         json.setType(type);
+        json.setRoot("/home/login");
         return json;
     }
 
@@ -265,12 +267,14 @@ public class FgHome {
         try {
             UserDto query = new UserDto();
             query.setUserName(loginUser.getUserName());
-            query.setPassword(userDto.getOldPassword());
+            query.setPassword(LoginHelper.md5PasswordTwo(userDto.getOldPassword()));
             //校验密码是否正确
             UserDto temp = userService.findUserByUserNameAndPwd(query);
             if (temp != null) {
                 userDto.setUserId(loginUser.getUserId());
+                userDto.setPassword(LoginHelper.md5PasswordTwo(userDto.getPassword()));
                 userService.updateByPrimaryKeySelective(userDto);
+                LoginHelper.removeUserSession(loginUser.getUserId());
                 message = MessageTipsCst.HOME_AGAIN_LOGIN;
                 type = MessageTipsCst.TYPE_SUCCES;
             } else {

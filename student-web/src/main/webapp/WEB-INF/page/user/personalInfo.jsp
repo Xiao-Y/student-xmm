@@ -20,7 +20,7 @@
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
         <legend>个人信息修改</legend>
     </fieldset>
-    <form class="layui-form layui-form-pane1" data-type="ajax" action="${ctx }/user/savePersonalInfo">
+    <form class="layui-form layui-form-pane1" data-type="ajax" action="${ctx }/user/savePersonalInfo" target="_blank">
         <input type="hidden" id="userId" name="userId" value="${user.userId }">
         <div class="layui-form-item">
             <label class="layui-form-label"><font style="color: red">*</font>用户名</label>

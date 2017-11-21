@@ -137,6 +137,7 @@ function submitFormNewTip(data) {
     var tipBox = null;
     var form = data.form;
     var url = form.action;
+    var target = form.target;
     var data = $(form).serialize();
     $.ajax({
         type: "POST",
@@ -157,7 +158,11 @@ function submitFormNewTip(data) {
                 new TipBox({
                     type: type, str: message, hasBtn: true, setTime: 1500, callBack: function () {
                         if (root != '' && root != null && root != 'null') {
-                            $(window.location).attr('href', path + root);
+                            if(target == '_blank'){//跳出顶层
+                                $(window.parent.location).attr('href', path + root);
+                            }else{
+                                $(window.location).attr('href', path + root);
+                            }
                         } else {
                             form.reset();
                         }

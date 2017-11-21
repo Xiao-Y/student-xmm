@@ -47,6 +47,7 @@
                     <strong style="color: red;">*</strong>为必填项<br/>
                     电子邮箱将用于以后的密码的找回，请保证邮箱的正确性！！！<br/>
                     用户名注册后不可以更改，请牢记用户名！！！<br/>
+                    更改用户名信息后需要重新登陆！！！<br/>
                 </p>
                 <form id="userInfoForm" action="" method="post" class="form-horizontal account-register clearfix">
                     <fieldset id="account">
@@ -165,12 +166,17 @@
                     }
                     var message = obj.message;
                     var type = obj.type;
+                    var root = obj.root;
                     if (type == 'success') {
                         $("#phoneNumber").attr("readonly", true);
                         $("#mail").attr("readonly", true);
                         $("#submitBtn").hide();
                         $("#editBtn").show();
-                        new TipBox({type: type, str: message, hasBtn: true, setTime: 2000});
+                        new TipBox({
+                            type: type, str: message, hasBtn: true, setTime: 2000, callBack: function () {
+                                $(window.location).attr('href', path + root);
+                            }
+                        });
                     } else {
                         new TipBox({type: type, str: message, hasBtn: true});
                     }

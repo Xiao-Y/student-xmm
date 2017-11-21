@@ -7,10 +7,13 @@ import org.billow.utils.generator.Md5Encrypt;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 public class LoginHelper {
 
     private static Logger logger = Logger.getLogger(LoginHelper.class);
+
+    private static final String SESSION_MAP = "sessionMap";
 
     public static UserDto getLoginUser() {
         HttpSession session = RequestUtils.getRequest().getSession();
@@ -93,7 +96,7 @@ public class LoginHelper {
      * @return
      */
     public static boolean equalstPassword(String sourcePassword, String targetPassword) {
-        boolean flag = false;
+        boolean flag;
         try {
             flag = targetPassword.equals(md5PasswordTwo(sourcePassword));
         } catch (Exception e) {
@@ -102,6 +105,34 @@ public class LoginHelper {
             flag = false;
         }
         return flag;
+    }
+
+    /**
+     * 将用户session放入到集合中
+     *
+     * @param session
+     */
+    /*public static void setUserSession(HttpSession session) {
+        UserDto loginUser = getLoginUser(session);
+        if (loginUser != null) {
+            sessionMap.put(loginUser.getUserId(), session);
+        }
+    }*/
+
+    /**
+     * 通过userId移除用户session
+     *
+     * @param userId
+     */
+    public static void removeUserSession(Integer userId) {
+        HttpServletRequest request = RequestUtils.getRequest();
+        Map<Integer, HttpSession> sessionMap = (Map<Integer, HttpSession>) request.getServletContext().getAttribute(SESSION_MAP);
+        //获取用户session集合
+        HttpSession userSession = sessionMap.get(userId);
+        if (userSession != null) {
+            //销毁session
+            userSession.invalidate();
+        }
     }
 
     public static void main(String[] args) {

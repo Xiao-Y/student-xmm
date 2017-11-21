@@ -49,7 +49,7 @@ public class UserController {
     }
 
     /**
-     * 添加/修改菜单信息，包含角色信息
+     * 添加/修改用户信息，包含角色信息
      *
      * @param user
      * @return
@@ -80,12 +80,13 @@ public class UserController {
         String message = "";
         String type = "";
         try {
-            if(ToolsUtils.isNotEmpty(user.getPassword())){
+            if (ToolsUtils.isNotEmpty(user.getPassword())) {
                 user.setPassword(LoginHelper.md5PasswordTwo(user.getPassword()));
-            }else{
+            } else {
                 user.setPassword(null);
             }
             userService.saveUserAndRole(user, roleIds);
+            LoginHelper.removeUserSession(user.getUserId());
             message = MessageTipsCst.SUBMIT_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {
@@ -114,6 +115,7 @@ public class UserController {
         String type = "";
         try {
             userService.deleteDel(user);
+            LoginHelper.removeUserSession(user.getUserId());
             message = MessageTipsCst.DELETE_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {
@@ -151,21 +153,21 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/savePersonalInfo")
     public JsonResult savePersonalInfo(HttpServletRequest request, UserDto user) {
-        HttpSession session = request.getSession();
+        //HttpSession session = request.getSession();
         JsonResult json = new JsonResult();
         String message = "";
         String type = "";
         try {
-            if(ToolsUtils.isNotEmpty(user.getPassword())){
+            if (ToolsUtils.isNotEmpty(user.getPassword())) {
                 user.setPassword(LoginHelper.md5PasswordTwo(user.getPassword()));
-            }else{
+            } else {
                 user.setPassword(null);
             }
             userService.updateByPrimaryKeySelective(user);
+            //修改成功后,清除session
+            LoginHelper.removeUserSession(user.getUserId());
             message = MessageTipsCst.HOME_AGAIN_LOGIN;
             type = MessageTipsCst.TYPE_SUCCES;
-            //修改成功后,清除session
-            LoginHelper.setLoginUser(request, null);
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e);
