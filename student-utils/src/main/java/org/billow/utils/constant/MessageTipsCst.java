@@ -101,9 +101,9 @@ public class MessageTipsCst {
      */
     public static final String SEND_FAILURE = "发送失败！";
     /**
-     * 注册成功
+     * 注册成功，请进入邮箱验证！
      */
-    public static final String REGISTER_SUCCESS = "注册成功！";
+    public static final String REGISTER_SUCCESS = "注册成功，请进入邮箱验证！";
     /**
      * 注册失败
      */

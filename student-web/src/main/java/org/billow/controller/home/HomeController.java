@@ -231,6 +231,7 @@ public class HomeController {
                 emailContent.append("/home/");
                 emailContent.append("checkLink?sid=");
                 emailContent.append(digitalSignature);
+                emailContent.append("&type=editPwd");
                 emailContent.append("&userName=");
                 emailContent.append(userDto.getUserName());
                 emailContent.append("\" target='_blank'>点击我重新设置密码</a>");
@@ -256,7 +257,7 @@ public class HomeController {
      * 检查邮件链接的正确性
      */
     @RequestMapping("/checkLink")
-    public ModelAndView checkLink(@RequestParam("sid") String sid, @RequestParam("userName") String userName) {
+    public ModelAndView checkLink(@RequestParam("sid") String sid, @RequestParam("type") String type, @RequestParam("userName") String userName) {
         ModelAndView av = new ModelAndView();
         if (ToolsUtils.isNotEmpty(sid)) {
             UserDto userDto = userService.findUserByUserName(userName);
@@ -265,9 +266,18 @@ public class HomeController {
                 if (ToolsUtils.isNotEmpty(secretKey)) {
                     String digitalSignature = Md5Encrypt.md5(secretKey);// 数字签名
                     if (digitalSignature.equals(sid)) {
-                        av.addObject("userName", userName);
-                        av.addObject("sid", sid);
-                        av.setViewName("page/home/editPwd");
+                        if ("editPwd".equals(type)) {//修改密码
+                            av.addObject("userName", userName);
+                            av.addObject("sid", sid);
+                            av.setViewName("page/home/editPwd");
+                        } else if ("regist".equals(type)) {//注册验证
+                            av.addObject("userName", userName);
+                            av.setViewName("page/home/registSuccess");
+                            userDto.setPassword(null);
+                            userDto.setSecretKey("");
+                            userDto.setVaild("1");
+                            userService.updateByPrimaryKeySelective(userDto);
+                        }
                         return av;
                     }
                 }
@@ -336,13 +346,40 @@ public class HomeController {
      */
     @ResponseBody
     @RequestMapping("/saveRegister")
-    public JsonResult saveRegister(UserDto userDto) {
+    public JsonResult saveRegister(HttpServletRequest request, UserDto userDto) {
         JsonResult json = new JsonResult();
         String message = "";
         String type = "";
         try {
+            String secretKey = UUID.generate();
+            userDto.setVaild("0");
+            userDto.setSecretKey(secretKey);
             userDto.setPassword(LoginHelper.md5PasswordTwo(userDto.getPassword()));
             userService.saveRegister(userDto);
+
+            String digitalSignature = Md5Encrypt.md5(secretKey);// 数字签名
+            //发送邮件
+            //http://localhost:8099/home/checkLink?sid=79d5d8e88c89db8214d5ef429af2a653&userName=admin
+            StringBuffer emailContent = new StringBuffer();
+            emailContent.append("请勿回复本邮件.点击下面的链接,验证注册用户<br>");
+            emailContent.append("<a href=\"");
+            emailContent.append(request.getScheme());
+            emailContent.append("://");
+            emailContent.append(request.getServerName());
+            emailContent.append(":");
+            emailContent.append(request.getServerPort());
+            emailContent.append(request.getContextPath());
+            emailContent.append("/home/");
+            emailContent.append("checkLink?sid=");
+            emailContent.append(digitalSignature);
+            emailContent.append("&type=regist");
+            emailContent.append("&userName=");
+            emailContent.append(userDto.getUserName());
+            emailContent.append("\" target='_blank'>点击我验证注册用户</a>");
+            emailContent.append("<br><br>");
+            logger.info(emailContent.toString());
+            emailServer.singleMailSend(userDto.getMail(), "验证注册用户", emailContent.toString());
+
             message = MessageTipsCst.REGISTER_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {

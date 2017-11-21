@@ -62,18 +62,18 @@
 	</delete>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="userId" parameterType="org.billow.model.expand.UserDto">
-		insert into t_user (user_id,
-		user_name, age,
-		password, phone_number,open_id,mail,vaild,secret_key)
+		insert into t_user (user_id,user_name, age, password, phone_number,open_id,mail,vaild,secret_key )
 		values
-		(#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR},
+		(#{userId,jdbcType=INTEGER},
+		#{userName,jdbcType=VARCHAR},
 		#{age,jdbcType=INTEGER},
 		#{password,jdbcType=VARCHAR},
 		#{phoneNumber,jdbcType=VARCHAR},
 		#{openID,jdbcType=VARCHAR},
-		#{mail,jdbcType=VARCHAR}),
-		#{vaild,jdbcType=VARCHAR}),
-		#{secret_key,jdbcType=VARCHAR})
+		#{mail,jdbcType=VARCHAR},
+		#{vaild,jdbcType=VARCHAR},
+		#{secretKey,jdbcType=VARCHAR}
+		)
 	</insert>
 
     <insert id="insertSelective" parameterType="org.billow.model.expand.UserDto">
