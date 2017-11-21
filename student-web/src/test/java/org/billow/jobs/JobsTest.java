@@ -1,8 +1,5 @@
 package org.billow.jobs;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.billow.jobs.manager.QuartzManager;
 import org.billow.model.expand.ScheduleJobDto;
 import org.billow.utils.bean.BeanUtils;
@@ -10,6 +7,9 @@ import org.junit.Before;
 import org.quartz.Scheduler;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JobsTest {
 

@@ -1,19 +1,18 @@
 package org.billow.build.generate;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import org.billow.build.Utils;
 import org.billow.build.data.SetData;
 import org.billow.build.model.MapperDaoModel;
 import org.billow.build.model.ModelModel;
 import org.billow.build.model.OtherModel;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 
 public class Generate {
 

@@ -1,5 +1,9 @@
 package org.billow.build.table;
 
+import org.billow.build.Utils;
+import org.billow.build.model.ColumnModel;
+import org.billow.build.model.TableModel;
+
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -10,10 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import org.billow.build.Utils;
-import org.billow.build.model.ColumnModel;
-import org.billow.build.model.TableModel;
 
 public class ReadDB {
 

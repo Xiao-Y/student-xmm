@@ -5,9 +5,7 @@ import org.apache.log4j.Logger;
 import org.billow.api.user.UserService;
 import org.billow.common.login.LoginHelper;
 import org.billow.model.custom.JsonResult;
-import org.billow.model.expand.RoleDto;
 import org.billow.model.expand.UserDto;
-import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.constant.PagePathCst;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * 用户信息管理

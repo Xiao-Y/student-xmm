@@ -1,7 +1,6 @@
 package org.billow.controller.system;
 
-import java.util.List;
-
+import com.github.pagehelper.PageInfo;
 import org.apache.log4j.Logger;
 import org.billow.api.menu.MenuService;
 import org.billow.model.custom.JsonResult;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.pagehelper.PageInfo;
+import java.util.List;
 
 @Controller
 @RequestMapping("/sysMenu")

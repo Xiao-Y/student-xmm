@@ -1,9 +1,6 @@
 package org.billow.controller.autoTask;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.billow.api.system.ScheduleJobService;
@@ -21,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.pagehelper.PageInfo;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 自动任务管理

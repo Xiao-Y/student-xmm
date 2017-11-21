@@ -1,12 +1,5 @@
 package org.billow.build.data;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.billow.build.model.BaseModel;
 import org.billow.build.model.ColumnModel;
 import org.billow.build.model.FieldModel;
@@ -16,6 +9,13 @@ import org.billow.build.model.OtherModel;
 import org.billow.build.readxml.ReadConfog;
 import org.billow.build.table.ReadDB;
 import org.billow.utils.StringUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 为模板准备数据
