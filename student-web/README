@@ -83,16 +83,34 @@ selectByPrimaryKey
 	
 
 系统配置：
+
 1、可以直接使用
 spring/applicationContext.properties
-修改：
-spring/applicationContext.xml
-locations为：
-<value>classpath:spring/applicationContext.properties</value>
+
+    修改：
+    1.1 spring/applicationContext.xml
+    locations为：
+    <value>classpath:spring/applicationContext.properties</value>
+
+    1.2 spring-mvc.xml
+    context:property-placeholder为：
+    location="classpath:env.properties"
+
+    1.3日志文件：
+    修改log4j.properties-copy为
+    log4j.properties
+
+*************************************************************
+
 2、使用
 student-web/src/main/env
 选择开发或生产添加为resourcess发布到claesses下
-修改：
-spring/applicationContext.xml
-locations为：
-<value>classpath:env.properties</value>
+
+    修改：
+    2.1 spring/applicationContext.xml
+    locations为：
+    <value>classpath:env.properties</value>
+
+    2.2 spring-mvc.xml
+    context:property-placeholder为：
+    location="classpath:env.properties"

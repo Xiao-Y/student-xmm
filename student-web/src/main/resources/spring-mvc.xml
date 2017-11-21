@@ -17,8 +17,10 @@
     </context:component-scan>
 
     <!-- 为了能在controller层获取配置文件中的值 -->
+    <!--<context:property-placeholder ignore-unresolvable="true"
+                                  location="classpath:spring/applicationContext.properties"/>-->
     <context:property-placeholder ignore-unresolvable="true"
-                                  location="classpath:spring/applicationContext.properties"/>
+                                  location="classpath:env.properties"/>
 
     <!-- 配置使Spring采用CGLIB代理：用于扫描controller中自定义的注解 -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
