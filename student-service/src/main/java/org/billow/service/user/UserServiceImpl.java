@@ -182,7 +182,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
         if (user.getUserId() == null) {
             userDao.insert(user);
         } else {
-            userDao.updateByPrimaryKey(user);
+            userDao.updateByPrimaryKeySelective(user);
         }
         userRoleDao.deleteUserRoleByUserId(user.getUserId());
         if (ToolsUtils.isNotEmpty(roleIds)) {

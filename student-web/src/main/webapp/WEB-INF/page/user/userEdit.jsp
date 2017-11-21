@@ -47,14 +47,14 @@
             <label class="layui-form-label"><font style="color: red">*</font>新密码</label>
             <div class="layui-input-block">
                 <input type="password" name="password" lay-verify="rePassword" required placeholder="这里输入密码"
-                       autocomplete="off" class="layui-input" id="password" value="${user.password }">
+                       autocomplete="off" class="layui-input" id="password">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label"><font style="color: red">*</font>确认密码</label>
             <div class="layui-input-block">
                 <input type="password" name="rePassword" lay-verify="rePassword" required placeholder="这里输入密码"
-                       autocomplete="off" class="layui-input" id="rePassword" value="${user.password }">
+                       autocomplete="off" class="layui-input" id="rePassword">
             </div>
         </div>
         <div class="layui-form-inline">

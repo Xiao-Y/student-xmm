@@ -1,6 +1,5 @@
 package org.billow.controller.home;
 
-import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.Logger;
 import org.billow.api.menu.MenuService;
 import org.billow.api.user.UserService;
@@ -8,7 +7,6 @@ import org.billow.common.email.EmailServer;
 import org.billow.common.login.LoginHelper;
 import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.MenuDto;
-import org.billow.model.expand.RoleDto;
 import org.billow.model.expand.UserDto;
 import org.billow.model.expand.UserRoleDto;
 import org.billow.utils.RequestUtils;
@@ -72,8 +70,6 @@ public class HomeController {
             for (int i = 0; i < cookies.length; i++) {
                 if ("userName".equals(cookies[i].getName())) {
                     userName = cookies[i].getValue();
-                } else if ("password".equals(cookies[i].getName())) {
-                    password = cookies[i].getValue();
                 }
             }
         }
@@ -95,18 +91,15 @@ public class HomeController {
     @RequestMapping("/homeIndex")
     public ModelAndView homeIndex(UserDto userTemp, HttpServletRequest request, HttpServletResponse response, RedirectAttributes attr) {
         ModelAndView av = new ModelAndView();
-        HttpSession session = RequestUtils.getSession(request);
         try {
             Cookie userCo = new Cookie("userName", null);
             userCo.setMaxAge(0);
-            Cookie pwdCo = new Cookie("password", null);
-            pwdCo.setMaxAge(0);
             response.addCookie(userCo);
-            response.addCookie(pwdCo);
         } catch (Exception e) {
             logger.error(e);
             e.printStackTrace();
         }
+        userTemp.setPassword(LoginHelper.md5PasswordTwo(userTemp.getPassword()));
         UserDto user = userService.findUserByUserNameAndPwd(userTemp);
         //记住密码
         if (userTemp.isRememberMe()) {
@@ -118,10 +111,6 @@ public class HomeController {
                     attr.addFlashAttribute("errorMsg", "用户名或密码错误！");
                     av.setViewName("redirect:/home/login");
                     return av;
-                } else {
-                    Cookie pwdCo = new Cookie("password", user.getPassword());
-                    pwdCo.setMaxAge(60 * 60 * 24 * 15);
-                    response.addCookie(pwdCo);
                 }
             } catch (Exception e) {
                 logger.error(e);
@@ -129,8 +118,6 @@ public class HomeController {
             }
         }
         LoginHelper.setLoginUser(request, user);
-        //session.setAttribute("ip", ToolsUtils.getServiceIpAddr());
-        //session.setAttribute("sessionId", session.getId());
         String viewName = "redirect:/home/index";
         List<UserRoleDto> userRoleDtos = user.getUserRoleDtos();
         if (ToolsUtils.isNotEmpty(userRoleDtos)) {
@@ -311,7 +298,7 @@ public class HomeController {
                     message = "签名错误，请不要修改邮件链接！";
                     type = MessageTipsCst.TYPE_ERROR;
                 } else {
-                    dto.setPassword(userDto.getPassword());
+                    dto.setPassword(LoginHelper.md5PasswordTwo(userDto.getPassword()));
                     dto.setOpenID(null);
                     userService.updateByPrimaryKey(dto);
                     message = MessageTipsCst.UPDATE_SUCCESS;
@@ -355,6 +342,7 @@ public class HomeController {
         String message = "";
         String type = "";
         try {
+            userDto.setPassword(LoginHelper.md5PasswordTwo(userDto.getPassword()));
             userService.saveRegister(userDto);
             message = MessageTipsCst.REGISTER_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;

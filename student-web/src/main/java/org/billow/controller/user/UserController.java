@@ -8,6 +8,7 @@ import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.RoleDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.PageHelper;
+import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.constant.PagePathCst;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,11 @@ public class UserController {
         String message = "";
         String type = "";
         try {
+            if(ToolsUtils.isNotEmpty(user.getPassword())){
+                user.setPassword(LoginHelper.md5PasswordTwo(user.getPassword()));
+            }else{
+                user.setPassword(null);
+            }
             userService.saveUserAndRole(user, roleIds);
             message = MessageTipsCst.SUBMIT_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
@@ -153,6 +159,11 @@ public class UserController {
         String message = "";
         String type = "";
         try {
+            if(ToolsUtils.isNotEmpty(user.getPassword())){
+                user.setPassword(LoginHelper.md5PasswordTwo(user.getPassword()));
+            }else{
+                user.setPassword(null);
+            }
             userService.updateByPrimaryKeySelective(user);
             message = MessageTipsCst.HOME_AGAIN_LOGIN;
             type = MessageTipsCst.TYPE_SUCCES;

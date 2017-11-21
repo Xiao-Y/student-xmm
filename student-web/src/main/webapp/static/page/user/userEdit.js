@@ -9,7 +9,7 @@ layui.use('form', function () {
                 message = '用户名不能为空！';
             }
             var userId = $("#userId").val();
-            if(userId == ''){
+            if (userId == '') {
                 $.ajaxSettings.async = false;
                 var url = path + "/home/checkUserName/" + userName;
                 $.post(url, function (result) {
@@ -18,21 +18,36 @@ layui.use('form', function () {
                     }
                 });
             }
-            if(message != ''){
+            if (message != '') {
                 return message;
             }
         },
         rePassword: function (value) {
             var password = $("#password").val();
             var rePassword = $("#rePassword").val();
-            if (password == '') {
-                return '新密码不能为空！';
-            }
-            if (rePassword == '') {
-                return '确认密码不能为空！';
-            }
-            if (password != rePassword) {
-                return '新密码与确认密码不一致！';
+            var userId = $("#userId").val();
+            //修改个人信息或者用户信息
+            if (userId != '') {
+                if (password != '') {
+                    if (rePassword == '') {
+                        return '确认密码不能为空！';
+                    }
+                    if (password != rePassword) {
+                        return '新密码与确认密码不一致！';
+                    }
+                } else {
+                    $("#rePassword").val("");
+                }
+            } else {
+                if (password == '') {
+                    return '新密码不能为空！';
+                }
+                if (rePassword == '') {
+                    return '确认密码不能为空！';
+                }
+                if (password != rePassword) {
+                    return '新密码与确认密码不一致！';
+                }
             }
         },
         phoneNumber: function (value) {
@@ -70,8 +85,8 @@ layui.use('form', function () {
 
 $(function () {
     var userId = $("#userId").val();
-    if(userId != ''){
-        $("#userName").attr("readonly",true);
+    if (userId != '') {
+        $("#userName").attr("readonly", true);
     }
 
 });

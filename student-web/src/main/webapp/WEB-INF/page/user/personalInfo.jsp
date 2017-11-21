@@ -13,7 +13,8 @@
 <blockquote class="layui-elem-quote">
     注意：<br><font style="color: red">*</font>为必填项<br>
     电子邮箱将用于以后的密码的找回，请保证邮箱的正确性！！！<br>
-    用户名注册后不可以更改，请牢记用户名！！！
+    用户名注册后不可以更改，请牢记用户名！！！<br>
+    如果不修改密码，请务填写新密码和确认密码！！！<br>
 </blockquote>
 <div>
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
@@ -43,17 +44,17 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label"><font style="color: red">*</font>新密码</label>
+            <label class="layui-form-label">新密码</label>
             <div class="layui-input-block">
                 <input type="password" name="password" lay-verify="rePassword" required placeholder="这里输入密码"
-                       autocomplete="off" class="layui-input" id="password" value="${user.password }">
+                       autocomplete="off" class="layui-input" id="password">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label"><font style="color: red">*</font>确认密码</label>
+            <label class="layui-form-label">确认密码</label>
             <div class="layui-input-block">
                 <input type="password" name="rePassword" lay-verify="rePassword" required placeholder="这里输入密码"
-                       autocomplete="off" class="layui-input" id="rePassword" value="${user.password }">
+                       autocomplete="off" class="layui-input" id="rePassword">
             </div>
         </div>
         <div class="layui-form-item">
