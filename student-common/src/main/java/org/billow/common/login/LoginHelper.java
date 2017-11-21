@@ -3,6 +3,7 @@ package org.billow.common.login;
 import org.apache.log4j.Logger;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.RequestUtils;
+import org.billow.utils.constant.CommonCst;
 import org.billow.utils.generator.Md5Encrypt;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,11 +14,9 @@ public class LoginHelper {
 
     private static Logger logger = Logger.getLogger(LoginHelper.class);
 
-    private static final String SESSION_MAP = "sessionMap";
-
     public static UserDto getLoginUser() {
         HttpSession session = RequestUtils.getRequest().getSession();
-        UserDto userDto = (UserDto) session.getAttribute("currentUser");
+        UserDto userDto = (UserDto) session.getAttribute(CommonCst.CURRENT_USER);
         return userDto;
     }
 
@@ -28,7 +27,7 @@ public class LoginHelper {
      * @return
      */
     public static UserDto getLoginUser(HttpSession session) {
-        UserDto userDto = (UserDto) session.getAttribute("currentUser");
+        UserDto userDto = (UserDto) session.getAttribute(CommonCst.CURRENT_USER);
         return userDto;
     }
 
@@ -40,7 +39,7 @@ public class LoginHelper {
      */
     public static UserDto getLoginUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        UserDto userDto = (UserDto) session.getAttribute("currentUser");
+        UserDto userDto = (UserDto) session.getAttribute(CommonCst.CURRENT_USER);
         return userDto;
     }
 
@@ -52,7 +51,7 @@ public class LoginHelper {
      */
     public static void setLoginUser(HttpServletRequest request, UserDto userDto) {
         HttpSession session = request.getSession();
-        session.setAttribute("currentUser", userDto);
+        session.setAttribute(CommonCst.CURRENT_USER, userDto);
     }
 
     /**
@@ -63,7 +62,7 @@ public class LoginHelper {
      */
     public static int getShoppingCount(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        int shoppingCount = (int) session.getAttribute("shoppingCount");
+        int shoppingCount = (int) session.getAttribute(CommonCst.SHOPPING_COUNT);
         return shoppingCount;
     }
 
@@ -75,7 +74,7 @@ public class LoginHelper {
      */
     public static void setShoppingCount(HttpServletRequest request, int shoppingCount) {
         HttpSession session = request.getSession();
-        session.setAttribute("shoppingCount", shoppingCount);
+        session.setAttribute(CommonCst.SHOPPING_COUNT, shoppingCount);
     }
 
     /**
@@ -108,25 +107,14 @@ public class LoginHelper {
     }
 
     /**
-     * 将用户session放入到集合中
-     *
-     * @param session
-     */
-    /*public static void setUserSession(HttpSession session) {
-        UserDto loginUser = getLoginUser(session);
-        if (loginUser != null) {
-            sessionMap.put(loginUser.getUserId(), session);
-        }
-    }*/
-
-    /**
      * 通过userId移除用户session
      *
      * @param userId
      */
     public static void removeUserSession(Integer userId) {
         HttpServletRequest request = RequestUtils.getRequest();
-        Map<Integer, HttpSession> sessionMap = (Map<Integer, HttpSession>) request.getServletContext().getAttribute(SESSION_MAP);
+        Map<Integer, HttpSession> sessionMap = (Map<Integer, HttpSession>) request.getServletContext()
+                .getAttribute(CommonCst.SESSION_MAP);
         //获取用户session集合
         HttpSession userSession = sessionMap.get(userId);
         if (userSession != null) {

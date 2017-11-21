@@ -1,6 +1,7 @@
 package org.billow.common.listener;
 
 import org.billow.model.expand.UserDto;
+import org.billow.utils.constant.CommonCst;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -21,8 +22,6 @@ import java.util.Map;
 @WebListener
 public class LoginSessionListener implements ServletContextListener, HttpSessionAttributeListener {
 
-    private static final String SESSION_MAP = "sessionMap";
-
     private ServletContext application = null;
 
     /**
@@ -35,13 +34,13 @@ public class LoginSessionListener implements ServletContextListener, HttpSession
         //容器初始化时，向application中存放一个空的容器
         Map<Integer, HttpSession> sessionMap = new HashMap<>();
         this.application = sce.getServletContext();
-        this.application.setAttribute(SESSION_MAP, sessionMap);
+        this.application.setAttribute(CommonCst.SESSION_MAP, sessionMap);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         this.application = sce.getServletContext();
-        this.application.setAttribute(SESSION_MAP, null);
+        this.application.setAttribute(CommonCst.SESSION_MAP, null);
     }
 
     /**
@@ -52,12 +51,12 @@ public class LoginSessionListener implements ServletContextListener, HttpSession
     @Override
     public void attributeAdded(HttpSessionBindingEvent event) {
         // 如果登陆成功，则将用户保存在列表之中
-        Map<Integer, HttpSession> sessionMap = (Map<Integer, HttpSession>) this.application.getAttribute(SESSION_MAP);
+        Map<Integer, HttpSession> sessionMap = (Map<Integer, HttpSession>) this.application.getAttribute(CommonCst.SESSION_MAP);
         if (event.getValue() instanceof UserDto) {
             UserDto loginUser = (UserDto) event.getValue();
             sessionMap.put(loginUser.getUserId(), event.getSession());
         }
-        this.application.setAttribute(SESSION_MAP, sessionMap);
+        this.application.setAttribute(CommonCst.SESSION_MAP, sessionMap);
     }
 
     /**
@@ -67,12 +66,12 @@ public class LoginSessionListener implements ServletContextListener, HttpSession
      */
     @Override
     public void attributeRemoved(HttpSessionBindingEvent event) {
-        Map<Integer, HttpSession> sessionMap = (Map<Integer, HttpSession>) this.application.getAttribute(SESSION_MAP);
+        Map<Integer, HttpSession> sessionMap = (Map<Integer, HttpSession>) this.application.getAttribute(CommonCst.SESSION_MAP);
         if (event.getValue() instanceof UserDto) {
             UserDto loginUser = (UserDto) event.getValue();
             sessionMap.remove(loginUser.getUserId());
         }
-        this.application.setAttribute(SESSION_MAP, sessionMap);
+        this.application.setAttribute(CommonCst.SESSION_MAP, sessionMap);
     }
 
     /**
