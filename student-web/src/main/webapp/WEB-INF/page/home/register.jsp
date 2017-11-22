@@ -14,6 +14,7 @@
 <blockquote class="layui-elem-quote">
     注意：<br><font style="color: red">*</font>为必填项<br>
     电子邮箱将用于以后的密码的找回和用户验证，请保证邮箱的正确性！！！<br>
+    用户名格式由字母和数字组合3-10位，必需有字母！！！<br>
     用户名注册后不可以更改，请牢记用户名！！！<br>
     用户注册成功后，需要邮箱验证通过才能登陆！！！<br>
 </blockquote>
@@ -26,7 +27,8 @@
             <label class="layui-form-label"><font style="color: red">*</font>用户名</label>
             <div class="layui-input-block">
                 <input type="text" name="userName" lay-verify="userName" required placeholder="这里输入用户名"
-                       autocomplete="off" class="layui-input" id="userName">
+                       autocomplete="off" class="layui-input" id="userName" onpaste="return false;"
+                       ondragenter="return false;" oncontextmenu="return false;" style="ime-mode:disabled">
             </div>
         </div>
         <div class="layui-form-item">

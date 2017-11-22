@@ -22,6 +22,7 @@ import java.util.Map;
 @WebListener
 public class LoginSessionListener implements ServletContextListener, HttpSessionAttributeListener {
 
+    //全局容器
     private ServletContext application = null;
 
     /**

@@ -64,7 +64,6 @@
         </form>
     </div>
     <footer>
-        <p>billow ©2017</p>
         <div style="text-align: center">
             <font style="color: red;">
                 <strong>${errorMsg}</strong>
@@ -72,6 +71,12 @@
         </div>
     </footer>
 </div>
+
+<p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;billow ©2017
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="javascript:void(0);" id="serviceInfo">服务商信息</a>
+</p>
 <script type="text/javascript" src="${ctx }/static/plugins/layui/layui.js"></script>
 <script type="text/javascript" src="${ctx }/static/page/home/login.js"></script>
 </body>

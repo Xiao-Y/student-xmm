@@ -111,7 +111,7 @@ public class HomeController {
             av.setViewName("redirect:/home/login");
             return av;
         } else if ("0".equals(user.getVaild())) {
-            attr.addFlashAttribute("errorMsg", "对不起，该用户没有通过验证！");
+            attr.addFlashAttribute("errorMsg", "对不起，该用户没有通过验证，请进入邮箱验证！");
             av.setViewName("redirect:/home/login");
             return av;
         }

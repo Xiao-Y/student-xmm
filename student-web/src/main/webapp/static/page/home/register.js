@@ -8,6 +8,10 @@ layui.use('form', function () {
             if (userName == '') {
                 return '用户名不能为空！';
             }
+            var reg = /^(?=.*[A-Za-z])[A-Za-z0-9]{3,10}$/;
+            if (!reg.test(userName)) {
+                return '用户名格式不正确，字母和数字组合3-10位，必需有字母！';
+            }
             $.ajaxSettings.async = false;
             var url = path + "/home/checkUserName/" + userName;
             $.post(url, function (result) {
@@ -15,7 +19,7 @@ layui.use('form', function () {
                     message = '该用户名已经存在，请更新换其它用户名！';
                 }
             });
-            if(message != ''){
+            if (message != '') {
                 return message;
             }
         },
