@@ -20,10 +20,10 @@ import org.billow.utils.generator.OrderNumUtil;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,8 +62,8 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     }
 
     @Override
-    public Map<String, String> saveOrderForm(UserDto loginUser, String addressId, String[] commodityIds,
-                                             String[] commodityNums) throws Exception {
+    public Map<String, String> saveOrderForm(HttpServletResponse response, UserDto loginUser, String addressId,
+                                             String[] commodityIds, String[] commodityNums) throws Exception {
         //订单金额
         BigDecimal orderFormAmount = new BigDecimal(0.00);
         //订单id
@@ -95,7 +95,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
             shoppingCartDto.setId(loginUser.getUserId().toString());
             shoppingCartDto.setCommodityId(dto.getId());
-            shoppingCartDao.deleteByPrimaryKey(shoppingCartDto);
+            //shoppingCartDao.deleteByPrimaryKey(shoppingCartDto);
             //4更新商品销售数量
             dto.setQuantity(dto.getQuantity() + new Integer(commodityNums[i]));
             commodityDao.updateByPrimaryKeySelective(dto);
@@ -119,7 +119,9 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         orderFormDao.insert(orderFormDto);
         logger.info("订单生成，订单号：" + orderFormId);
         //邮件发送内容
-        return this.mailSendContent(orderFormId, orderFormAmount, detailes, dto);
+        Map<String, String> map = this.mailSendContent(orderFormId, orderFormAmount, detailes, dto);
+        map.put("orderFormId",orderFormId);
+        return map;
     }
 
     /**

@@ -305,11 +305,24 @@
                     }
                     var message = obj.message;
                     var type = obj.type;
+                    var objData = obj.data;
                     if (type == 'success') {
                         new TipBox({
                             type: type, str: message, hasBtn: true, setTime: 1500, callBack: function () {
                                 new TipBox({type: 'load', str: "页面加载中..."});
-                                location.reload();
+                                if (objData) {
+                                    //订单号
+                                    var orderFormId = objData.orderFormId;
+                                    //是否打开支付页面
+                                    var isOpen = objData.isOpen;
+                                    if (isOpen) {
+                                        $(window.location).attr('href', path + "/aliPay/openAliPayPage/" + orderFormId);
+                                    } else {
+                                        location.reload();
+                                    }
+                                } else {
+                                    location.reload();
+                                }
                             }
                         });
                     } else {

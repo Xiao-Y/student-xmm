@@ -4,6 +4,7 @@ import org.billow.api.base.BaseService;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.UserDto;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -29,5 +30,6 @@ public interface OrderFormService extends BaseService<OrderFormDto> {
      * @param commodityNums 商品数量
      * @return 邮件发送内容
      */
-    Map<String, String> saveOrderForm(UserDto loginUser, String addressId, String[] commodityIds, String[] commodityNums) throws Exception;
+    Map<String, String> saveOrderForm(HttpServletResponse response, UserDto loginUser, String addressId,
+                                      String[] commodityIds, String[] commodityNums) throws Exception;
 }

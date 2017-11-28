@@ -50,6 +50,8 @@
         <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
         <shiro.version>1.2.2</shiro.version>
 
+        <alipay-sdk.version>java20171123203126</alipay-sdk.version>
+
         <jdk.version>1.7</jdk.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
@@ -276,6 +278,12 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
             <version>${shiro.version}</version>
+        </dependency>
+        <!-- 阿里支付 -->
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>alipay-sdk</artifactId>
+            <version>${alipay-sdk.version}</version>
         </dependency>
     </dependencies>
     <build>

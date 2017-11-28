@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +61,8 @@ public class OrderFormController {
     private boolean customerCancel;
     @Value("${mail.auto.business.cancel.send}")
     private boolean businessCancel;
+    @Value("${pay.isOpen}")
+    private boolean isOpen;
 
     /**
      * 保存订单信息
@@ -71,7 +75,8 @@ public class OrderFormController {
      */
     @ResponseBody
     @RequestMapping("/saveOrderForm")
-    public JsonResult saveOrderForm(HttpServletRequest request, @RequestParam(value = "addressId") String addressId,
+    public JsonResult saveOrderForm(HttpServletRequest request, HttpServletResponse response,
+                                    @RequestParam(value = "addressId") String addressId,
                                     @RequestParam(value = "commodityIds[]") String[] commodityIds,
                                     @RequestParam(value = "commodityNums[]") String[] commodityNums) {
         JsonResult json = new JsonResult();
@@ -80,7 +85,7 @@ public class OrderFormController {
         String message = "";
         String type = "";
         try {
-            Map<String, String> map = orderFormService.saveOrderForm(loginUser, addressId, commodityIds, commodityNums);
+            Map<String, String> map = orderFormService.saveOrderForm(response, loginUser, addressId, commodityIds, commodityNums);
             //更新页面购物车显示的数量
             ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
             shoppingCartDto.setId(loginUser.getUserId().toString());
@@ -101,6 +106,12 @@ public class OrderFormController {
                     logger.error(e);
                 }
             }
+
+            Map<String, Object> data = new HashMap<>();
+            data.put("orderFormId", map.get("orderFormId"));
+            data.put("isOpen", isOpen);
+            json.setData(data);
+
             message = MessageTipsCst.ORDERFORM_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {
