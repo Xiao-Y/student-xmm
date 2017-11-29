@@ -1,15 +1,15 @@
 package org.billow.controller.pay;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.support.spring.FastJsonJsonView;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradePayModel;
 import com.alipay.api.domain.AlipayTradeQueryModel;
+import com.alipay.api.domain.GoodsDetail;
 import com.alipay.api.internal.util.AlipaySignature;
 import org.apache.log4j.Logger;
+import org.billow.api.orderForm.OrderFormDetailService;
 import org.billow.api.orderForm.OrderFormService;
 import org.billow.common.login.LoginHelper;
-import org.billow.controller.orderForm.ShoppingCartController;
+import org.billow.model.expand.OrderFormDetailDto;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.pay.alipay.AliPayApi;
@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -42,8 +44,12 @@ public class AliPay {
     private AliPayApiConfig aliPayApiConfig;
     @Autowired
     private OrderFormService orderFormService;
+    @Autowired
+    private OrderFormDetailService orderFormDetailService;
     @Value("${system.domain.name}")
     private String systemDomainName;
+    @Value("${shopping.mall.name}")
+    private String shoppingMallName;
 
     /**
      * 打开支付支付页面
@@ -67,17 +73,63 @@ public class AliPay {
             model.setProductCode("FAST_INSTANT_TRADE_PAY");
             //订单总金额
             model.setTotalAmount(orderFormDto.getOrderformAmount().setScale(2).toString());
+            OrderFormDetailDto orderFormDetailDto = new OrderFormDetailDto();
+            orderFormDetailDto.setOrderFormId(orderFormId);
+            List<OrderFormDetailDto> orderFormDetailDtos = orderFormDetailService.selectAll(orderFormDetailDto);
             //订单标题
-            model.setSubject("phone6 16Gooo");
-            //订单描述
-            model.setBody("订单生成，订单号：" + orderFormId);
-            //用户信息
-            model.setBusinessParams(JSON.toJSONString(loginUser));
+            model.setSubject(shoppingMallName);
+            if (orderFormDetailDtos.size() == 1) {
+                OrderFormDetailDto detailDto = orderFormDetailDtos.get(0);
+                //订单标题
+                model.setSubject(detailDto.getCommodityName());
+                //订单描述
+                model.setBody(detailDto.getCommodityInfo());
+            } else {
+                //商品列表显示
+                List<GoodsDetail> goodsDetails = new ArrayList<>();
+                for (OrderFormDetailDto formDetailDto : orderFormDetailDtos) {
+                    GoodsDetail detail = new GoodsDetail();
+                    detail.setGoodsId(formDetailDto.getCommodityId());
+                    detail.setGoodsName(formDetailDto.getCommodityName());
+                    detail.setQuantity(new Long(formDetailDto.getCommodityNum()));
+                    detail.setPrice(formDetailDto.getUnitPrice().toString());
+                    detail.setBody(formDetailDto.getCommodityInfo());
+                    goodsDetails.add(detail);
+                }
+                model.setGoodsDetail(goodsDetails);
+            }
+
             AliPayApiConfigKit.putApiConfig(aliPayApiConfig.build());
             AliPayApi.tradePage(response, model, notifyUrl, returnUrl);
         }
     }
 
+    /**
+     [DEBUG][2017/11/29 21:43]###########################notifyResult start#########################################
+     [DEBUG][2017/11/29 21:43]gmt_create:2017-11-29 21:39:14
+     [DEBUG][2017/11/29 21:43]charset:UTF-8
+     [DEBUG][2017/11/29 21:43]gmt_payment:2017-11-29 21:39:31
+     [DEBUG][2017/11/29 21:43]notify_time:2017-11-29 21:39:32
+     [DEBUG][2017/11/29 21:43]subject:香蕉4
+     [DEBUG][2017/11/29 21:43]buyer_id:2088102175139669
+     [DEBUG][2017/11/29 21:43]body:广西香蕉
+     [DEBUG][2017/11/29 21:43]invoice_amount:8.63
+     [DEBUG][2017/11/29 21:43]version:1.0
+     [DEBUG][2017/11/29 21:43]notify_id:aa36e5057d870d9e6780b1886ee3ae7l3e
+     [DEBUG][2017/11/29 21:43]fund_bill_list:[{"amount":"8.63","fundChannel":"ALIPAYACCOUNT"}]
+     [DEBUG][2017/11/29 21:43]notify_type:trade_status_sync
+     [DEBUG][2017/11/29 21:43]out_trade_no:E20171129213241546001
+     [DEBUG][2017/11/29 21:43]total_amount:8.63
+     [DEBUG][2017/11/29 21:43]trade_status:TRADE_SUCCESS
+     [DEBUG][2017/11/29 21:43]trade_no:2017112921001004660200620361
+     [DEBUG][2017/11/29 21:43]auth_app_id:2016082500310007
+     [DEBUG][2017/11/29 21:43]receipt_amount:8.63
+     [DEBUG][2017/11/29 21:43]point_amount:0.00
+     [DEBUG][2017/11/29 21:43]app_id:2016082500310007
+     [DEBUG][2017/11/29 21:43]buyer_pay_amount:8.63
+     [DEBUG][2017/11/29 21:43]seller_id:2088102172949100
+     [DEBUG][2017/11/29 21:43]#############################notifyResult end#######################################
+     */
     /**
      * 支付结果的异步回调
      *
@@ -100,6 +152,7 @@ public class AliPay {
             for (Map.Entry<String, String> entry : paramsMap.entrySet()) {
                 logger.debug(entry.getKey() + ":" + entry.getValue());
             }
+
             response.getWriter().write("success");
         } else {// TODO 验签失败则记录异常日志，并在response中返回failure.
             response.getWriter().write("failure");
@@ -109,6 +162,20 @@ public class AliPay {
         response.getWriter().close();
     }
 
+    /**
+     [DEBUG][2017/11/29 21:43]###########################returnResult start#########################################
+     [DEBUG][2017/11/29 21:43]charset:UTF-8
+     [DEBUG][2017/11/29 21:43]out_trade_no:E20171129213241546001
+     [DEBUG][2017/11/29 21:43]method:alipay.trade.page.pay.return
+     [DEBUG][2017/11/29 21:43]total_amount:8.63
+     [DEBUG][2017/11/29 21:43]trade_no:2017112921001004660200620361
+     [DEBUG][2017/11/29 21:43]auth_app_id:2016082500310007
+     [DEBUG][2017/11/29 21:43]app_id:2016082500310007
+     [DEBUG][2017/11/29 21:43]version:1.0
+     [DEBUG][2017/11/29 21:43]seller_id:2088102172949100
+     [DEBUG][2017/11/29 21:43]timestamp:2017-11-29 21:39:39
+     [DEBUG][2017/11/29 21:43]###########################returnResult end#########################################
+     */
     /**
      * 支付结果的同步回调
      *
