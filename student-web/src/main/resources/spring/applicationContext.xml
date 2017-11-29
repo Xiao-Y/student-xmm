@@ -15,8 +15,9 @@
         <property name="locations">
             <list>
                 <!--<value>classpath:spring/applicationContext.properties</value>-->
+                <!--<value>classpath:spring/druid.properties</value>-->
                 <value>classpath:env.properties</value>
-                <value>classpath:spring/druid.properties</value>
+                <value>classpath:druid.properties</value>
             </list>
         </property>
     </bean>
