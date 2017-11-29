@@ -168,6 +168,28 @@
     </div>
 </div>
 <!-- cart-main-area end -->
+<%-- 选择支付方式 --%>
+<div class="modal fade" id="payModal">
+    <div class="modal-dialog">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <h4 class="modal-title">支付选择</h4>
+            </div>
+            <div class="modal-body">
+                <p id="payContent">请选择你想要的支付方式</p>
+            </div>
+            <div class="modal-footer">
+                <a id="aliPay" href="#" class="btn btn-success">支付宝支付</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="wexinPay" href="#" class="btn btn-success" disabled="">微信支付</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-success" data-dismiss="modal">暂不支付</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="result" id="result" value="${result}">
 <!-- footer start -->
 <jsp:include page="/WEB-INF/page/fg/pub/footer.jsp" flush="true"/>
 <!-- footer end -->
@@ -190,7 +212,24 @@
 
     $(function () {
 
+        //支付完毕后跳转回来显示用
+        var result = $("#result").val();
+        if ("success" == result) {
+            new TipBox({type: 'tip', str: '支付成功......', hasBtn: true});
+        } else if ("error" == result) {
+            new TipBox({type: 'error', str: '支付失败......', hasBtn: true});
+        }
+        //计算所有选种商品的总价格
         total();
+
+        /**
+         * 绑定支付选择
+         */
+        function showPayModal(orderFormId) {
+            $("#aliPay").attr("href", path + "/aliPay/openAliPayPage/" + orderFormId);
+            $("#wexinPay").attr("href", "#");
+            $("#payModal").modal();
+        }
 
         $("#checkBoxAll").on("click", function () {
             var checkBoxAll = $(this).is(':checked');
@@ -309,14 +348,14 @@
                     if (type == 'success') {
                         new TipBox({
                             type: type, str: message, hasBtn: true, setTime: 1500, callBack: function () {
-                                new TipBox({type: 'load', str: "页面加载中..."});
+                                //new TipBox({type: 'load', str: "页面加载中..."});
                                 if (objData) {
                                     //订单号
                                     var orderFormId = objData.orderFormId;
                                     //是否打开支付页面
                                     var isOpen = objData.isOpen;
                                     if (isOpen) {
-                                        $(window.location).attr('href', path + "/aliPay/openAliPayPage/" + orderFormId);
+                                        showPayModal(orderFormId);
                                     } else {
                                         location.reload();
                                     }

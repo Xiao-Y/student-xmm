@@ -95,7 +95,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
             shoppingCartDto.setId(loginUser.getUserId().toString());
             shoppingCartDto.setCommodityId(dto.getId());
-            shoppingCartDao.deleteByPrimaryKey(shoppingCartDto);
+            //shoppingCartDao.deleteByPrimaryKey(shoppingCartDto);
             //4更新商品销售数量
             dto.setQuantity(dto.getQuantity() + new Integer(commodityNums[i]));
             commodityDao.updateByPrimaryKeySelective(dto);

@@ -34,6 +34,8 @@ public class LoginSessionFilter extends OncePerRequestFilter {
         notFilter.add("/home/checkLink");//检查邮件链接的正确性
         notFilter.add("/home/register");//进入注册页面
         notFilter.add("/home/saveRegister");//保存用户注册信息
+        notFilter.add("/aliPay/notifyResult");//支付宝支付通知异步回调
+        notFilter.add("/aliPay/returnResult");//支付宝支付通知同步回调
 
         //uri关键字过渡
         List<String> notUri = new ArrayList<>();

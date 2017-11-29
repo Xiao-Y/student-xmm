@@ -143,6 +143,7 @@ public class FgHome {
                 address = addressDtos.get(0);
             }
         }
+        av.addObject("result", request.getParameter("result"));
         av.addObject("list", list);
         av.addObject("address", address);
         av.addObject("addressDtos", addressDtos);
