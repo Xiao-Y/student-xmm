@@ -16,6 +16,7 @@ import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
 import org.billow.service.base.BaseServiceImpl;
 import org.billow.utils.date.DateTime;
+import org.billow.utils.enumType.PayEunm;
 import org.billow.utils.generator.OrderNumUtil;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.BeanUtils;
@@ -107,7 +108,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         AddressDto dto = addressDao.selectByPrimaryKey(addressDto);
         OrderFormDto orderFormDto = new OrderFormDto();
         orderFormDto.setId(orderFormId);
-        orderFormDto.setStatus("1");
+        orderFormDto.setStatus(PayEunm.UNPAID.getStatus());
         orderFormDto.setDelFlag("0");
         orderFormDto.setConsignee(dto.getConsignee());
         orderFormDto.setConsigneePhone(dto.getConsigneePhone());
@@ -120,7 +121,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         logger.info("订单生成，订单号：" + orderFormId);
         //邮件发送内容
         Map<String, String> map = this.mailSendContent(orderFormId, orderFormAmount, detailes, dto);
-        map.put("orderFormId",orderFormId);
+        map.put("orderFormId", orderFormId);
         return map;
     }
 

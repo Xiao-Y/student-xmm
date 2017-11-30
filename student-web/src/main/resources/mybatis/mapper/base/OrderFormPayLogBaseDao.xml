@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.billow.dao.OrderFormPayLogDao">
+	<resultMap id="BaseResultMap" type="org.billow.model.expand.OrderFormPayLogDto">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+        <result column="login_user_name" property="loginUserName" jdbcType="VARCHAR" />
+        <result column="order_form_id" property="orderFormId" jdbcType="VARCHAR" />
+        <result column="business_no" property="businessNo" jdbcType="VARCHAR" />
+        <result column="login_user_id" property="loginUserId" jdbcType="INTEGER" />
+        <result column="buyer_id" property="buyerId" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="VARCHAR" />
+        <result column="info" property="info" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="base_column_list">
+		create_time,total_amount,login_user_name,order_form_id,business_no,login_user_id,id,buyer_id,status,info
+	</sql>
+	<!-- 公用查询条件 -->
+	<sql id="selectCondition">
+		<where>
+			<if test="null != createTime and '' != createTime">
+				and create_time = #{createTime}
+			</if>
+			<if test="null != totalAmount and '' != totalAmount">
+				and total_amount = #{totalAmount}
+			</if>
+			<if test="null != loginUserName and '' != loginUserName">
+				and login_user_name = #{loginUserName}
+			</if>
+			<if test="null != orderFormId and '' != orderFormId">
+				and order_form_id = #{orderFormId}
+			</if>
+			<if test="null != businessNo and '' != businessNo">
+				and business_no = #{businessNo}
+			</if>
+			<if test="null != loginUserId and '' != loginUserId">
+				and login_user_id = #{loginUserId}
+			</if>
+			<if test="null != id and '' != id">
+				and id = #{id}
+			</if>
+			<if test="null != buyerId and '' != buyerId">
+				and buyer_id = #{buyerId}
+			</if>
+			<if test="null != status and '' != status">
+				and status = #{status}
+			</if>
+			<if test="null != info and '' != info">
+				and info = #{info}
+			</if>
+		</where>
+	</sql>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.OrderFormPayLogDto">
+		select
+		<include refid="base_column_list" />
+		from t_order_form_pay_log
+		<include refid="selectCondition" />
+	</select>
+	<select id="selectAllCount" resultType="java.lang.Integer" parameterType="org.billow.model.expand.OrderFormPayLogDto">
+		select count(*)
+		from t_order_form_pay_log
+		<include refid="selectCondition" />
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.billow.model.expand.OrderFormPayLogDto">
+		select
+		<include refid="base_column_list" />
+		from t_order_form_pay_log
+		where 1=1
+		and id = #{id}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="org.billow.model.expand.OrderFormPayLogDto">
+		delete from t_order_form_pay_log
+		where 1=1
+		and id = #{id}
+	</delete>
+	<insert id="insert" parameterType="org.billow.model.expand.OrderFormPayLogDto">
+		insert into t_order_form_pay_log (create_time,total_amount,login_user_name,order_form_id,business_no,login_user_id,id,buyer_id,status,info)
+		values (
+			#{createTime,jdbcType=TIMESTAMP},
+			#{totalAmount,jdbcType=DECIMAL},
+			#{loginUserName,jdbcType=VARCHAR},
+			#{orderFormId,jdbcType=VARCHAR},
+			#{businessNo,jdbcType=VARCHAR},
+			#{loginUserId,jdbcType=INTEGER},
+			#{id,jdbcType=VARCHAR},
+			#{buyerId,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},
+			#{info,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="org.billow.model.expand.OrderFormPayLogDto">
+		insert into t_order_form_pay_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="null != createTime">
+				create_time,
+			</if>
+			<if test="null != totalAmount">
+				total_amount,
+			</if>
+			<if test="null != loginUserName">
+				login_user_name,
+			</if>
+			<if test="null != orderFormId">
+				order_form_id,
+			</if>
+			<if test="null != businessNo">
+				business_no,
+			</if>
+			<if test="null != loginUserId">
+				login_user_id,
+			</if>
+			<if test="null != id">
+				id,
+			</if>
+			<if test="null != buyerId">
+				buyer_id,
+			</if>
+			<if test="null != status">
+				status,
+			</if>
+			<if test="null != info">
+				info,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="null != createTime">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != totalAmount">
+				#{totalAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="null != loginUserName">
+				#{loginUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="null != orderFormId">
+				#{orderFormId,jdbcType=VARCHAR},
+			</if>
+			<if test="null != businessNo">
+				#{businessNo,jdbcType=VARCHAR},
+			</if>
+			<if test="null != loginUserId">
+				#{loginUserId,jdbcType=INTEGER},
+			</if>
+			<if test="null != id">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="null != buyerId">
+				#{buyerId,jdbcType=VARCHAR},
+			</if>
+			<if test="null != status">
+				#{status,jdbcType=VARCHAR},
+			</if>
+			<if test="null != info">
+				#{info,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.OrderFormPayLogDto">
+		update t_order_form_pay_log
+		<set>
+			<if test="null != createTime">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != totalAmount">
+				total_amount = #{totalAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="null != loginUserName">
+				login_user_name = #{loginUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="null != orderFormId">
+				order_form_id = #{orderFormId,jdbcType=VARCHAR},
+			</if>
+			<if test="null != businessNo">
+				business_no = #{businessNo,jdbcType=VARCHAR},
+			</if>
+			<if test="null != loginUserId">
+				login_user_id = #{loginUserId,jdbcType=INTEGER},
+			</if>
+			<if test="null != id">
+				id = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="null != buyerId">
+				buyer_id = #{buyerId,jdbcType=VARCHAR},
+			</if>
+			<if test="null != status">
+				status = #{status,jdbcType=VARCHAR},
+			</if>
+			<if test="null != info">
+				info = #{info,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where 1=1
+		and id = #{id}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.OrderFormPayLogDto">
+		update t_order_form_pay_log
+		set
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+			total_amount = #{totalAmount,jdbcType=DECIMAL},
+			login_user_name = #{loginUserName,jdbcType=VARCHAR},
+			order_form_id = #{orderFormId,jdbcType=VARCHAR},
+			business_no = #{businessNo,jdbcType=VARCHAR},
+			login_user_id = #{loginUserId,jdbcType=INTEGER},
+			buyer_id = #{buyerId,jdbcType=VARCHAR},
+			status = #{status,jdbcType=VARCHAR},
+			info = #{info,jdbcType=VARCHAR}
+		where 1=1
+		and id = #{id}
+	</update>
+</mapper>

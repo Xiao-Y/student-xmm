@@ -9,6 +9,7 @@ import com.alipay.api.internal.util.AlipaySignature;
 import org.apache.log4j.Logger;
 import org.billow.api.orderForm.OrderFormDetailService;
 import org.billow.api.orderForm.OrderFormService;
+import org.billow.api.pay.AlipayService;
 import org.billow.common.login.LoginHelper;
 import org.billow.model.expand.OrderFormDetailDto;
 import org.billow.model.expand.OrderFormDto;
@@ -49,6 +50,8 @@ public class AliPay {
     private OrderFormService orderFormService;
     @Autowired
     private OrderFormDetailService orderFormDetailService;
+    @Autowired
+    private AlipayService alipayService;
     @Value("${system.domain.name}")
     private String systemDomainName;
     @Value("${shopping.mall.name}")
@@ -160,7 +163,8 @@ public class AliPay {
             for (Map.Entry<String, String> entry : paramsMap.entrySet()) {
                 logger.debug(entry.getKey() + ":" + entry.getValue());
             }
-
+            //更新订单状态和保存支付宝返回的数据
+            alipayService.saveAlipayData(paramsMap);
             response.getWriter().write("success");
         } else {// TODO 验签失败则记录异常日志，并在response中返回failure.
             response.getWriter().write("failure");
