@@ -10,7 +10,8 @@ layui.use('form', function () {
 //zTree参数设置
 var setting = {
     view: {
-        selectedMulti: false//是否单选
+        selectedMulti: false,//是否单选
+        fontCss: setFontCss
     },
     check: {
         enable: true//是否显示check
@@ -23,7 +24,8 @@ var setting = {
             rootPId: 0
         },
         key: {
-            url: ""
+            url: "",
+            title: "title"
         }
     },
     edit: {
@@ -47,6 +49,11 @@ function zTreeOnCheck(e, treeId, treeNode) {
     $("#menuIds").val(menuIds);
     //alert(treeNode.tId + ", " + treeNode.name + "," + treeNode.checked);
 }
+
+//设置无效菜单的为红色
+function setFontCss(treeId, treeNode) {
+    return treeNode.title == '此菜单无效' ? {color:"red"} : {};
+};
 
 $(function () {
     //加载树形权限菜单

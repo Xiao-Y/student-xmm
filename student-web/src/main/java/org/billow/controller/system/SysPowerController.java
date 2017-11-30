@@ -154,6 +154,11 @@ public class SysPowerController {
         List<MenuDto> menuDtos = menuService.selectAll(null);
         for (MenuDto menu : menuDtos) {
             menu.setName(menu.getTitle());
+            if(!menu.getValidind()){
+                menu.setTitle("此菜单无效");
+                //menu.setChecked(false);
+                //menu.setChkDisabled(true);
+            }
             menu.setIcon(null);
             if (menu.getPid() == 0) {
                 menu.setOpen(true);

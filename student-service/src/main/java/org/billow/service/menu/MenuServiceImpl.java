@@ -65,6 +65,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuDto> implements MenuSer
         }
         MenuDto menu = new MenuDto();
         menu.setPid(0);
+        menu.setValidind(true);
         List<MenuDto> selectAll = menuDao.selectAll(menu);
         if (ToolsUtils.isEmpty(selectAll)) {
             return null;
@@ -91,13 +92,20 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuDto> implements MenuSer
                 if (tempChild == null) {
                     continue;
                 }
+                //无效数据remove
+                if (!tempChild.getValidind()) {
+                    iterator.remove();
+                    continue;
+                }
                 //没有权限的remove
                 if (!menuIds.contains(tempChild.getId())) {
                     iterator.remove();
                     continue;
                 }
+                //父节点remove
                 if (Long.compare(0, tempChild.getPid()) == 0) {
                     iterator.remove();
+                    continue;
                 }
                 String href = tempChild.getHref();
                 if (ToolsUtils.isNotEmpty(href) && !(href.startsWith("https") || href.startsWith("http"))) {

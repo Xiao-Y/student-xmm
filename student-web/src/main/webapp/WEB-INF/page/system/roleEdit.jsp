@@ -19,18 +19,23 @@
     <script type="text/javascript" src="${ctx }/static/page/system/roleEdit.js"></script>
 </head>
 <body style="padding: 10px;">
+<blockquote class="layui-elem-quote">
+    注意：<br>
+    <font style="color: red">*</font>为必填项<br>
+    菜单权限显示为红色的为无效菜单，如果要显示请在菜单管理里面修改为有效<br>
+</blockquote>
 <form class="layui-form layui-form-pane1" data-type="ajax" action="${ctx }/sysPower/roleSave">
     <input type="hidden" id="id" name="id" value="${role.id }">
     <input type="hidden" name="pageNo" value="${role.pageNo }">
     <div class="layui-form-item">
-        <label class="layui-form-label">角色名称</label>
+        <label class="layui-form-label"><font style="color: red">*</font>角色名称</label>
         <div class="layui-input-block">
             <input type="text" name="roleName" lay-verify="required" required placeholder="请输入角色名称" autocomplete="off"
                    class="layui-input" value="${role.roleName }">
         </div>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">描述</label>
+        <label class="layui-form-label"><font style="color: red">*</font>描述</label>
         <div class="layui-input-block">
             <textarea placeholder="请输入内容" name="remark" lay-verify="required" required
                       class="layui-textarea">${role.remark }</textarea>
