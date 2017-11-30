@@ -14,23 +14,23 @@
 	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
-		from t_role
+		from r_role
 		where id = #{id,jdbcType=INTEGER}
 	</select>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from t_role
+		delete from r_role
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 
 	<insert id="insert" parameterType="org.billow.model.expand.RoleDto">
-		insert into t_role (id, rolename)
+		insert into r_role (id, rolename)
 		values (#{id,jdbcType=INTEGER},
 		#{rolename,jdbcType=VARCHAR})
 	</insert>
 
 	<insert id="insertSelective" parameterType="org.billow.model.expand.RoleDto">
-		insert into t_role
+		insert into r_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
@@ -50,7 +50,7 @@
 	</insert>
 
 	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.RoleDto">
-		update t_role
+		update r_role
 		<set>
 			<if test="rolename != null">
 				rolename = #{rolename,jdbcType=VARCHAR},
@@ -60,7 +60,7 @@
 	</update>
 
 	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.RoleDto">
-		update t_role
+		update r_role
 		set rolename = #{rolename,jdbcType=VARCHAR}
 		where id =
 		#{id,jdbcType=INTEGER}

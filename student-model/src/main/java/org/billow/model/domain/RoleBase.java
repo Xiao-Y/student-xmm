@@ -9,7 +9,7 @@ import org.billow.model.base.BaseModel;
  * 
  * 角色管理数据库模型<br>
  *
- * 对应的表名：t_role
+ * 对应的表名：r_role
  * @version 1.0
  * @author billow<br>
  * @Mail lyongtao123@126.com<br>

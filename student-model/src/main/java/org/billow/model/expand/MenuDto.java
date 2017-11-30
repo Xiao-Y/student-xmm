@@ -12,6 +12,26 @@ public class MenuDto extends MenuBase {
     private boolean checked;
     //菜单名称
     private String name;
+    //设置节点的 checkbox / radio 是否禁用
+    private boolean chkDisabled = false;
+
+    /**
+     * 设置节点的 checkbox / radio 是否禁用
+     *
+     * @return
+     */
+    public boolean getChkDisabled() {
+        return chkDisabled;
+    }
+
+    /**
+     * 设置节点的 checkbox / radio 是否禁用
+     *
+     * @param chkDisabled
+     */
+    public void setChkDisabled(boolean chkDisabled) {
+        this.chkDisabled = chkDisabled;
+    }
 
     /**
      * 是否展开

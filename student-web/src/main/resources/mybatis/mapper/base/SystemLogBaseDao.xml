@@ -20,16 +20,16 @@
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
-		from t_system_log
+		from sys_system_log
 		where id = #{id,jdbcType=INTEGER}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from
-		t_system_log
+		sys_system_log
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="org.billow.model.expand.SystemLogDto">
-		insert into t_system_log (id,
+		insert into sys_system_log (id,
 		module, function,
 		operation, note, content,
 		run_class, create_time,
@@ -44,7 +44,7 @@
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="org.billow.model.expand.SystemLogDto">
-		insert into t_system_log
+		insert into sys_system_log
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
@@ -105,7 +105,7 @@
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.SystemLogDto">
-		update t_system_log
+		update sys_system_log
 		<set>
 			<if test="module != null">
 				module = #{module,jdbcType=VARCHAR},
@@ -136,7 +136,7 @@
 	</update>
 	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.SystemLogDto">
 		update
-		t_system_log
+		sys_system_log
 		set module = #{module,jdbcType=VARCHAR},
 		function =
 		#{function,jdbcType=VARCHAR},

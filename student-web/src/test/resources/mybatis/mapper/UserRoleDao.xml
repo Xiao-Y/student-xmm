@@ -14,13 +14,13 @@
 	</resultMap>
 
 	<insert id="insert" parameterType="org.billow.model.expand.UserRoleDto">
-		insert into t_user_role (user_id, role_id)
+		insert into r_user_role (user_id, role_id)
 		values (#{userId,jdbcType=INTEGER},
 		#{roleId,jdbcType=INTEGER})
 	</insert>
 
 	<insert id="insertSelective" parameterType="org.billow.model.expand.UserRoleDto">
-		insert into t_user_role
+		insert into r_user_role
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="userId != null">
 				user_id,
@@ -42,7 +42,7 @@
 	<select id="findUserRoleByUserId" resultMap="UserRoleResultMap" parameterType="org.billow.model.expand.UserRoleDto">
 		select r.user_id,r.role_id as id
 		from
-		t_user_role r
+		r_user_role r
 		where user_id = #{userId,jdbcType=INTEGER}
 	</select>
 </mapper>

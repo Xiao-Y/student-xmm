@@ -7,7 +7,7 @@
 	<!-- 版本 -->
 	<version>1.0</version>
 	<!-- 表名 -->
-	<tableName>t_address</tableName>
+	<tableName>u_address</tableName>
 
 	<controllerPackageName>org.billow.controller.orderForm</controllerPackageName>
 	<controllerClazzName>AddressController</controllerClazzName>

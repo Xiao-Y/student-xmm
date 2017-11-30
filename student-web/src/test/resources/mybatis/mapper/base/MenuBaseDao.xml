@@ -20,15 +20,15 @@
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
-		from t_menu
+		from sys_menu
 		where id = #{id,jdbcType=INTEGER}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from t_menu
+		delete from sys_menu
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
 	<insert id="insert" parameterType="org.billow.model.expand.MenuDto">
-		insert into t_menu (id, title,
+		insert into sys_menu (id, title,
 		icon,
 		spread, href, pid, validind,
 		displayno)
@@ -41,7 +41,7 @@
 		#{displayno,jdbcType=DOUBLE})
 	</insert>
 	<insert id="insertSelective" parameterType="org.billow.model.expand.MenuDto">
-		insert into t_menu
+		insert into sys_menu
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				id,
@@ -96,7 +96,7 @@
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.MenuDto">
-		update t_menu
+		update sys_menu
 		<set>
 			<if test="title != null">
 				title = #{title,jdbcType=VARCHAR},
@@ -123,7 +123,7 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.MenuDto">
-		update t_menu
+		update sys_menu
 		set
 		title = #{title,jdbcType=VARCHAR},
 		icon =

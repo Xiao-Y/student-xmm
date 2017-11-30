@@ -8,7 +8,7 @@ import org.billow.model.base.BaseModel;
 /**
  * 收货地址数据库模型<br>
  * <p>
- * 对应的表名：t_address
+ * 对应的表名：u_address
  *
  * @author billow<br>
  * @version 1.0

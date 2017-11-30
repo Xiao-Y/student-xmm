@@ -19,7 +19,7 @@
 	<select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.DictionaryDto">
 		select
 		<include refid="Base_Column_List" />
-		from t_dictionary
+		from sys_dictionary
 		<where>
 			<if test="null != notice">
 				and NOTICE = #{notice}
@@ -57,17 +57,17 @@
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.billow.model.expand.DictionaryDto">
 		select
 		<include refid="Base_Column_List" />
-		from t_dictionary
+		from sys_dictionary
 		where 1=1
 		and ID = #{id}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="org.billow.model.expand.DictionaryDto">
-		delete from t_dictionary
+		delete from sys_dictionary
 		where 1=1
 		and ID = #{id}
 	</delete>
 	<insert id="insert" parameterType="org.billow.model.expand.DictionaryDto">
-		insert into t_dictionary
+		insert into sys_dictionary
 		(NOTICE,FIELD_CODE,DISPLAY_FIELD,FIELD_NAME,CREATE_TIME,ID,MODEL_CODE,VALUE_FIELD,UPDATE_TIME,MODEL_NAME)
 		values (
 		#{NOTICE,jdbcType=VARCHAR},
@@ -83,7 +83,7 @@
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="org.billow.model.expand.DictionaryDto">
-		insert into t_dictionary
+		insert into sys_dictionary
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="null != notice">
 				NOTICE,
@@ -150,7 +150,7 @@
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.DictionaryDto">
-		update t_dictionary
+		update sys_dictionary
 		<set>
 			<if test="null != notice">
 				NOTICE = #{NOTICE,jdbcType=VARCHAR},
@@ -187,7 +187,7 @@
 		and ID = #{id}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.DictionaryDto">
-		update t_dictionary
+		update sys_dictionary
 		set
 		NOTICE = #{NOTICE,jdbcType=VARCHAR},
 		FIELD_CODE = #{FIELD_CODE,jdbcType=VARCHAR},

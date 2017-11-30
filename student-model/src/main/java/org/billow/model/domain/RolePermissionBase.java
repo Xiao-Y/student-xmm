@@ -7,7 +7,7 @@ import org.billow.model.base.BaseModel;
  * 
  * 角色权限数据库模型<br>
  *
- * 对应的表名：t_role_permission
+ * 对应的表名：r_role_permission
  * @version 1.0
  * @author billow<br>
  * @Mail lyongtao123@126.com<br>

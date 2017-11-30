@@ -7,7 +7,7 @@
 	<!-- 版本 -->
 	<version>1.0</version>
 	<!-- 表名 -->
-	<tableName>t_role_permission</tableName>
+	<tableName>r_role_permission</tableName>
 
 	<controllerPackageName>org.billow.controller.system</controllerPackageName>
 	<controllerClazzName>RolePermissionController</controllerClazzName>

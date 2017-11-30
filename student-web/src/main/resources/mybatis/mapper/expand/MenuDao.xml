@@ -5,7 +5,7 @@
     <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from t_menu
+        from sys_menu
         <where>
             <if test="null != pid">
                 and pid = #{pid}
@@ -16,7 +16,7 @@
     <select id="getMenuChildList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from t_menu
+        from sys_menu
         where
         FIND_IN_SET(id,getMenuChildList(#{id,jdbcType=INTEGER}))
     </select>
@@ -24,12 +24,12 @@
     <!--通过用户Id查询出用户的菜单权限-->
     <select id="findMenuIdsByUserId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
 		SELECT DISTINCT rp.menu_id
-		FROM t_role_permission AS rp
+		FROM r_role_permission AS rp
 		WHERE rp.role_id IN (
 		SELECT
 		ur.role_id
 		FROM
-		t_user_role AS ur
+		r_user_role AS ur
 		WHERE
 		ur.user_id = #{userId,jdbcType=INTEGER}
 		)

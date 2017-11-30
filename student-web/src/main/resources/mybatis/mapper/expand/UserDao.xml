@@ -10,7 +10,7 @@
     <select id="findRoleListByUserId" resultMap="userResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from t_user
+        from u_user
         where user_id = #{userId,jdbcType=INTEGER}
     </select>
 
@@ -18,7 +18,7 @@
     <select id="findUserByUserNameAndPwd" resultMap="userResultMap" parameterType="org.billow.model.expand.UserDto">
         select
         <include refid="Base_Column_List"/>
-        from t_user u
+        from u_user u
         where u.user_Name = #{userName,jdbcType=VARCHAR}
         and u.password = #{password,jdbcType=VARCHAR}
     </select>
@@ -27,7 +27,7 @@
     <select id="findUserByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
-        from t_user u
+        from u_user u
         where u.user_Name = #{userName,jdbcType=VARCHAR}
     </select>
 </mapper>

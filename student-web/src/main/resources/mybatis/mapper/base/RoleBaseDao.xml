@@ -34,28 +34,28 @@
     <select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.RoleDto">
         select
         <include refid="base_column_list"/>
-        from t_role
+        from r_role
         <include refid="selectCondition"/>
     </select>
     <select id="selectAllCount" resultType="java.lang.Integer" parameterType="org.billow.model.expand.RoleDto">
         select count(*)
-        from t_role
+        from r_role
         <include refid="selectCondition"/>
     </select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.billow.model.expand.RoleDto">
         select
         <include refid="base_column_list"/>
-        from t_role
+        from r_role
         where 1=1
         and id = #{id}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="org.billow.model.expand.RoleDto">
-		delete from t_role
+		delete from r_role
 		where 1=1
 		and id = #{id}
 	</delete>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.billow.model.expand.RoleDto">
-		insert into t_role (id,role_name,update_time,create_time,remark)
+		insert into r_role (id,role_name,update_time,create_time,remark)
 		values (
 			#{id,jdbcType=INTEGER},
 			#{roleName,jdbcType=VARCHAR},
@@ -65,7 +65,7 @@
 		)
 	</insert>
     <insert id="insertSelective" parameterType="org.billow.model.expand.RoleDto">
-        insert into t_role
+        insert into r_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="null != roleName">
                 role_name,
@@ -102,7 +102,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.RoleDto">
-        update t_role
+        update r_role
         <set>
             <if test="null != roleName">
                 role_name = #{roleName,jdbcType=VARCHAR},
@@ -124,7 +124,7 @@
         and id = #{id}
     </update>
     <update id="updateByPrimaryKey" parameterType="org.billow.model.expand.RoleDto">
-		update t_role
+		update r_role
 		set
 			role_name = #{roleName,jdbcType=VARCHAR},
 			update_time = #{updateTime,jdbcType=TIMESTAMP},

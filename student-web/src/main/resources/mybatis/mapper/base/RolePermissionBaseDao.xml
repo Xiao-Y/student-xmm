@@ -26,28 +26,28 @@
 	<select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.RolePermissionDto">
 		select
 		<include refid="base_column_list" />
-		from t_role_permission
+		from r_role_permission
 		<include refid="selectCondition" />
 	</select>
 	<select id="selectAllCount" resultType="java.lang.Integer" parameterType="org.billow.model.expand.RolePermissionDto">
 		select count(*)
-		from t_role_permission
+		from r_role_permission
 		<include refid="selectCondition" />
 	</select>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.billow.model.expand.RolePermissionDto">
 		select
 		<include refid="base_column_list" />
-		from t_role_permission
+		from r_role_permission
 		where 1=1
 		and id = #{id}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="org.billow.model.expand.RolePermissionDto">
-		delete from t_role_permission
+		delete from r_role_permission
 		where 1=1
 		and id = #{id}
 	</delete>
 	<insert id="insert" parameterType="org.billow.model.expand.RolePermissionDto">
-		insert into t_role_permission (id,role_id,menu_id)
+		insert into r_role_permission (id,role_id,menu_id)
 		values (
 			#{id,jdbcType=INTEGER},
 			#{roleId,jdbcType=INTEGER},
@@ -55,7 +55,7 @@
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="org.billow.model.expand.RolePermissionDto">
-		insert into t_role_permission
+		insert into r_role_permission
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="null != id">
 				id,
@@ -80,7 +80,7 @@
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.RolePermissionDto">
-		update t_role_permission
+		update r_role_permission
 		<set>
 			<if test="null != id">
 				id = #{id,jdbcType=INTEGER},
@@ -96,7 +96,7 @@
 		and id = #{id}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.RolePermissionDto">
-		update t_role_permission
+		update r_role_permission
 		set
 			role_id = #{roleId,jdbcType=INTEGER},
 			menu_id = #{menuId,jdbcType=INTEGER}

@@ -9,7 +9,7 @@ import org.billow.model.base.BaseModel;
  * 
  * 数据字典数据库模型<br>
  * 
- * 对应的表名：t_dictionary
+ * 对应的表名：sys_dictionary
  * 
  * @version 1.0
  * @author billow<br>

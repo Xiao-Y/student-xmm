@@ -47,28 +47,28 @@
 	<select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.AddressDto">
 		select
 		<include refid="base_column_list" />
-		from t_address
+		from u_address
 		<include refid="selectCondition" />
 	</select>
 	<select id="selectAllCount" resultType="java.lang.Integer" parameterType="org.billow.model.expand.AddressDto">
 		select count(*)
-		from t_address
+		from u_address
 		<include refid="selectCondition" />
 	</select>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.billow.model.expand.AddressDto">
 		select
 		<include refid="base_column_list" />
-		from t_address
+		from u_address
 		where 1=1
 		and id = #{id}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="org.billow.model.expand.AddressDto">
-		delete from t_address
+		delete from u_address
 		where 1=1
 		and id = #{id}
 	</delete>
 	<insert id="insert" parameterType="org.billow.model.expand.AddressDto">
-		insert into t_address (consignee_address,update_time,consignee,create_time,user_id,id,consignee_phone,status)
+		insert into u_address (consignee_address,update_time,consignee,create_time,user_id,id,consignee_phone,status)
 		values (
 			#{consigneeAddress,jdbcType=VARCHAR},
 			#{updateTime,jdbcType=TIMESTAMP},
@@ -81,7 +81,7 @@
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="org.billow.model.expand.AddressDto">
-		insert into t_address
+		insert into u_address
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="null != consigneeAddress">
 				consignee_address,
@@ -136,7 +136,7 @@
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.AddressDto">
-		update t_address
+		update u_address
 		<set>
 			<if test="null != consigneeAddress">
 				consignee_address = #{consigneeAddress,jdbcType=VARCHAR},
@@ -167,7 +167,7 @@
 		and id = #{id}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.AddressDto">
-		update t_address
+		update u_address
 		set
 			consignee_address = #{consigneeAddress,jdbcType=VARCHAR},
 			update_time = #{updateTime,jdbcType=TIMESTAMP},

@@ -11,14 +11,14 @@
     <select id="findUserRoleByUserId" resultMap="UserRoleResultMap" parameterType="org.billow.model.expand.UserRoleDto">
 		select r.user_id,r.role_id as id
 		from
-		t_user_role r
+		r_user_role r
 		where user_id = #{userId,jdbcType=INTEGER}
 	</select>
 
     <delete id="deleteUserRoleByRoleId" parameterType="java.lang.Integer">
-		DELETE FROM t_user_role WHERE role_id = #{roleId,jdbcType=INTEGER}
+		DELETE FROM r_user_role WHERE role_id = #{roleId,jdbcType=INTEGER}
 	</delete>
 	<delete id="deleteUserRoleByUserId" parameterType="java.lang.Integer">
-		DELETE FROM t_user_role WHERE user_id = #{userId,jdbcType=INTEGER}
+		DELETE FROM r_user_role WHERE user_id = #{userId,jdbcType=INTEGER}
 	</delete>
 </mapper>
