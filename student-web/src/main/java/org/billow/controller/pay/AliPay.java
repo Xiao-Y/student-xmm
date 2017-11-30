@@ -1,7 +1,8 @@
 package org.billow.controller.pay;
 
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
-import com.alipay.api.domain.AlipayTradePayModel;
+import com.alipay.api.domain.AlipayTradePagePayModel;
 import com.alipay.api.domain.AlipayTradeQueryModel;
 import com.alipay.api.domain.GoodsDetail;
 import com.alipay.api.internal.util.AlipaySignature;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +69,8 @@ public class AliPay {
             //支付结果的回调
             String notifyUrl = systemDomainName + "/aliPay/notifyResult";
             //String notifyUrl = "";
-            AlipayTradePayModel model = new AlipayTradePayModel();
+            //AlipayTradePayModel model = new AlipayTradePayModel();
+            AlipayTradePagePayModel model = new AlipayTradePagePayModel();
             //商户订单号
             model.setOutTradeNo(orderFormId);
             //销售产品码,与支付宝签约的产品码名称。 注：目前仅支持FAST_INSTANT_TRADE_PAY
@@ -98,7 +102,11 @@ public class AliPay {
                 }
                 model.setGoodsDetail(goodsDetails);
             }
-
+            //业务数据：用户信息
+            Map<String, String> params = new HashMap<>();
+            params.put("userId", loginUser.getUserId().toString());
+            params.put("userName", loginUser.getUserName());
+            model.setPassbackParams(URLEncoder.encode(JSON.toJSONString(params), "UTF-8"));
             AliPayApiConfigKit.putApiConfig(aliPayApiConfig.build());
             AliPayApi.tradePage(response, model, notifyUrl, returnUrl);
         }
@@ -106,28 +114,28 @@ public class AliPay {
 
     /**
      [DEBUG][2017/11/29 21:43]###########################notifyResult start#########################################
-     [DEBUG][2017/11/29 21:43]gmt_create:2017-11-29 21:39:14
-     [DEBUG][2017/11/29 21:43]charset:UTF-8
-     [DEBUG][2017/11/29 21:43]gmt_payment:2017-11-29 21:39:31
-     [DEBUG][2017/11/29 21:43]notify_time:2017-11-29 21:39:32
-     [DEBUG][2017/11/29 21:43]subject:香蕉4
-     [DEBUG][2017/11/29 21:43]buyer_id:2088102175139669
-     [DEBUG][2017/11/29 21:43]body:广西香蕉
-     [DEBUG][2017/11/29 21:43]invoice_amount:8.63
-     [DEBUG][2017/11/29 21:43]version:1.0
-     [DEBUG][2017/11/29 21:43]notify_id:aa36e5057d870d9e6780b1886ee3ae7l3e
-     [DEBUG][2017/11/29 21:43]fund_bill_list:[{"amount":"8.63","fundChannel":"ALIPAYACCOUNT"}]
-     [DEBUG][2017/11/29 21:43]notify_type:trade_status_sync
-     [DEBUG][2017/11/29 21:43]out_trade_no:E20171129213241546001
-     [DEBUG][2017/11/29 21:43]total_amount:8.63
-     [DEBUG][2017/11/29 21:43]trade_status:TRADE_SUCCESS
-     [DEBUG][2017/11/29 21:43]trade_no:2017112921001004660200620361
-     [DEBUG][2017/11/29 21:43]auth_app_id:2016082500310007
-     [DEBUG][2017/11/29 21:43]receipt_amount:8.63
-     [DEBUG][2017/11/29 21:43]point_amount:0.00
-     [DEBUG][2017/11/29 21:43]app_id:2016082500310007
-     [DEBUG][2017/11/29 21:43]buyer_pay_amount:8.63
-     [DEBUG][2017/11/29 21:43]seller_id:2088102172949100
+     [DEBUG][2017/11/30 10:00]gmt_create:2017-11-30 10:00:18
+     [DEBUG][2017/11/30 10:00]charset:UTF-8
+     [DEBUG][2017/11/30 10:00]gmt_payment:2017-11-30 10:00:30
+     [DEBUG][2017/11/30 10:00]notify_time:2017-11-30 10:00:32
+     [DEBUG][2017/11/30 10:00]subject:OY特色水煮鱼
+     [DEBUG][2017/11/30 10:00]buyer_id:2088102175139669
+     [DEBUG][2017/11/30 10:00]passback_params:%7B%22userId%22%3A%22billow%22%7D
+     [DEBUG][2017/11/30 10:00]invoice_amount:79.35
+     [DEBUG][2017/11/30 10:00]version:1.0
+     [DEBUG][2017/11/30 10:00]notify_id:0d2ee9eded503a558457b8378f89082l3e
+     [DEBUG][2017/11/30 10:00]fund_bill_list:[{"amount":"79.35","fundChannel":"ALIPAYACCOUNT"}]
+     [DEBUG][2017/11/30 10:00]notify_type:trade_status_sync
+     [DEBUG][2017/11/30 10:00]out_trade_no:E20171130095858857000
+     [DEBUG][2017/11/30 10:00]total_amount:79.35
+     [DEBUG][2017/11/30 10:00]trade_status:TRADE_SUCCESS
+     [DEBUG][2017/11/30 10:00]trade_no:2017113021001004660200620195
+     [DEBUG][2017/11/30 10:00]auth_app_id:2016082500310007
+     [DEBUG][2017/11/30 10:00]receipt_amount:79.35
+     [DEBUG][2017/11/30 10:00]point_amount:0.00
+     [DEBUG][2017/11/30 10:00]app_id:2016082500310007
+     [DEBUG][2017/11/30 10:00]buyer_pay_amount:79.35
+     [DEBUG][2017/11/30 10:00]seller_id:2088102172949100
      [DEBUG][2017/11/29 21:43]#############################notifyResult end#######################################
      */
     /**
@@ -164,16 +172,16 @@ public class AliPay {
 
     /**
      [DEBUG][2017/11/29 21:43]###########################returnResult start#########################################
-     [DEBUG][2017/11/29 21:43]charset:UTF-8
-     [DEBUG][2017/11/29 21:43]out_trade_no:E20171129213241546001
-     [DEBUG][2017/11/29 21:43]method:alipay.trade.page.pay.return
-     [DEBUG][2017/11/29 21:43]total_amount:8.63
-     [DEBUG][2017/11/29 21:43]trade_no:2017112921001004660200620361
-     [DEBUG][2017/11/29 21:43]auth_app_id:2016082500310007
-     [DEBUG][2017/11/29 21:43]app_id:2016082500310007
-     [DEBUG][2017/11/29 21:43]version:1.0
-     [DEBUG][2017/11/29 21:43]seller_id:2088102172949100
-     [DEBUG][2017/11/29 21:43]timestamp:2017-11-29 21:39:39
+     [DEBUG][2017/11/30 10:00]charset:UTF-8
+     [DEBUG][2017/11/30 10:00]out_trade_no:E20171130095858857000
+     [DEBUG][2017/11/30 10:00]method:alipay.trade.page.pay.return
+     [DEBUG][2017/11/30 10:00]total_amount:79.35
+     [DEBUG][2017/11/30 10:00]trade_no:2017113021001004660200620195
+     [DEBUG][2017/11/30 10:00]auth_app_id:2016082500310007
+     [DEBUG][2017/11/30 10:00]app_id:2016082500310007
+     [DEBUG][2017/11/30 10:00]version:1.0
+     [DEBUG][2017/11/30 10:00]seller_id:2088102172949100
+     [DEBUG][2017/11/30 10:00]timestamp:2017-11-30 10:00:38
      [DEBUG][2017/11/29 21:43]###########################returnResult end#########################################
      */
     /**
