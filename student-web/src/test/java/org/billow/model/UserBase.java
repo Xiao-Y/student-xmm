@@ -1,18 +1,11 @@
 package org.billow.model;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-@Component("userBase")
 public class UserBase {
 
 	private Integer userId;
 
-	@Value("${dubbo.registry.address}")
 	private String userName;
-	@Value("${spring.datasource.initialSize}")
 	private Integer age;
-	@Value("${spring.datasource.driver-class-name}")
 	private String password;
 
 	private String phoneNumber;

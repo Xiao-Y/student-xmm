@@ -1,9 +1,5 @@
 package org.billow.jobs.manager;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.billow.jobs.quartzJobFactory.QuartzJobFactory;
 import org.billow.jobs.quartzJobFactory.QuartzJobFactoryDisallowConcurrentExecution;
@@ -24,7 +20,11 @@ import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 定时任务管理器
@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
  * @author XiaoY
  * @date: 2017年5月6日 下午10:49:14
  */
-@Component
+@Service
 public class QuartzManager {
 
 	public final static Logger log = Logger.getLogger(QuartzManager.class);

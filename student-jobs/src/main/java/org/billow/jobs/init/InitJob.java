@@ -1,7 +1,5 @@
 package org.billow.jobs.init;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.billow.api.system.ScheduleJobService;
 import org.billow.jobs.manager.QuartzManager;
@@ -9,7 +7,9 @@ import org.billow.model.expand.ScheduleJobDto;
 import org.billow.utils.ToolsUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 初始化，加载所有的自动任务
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * 
  * @date 2017年5月12日 下午6:44:08
  */
-@Component
+@Service
 public class InitJob implements InitializingBean {
 	private static final Logger logger = Logger.getLogger(InitJob.class);
 

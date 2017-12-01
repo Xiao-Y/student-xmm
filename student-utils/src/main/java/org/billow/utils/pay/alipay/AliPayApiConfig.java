@@ -4,15 +4,13 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import org.billow.utils.ToolsUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import java.io.Serializable;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Javen
  * 2017年5月20日
  */
-@Component
+@Service
 public class AliPayApiConfig {
 
     @Value("${alipay.privateKey}")

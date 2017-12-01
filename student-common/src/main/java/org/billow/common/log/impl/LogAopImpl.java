@@ -1,10 +1,6 @@
 package org.billow.common.log.impl;
 
-import java.lang.reflect.Method;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.alibaba.fastjson.JSON;
 import org.aspectj.lang.JoinPoint;
 import org.billow.api.system.SystemLogService;
 import org.billow.common.annotation.SystemControllerLog;
@@ -12,11 +8,14 @@ import org.billow.common.log.LogAop;
 import org.billow.common.login.LoginHelper;
 import org.billow.model.expand.SystemLogDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
+import java.lang.reflect.Method;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-@Component
+@Service
 public class LogAopImpl implements LogAop {
 
     @Autowired

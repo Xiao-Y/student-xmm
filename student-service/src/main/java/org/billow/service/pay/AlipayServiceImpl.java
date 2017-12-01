@@ -64,12 +64,12 @@ public class AlipayServiceImpl implements AlipayService {
         Integer userId = new Integer(userMap.get("userId"));
         String userName = userMap.get("userName");
         //支付信息
-        String orderFormId = paramsMap.get("out_trade_no");
-        String trade_no = paramsMap.get("trade_no");
-        String buyer_id = paramsMap.get("buyer_id");
-        String trade_status = paramsMap.get("trade_status");
-        String total_amount = paramsMap.get("total_amount");
-        String info = JSON.toJSONString(paramsMap);
+        String orderFormId = paramsMap.get("out_trade_no");//订单号
+        String trade_no = paramsMap.get("trade_no");//支付宝交易号
+        String buyer_id = paramsMap.get("buyer_id");//买家支付宝号
+        String trade_status = paramsMap.get("trade_status");//支付状态
+        String total_amount = paramsMap.get("total_amount");//支付金额
+        String info = JSON.toJSONString(paramsMap);//支付宝返回报文
         logger.debug(PayEunm.getName(info));
         OrderFormPayLogDto log = new OrderFormPayLogDto();
         log.setId(UUID.generate());

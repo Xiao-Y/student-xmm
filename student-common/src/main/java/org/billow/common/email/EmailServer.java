@@ -9,7 +9,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -25,7 +25,7 @@ import java.util.Map;
  * @author liuyongtao
  * @create 2017-10-26 15:19
  */
-@Component
+@Service
 public class EmailServer {
     private static final Logger logger = Logger.getLogger(EmailServer.class);
 
