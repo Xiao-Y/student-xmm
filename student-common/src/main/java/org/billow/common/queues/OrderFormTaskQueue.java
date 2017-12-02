@@ -67,12 +67,16 @@ public class OrderFormTaskQueue implements Runnable {
             OrderFormDto dto = new OrderFormDto();
             dto.setId(orderFormId);
             OrderFormDto orderFormDto = orderFormService.selectByPrimaryKey(dto);
-            if (orderFormDto != null && PayEunm.TRADE_SUCCESS.getStatus().equals(orderFormDto.getStatus())) {
-                dto.setStatus(PayEunm.BUSINESS_CONFIRMATION.getStatus());
-                orderFormService.updateByPrimaryKeySelective(dto);
-                logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId);
+            if (orderFormDto != null) {
+                if (PayEunm.TRADE_SUCCESS.getStatus().equals(orderFormDto.getStatus())) {
+                    dto.setStatus(PayEunm.BUSINESS_CONFIRMATION.getStatus());
+                    orderFormService.updateByPrimaryKeySelective(dto);
+                    logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId);
+                } else {
+                    logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId + "，[" + PayEunm.getName(orderFormDto.getStatus()) + "]订单状态不对...");
+                }
             } else {
-                logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId + "，订单状态不对或订单不存在...");
+                logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId + "，订单不存在...");
             }
         } catch (Exception e) {
             e.printStackTrace();
