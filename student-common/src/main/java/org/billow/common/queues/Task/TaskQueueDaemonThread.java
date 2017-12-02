@@ -49,7 +49,6 @@ public class TaskQueueDaemonThread {
      * 初始化守护线程
      */
     public void init() {
-        //daemonThread = new Thread(() -> execute());
         daemonThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -62,10 +61,10 @@ public class TaskQueueDaemonThread {
     }
 
     private void execute() {
-        logger.info("start:" + System.currentTimeMillis());
+        logger.debug("start:" + System.currentTimeMillis());
         while (true) {
             try {
-                //从延迟队列中取值,如果没有对象过期则队列一直等待，
+                //从延迟队列中获取并移除,如果没有对象过期则队列一直等待，
                 Task t1 = delayQueueTask.take();
                 if (t1 != null) {
                     //修改问题的状态
@@ -74,7 +73,6 @@ public class TaskQueueDaemonThread {
                         continue;
                     }
                     executor.execute(task);
-                    logger.info(">>>>>>>> 自动处理任务:" + task);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -105,14 +103,5 @@ public class TaskQueueDaemonThread {
      */
     public boolean endTask(Task<Runnable> task) {
         return delayQueueTask.remove(task);
-    }
-
-    /**
-     * 获取此队列的头部(过期的对象)
-     *
-     * @return
-     */
-    public Task getTake() throws InterruptedException {
-        return delayQueueTask.take();
     }
 }

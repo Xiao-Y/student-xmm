@@ -1,5 +1,14 @@
 package org.billow.utils;
 
+import org.apache.commons.lang3.StringUtils;
+import org.billow.utils.date.DateTime;
+import org.billow.utils.proxy.ProxyInfo;
+import org.billow.utils.proxy.ProxyInfoContext;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -20,16 +29,6 @@ import java.util.Random;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
-import org.billow.utils.date.DateTime;
-import org.billow.utils.proxy.ProxyInfo;
-import org.billow.utils.proxy.ProxyInfoContext;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 数据操作工具类
@@ -1202,15 +1201,17 @@ public class ToolsUtils {
      */
     public static long splitTextData(String text) {
         long time = 0L;
-        String[] autoTime = text.split("\\*");
-        if (ToolsUtils.isNotEmpty(autoTime)) {
-            time = 1L;
-            if (autoTime.length > 1) {
-                for (String str : autoTime) {
-                    time = time * new Long(StringUtils.trim(str));
+        if (ToolsUtils.isNotEmpty(text)) {
+            String[] autoTime = text.split("\\*");
+            if (ToolsUtils.isNotEmpty(autoTime)) {
+                time = 1L;
+                if (autoTime.length > 1) {
+                    for (String str : autoTime) {
+                        time = time * new Long(StringUtils.trim(str));
+                    }
+                } else {
+                    time = new Long(autoTime[0]);
                 }
-            } else {
-                time = new Long(autoTime[0]);
             }
         }
         return time;

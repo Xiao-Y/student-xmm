@@ -12,11 +12,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 系统启动时初始化订单队列
+ * PostConstruct-->afterPropertiesSet
  *
  * @author liuyongtao
  * @create 2017-12-01 9:38
@@ -30,6 +32,8 @@ public class OrderFormTaskQueueInit implements InitializingBean {
     private String orderFormAutoTime;
     @Value("${orderForm.auto.minTime}")
     private String orderFormAutoMinTime;
+    @Value("${orderForm.queue.interval.time}")
+    private String orderFormQueueIntervalTime;
     @Value("${orderForm.auto.flag}")
     private boolean orderFormAutoFlag;
     @Autowired
@@ -50,31 +54,32 @@ public class OrderFormTaskQueueInit implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         if (!orderFormAutoFlag) return;
-        logger.info("==============================初始化自动订单队列开始===========================");
+        logger.debug("==============================初始化自动订单队列开始===========================");
         try {
             long autoTime = ToolsUtils.splitTextData(orderFormAutoTime);
             long autoMinTime = ToolsUtils.splitTextData(orderFormAutoMinTime);
+            long queueIntervalTime = ToolsUtils.splitTextData(orderFormQueueIntervalTime);
             //查询出支付成功的
             OrderFormDto dto = new OrderFormDto();
             dto.setStatus(PayEunm.TRADE_SUCCESS.getStatus());
             List<OrderFormDto> orderFormDtos = orderFormService.selectAll(dto);
             if (ToolsUtils.isNotEmpty(orderFormDtos)) {
-                for (int i = (orderFormDtos.size() - 1); i > -1; i--) {
+                Collections.reverse(orderFormDtos);
+                for (int i = 0; i < orderFormDtos.size(); i++) {
                     OrderFormDto orderFormDto = orderFormDtos.get(i);
                     long time = autoTime - (new Date().getTime() - orderFormDto.getUpdateDate().getTime());
                     //避免系统启动时执行业务逻辑
                     if (time <= autoMinTime) {
-                        new Thread(new OrderFormTaskQueue(orderFormDto.getId(), autoMinTime)).start();
-                    } else {
-                        new Thread(new OrderFormTaskQueue(orderFormDto.getId(), time)).start();
+                        //队列任务间隔时间
+                        time = autoMinTime + (i * queueIntervalTime);
                     }
+                    new OrderFormTaskQueue(orderFormDto.getId(), time);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("初始化自动订单队列错误" + e);
         }
-        logger.info("==============================初始化自动订单队列结束===========================");
-
+        logger.debug("==============================初始化自动订单队列结束===========================");
     }
 }
