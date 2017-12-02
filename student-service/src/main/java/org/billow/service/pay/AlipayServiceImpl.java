@@ -7,6 +7,7 @@ import org.billow.api.orderForm.OrderFormService;
 import org.billow.api.pay.AlipayService;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.OrderFormPayLogDto;
+import org.billow.utils.StringUtils;
 import org.billow.utils.enumType.PayEunm;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,7 @@ public class AlipayServiceImpl implements AlipayService {
         log.setBusinessNo(trade_no);
         log.setBuyerId(buyer_id);
         log.setTotalAmount(new BigDecimal(total_amount));
-        String status = PayEunm.getStatus(trade_status);
+        String status = PayEunm.getStatus(StringUtils.upperCase(trade_status));
         logger.debug(PayEunm.getName(status));
         log.setStatus(status);
         log.setInfo(info);

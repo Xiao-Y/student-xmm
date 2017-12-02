@@ -98,7 +98,7 @@ public enum PayEunm {
      */
     public static String getName(String status) {
         for (PayEunm c : PayEunm.values()) {
-            if (c.getStatus() == status) {
+            if (c.getStatus().equals(status)) {
                 return c.name;
             }
         }
@@ -113,7 +113,7 @@ public enum PayEunm {
      */
     public static String getNameCode(String status) {
         for (PayEunm c : PayEunm.values()) {
-            if (c.getStatus() == status) {
+            if (c.getStatus().equals(status)) {
                 return c.nameCode;
             }
         }
@@ -128,7 +128,7 @@ public enum PayEunm {
      */
     public static String getStatus(String nameCode) {
         for (PayEunm c : PayEunm.values()) {
-            if (c.getNameCode() == nameCode) {
+            if (c.getNameCode().equals(nameCode)) {
                 return c.status;
             }
         }

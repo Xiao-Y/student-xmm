@@ -35,7 +35,7 @@ public class OrderFormTaskQueue implements Runnable {
 
         this.orderFormId = orderFormId;
         TaskQueueDaemonThread.getInstance().putTask(orderFormAutoTime, this);
-        logger.debug("<<<<<<<< 添加新订单确认任务,业务号:" + orderFormId + "，延时：" + orderFormAutoTime);
+        logger.debug("<<<<<<<< 添加新订单自动确认任务,业务号:" + orderFormId + "，延时：" + orderFormAutoTime);
     }
 
     /**
@@ -53,7 +53,7 @@ public class OrderFormTaskQueue implements Runnable {
         this.orderFormId = orderFormId;
         long autoTime = ToolsUtils.splitTextData(orderFormAutoTime);
         TaskQueueDaemonThread.getInstance().putTask(autoTime, this);
-        logger.debug("<<<<<<<< 添加新订单确认任务,业务号:" + orderFormId + "，延时：" + orderFormAutoTime);
+        logger.debug("<<<<<<<< 添加新订单自动确认任务,业务号:" + orderFormId + "，延时：" + orderFormAutoTime);
     }
 
     @Override
@@ -66,9 +66,14 @@ public class OrderFormTaskQueue implements Runnable {
             OrderFormService orderFormService = BeanUtils.getBean("orderFormServiceImpl");
             OrderFormDto dto = new OrderFormDto();
             dto.setId(orderFormId);
-            dto.setStatus(PayEunm.BUSINESS_CONFIRMATION.getStatus());
-            orderFormService.updateByPrimaryKeySelective(dto);
-            logger.debug(">>>>>>>> 自动处理订单确认任务:" + orderFormId);
+            OrderFormDto orderFormDto = orderFormService.selectByPrimaryKey(dto);
+            if (orderFormDto != null && PayEunm.TRADE_SUCCESS.getStatus().equals(orderFormDto.getStatus())) {
+                dto.setStatus(PayEunm.BUSINESS_CONFIRMATION.getStatus());
+                orderFormService.updateByPrimaryKeySelective(dto);
+                logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId);
+            } else {
+                logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId + "，订单状态不对或订单不存在...");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             logger.error("订单自动确认失败：" + orderFormId);

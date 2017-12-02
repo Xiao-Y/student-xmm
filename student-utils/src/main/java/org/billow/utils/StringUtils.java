@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class StringUtils {
+public final class StringUtils extends org.apache.commons.lang3.StringUtils{
 
 	private String defaultCharset = "UTF-8";
 

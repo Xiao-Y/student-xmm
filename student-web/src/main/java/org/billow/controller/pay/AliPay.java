@@ -11,6 +11,7 @@ import org.billow.api.orderForm.OrderFormDetailService;
 import org.billow.api.orderForm.OrderFormService;
 import org.billow.api.pay.AlipayService;
 import org.billow.common.login.LoginHelper;
+import org.billow.common.queues.OrderFormTaskQueue;
 import org.billow.model.expand.OrderFormDetailDto;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.UserDto;
@@ -165,8 +166,16 @@ public class AliPay {
             }
             //更新订单状态和保存支付宝返回的数据
             alipayService.saveAlipayData(paramsMap);
+            try {
+                //插入自动确认订单队列
+                new OrderFormTaskQueue(paramsMap.get("out_trade_no"));
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.error("插入自动确认订单队列错误" + e);
+            }
             response.getWriter().write("success");
-        } else {// TODO 验签失败则记录异常日志，并在response中返回failure.
+        } else {
+            // TODO 验签失败则记录异常日志，并在response中返回failure.
             response.getWriter().write("failure");
         }
         logger.debug("#############################notifyResult end#######################################");
