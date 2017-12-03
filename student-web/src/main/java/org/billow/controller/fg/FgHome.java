@@ -52,6 +52,8 @@ public class FgHome {
     private UserService userService;
     @Value("${commodity.shop.pageSize}")
     private int shopPageSize;
+    @Value("${pay.isOpen}")
+    private boolean isOpen;
 
     /**
      * 商城首页
@@ -164,7 +166,8 @@ public class FgHome {
         PageHelper.startPage(6);
         orderFormDto.setUserId(loginUser.getUserId());
         orderFormDto.setDelFlag("0");
-        List<OrderFormDto> list = orderFormService.selectAll(orderFormDto);
+        orderFormDto.setIsCustomer(true);
+        List<OrderFormDto> list = orderFormService.selectAllAndOptionButton(orderFormDto);
         PageInfo<OrderFormDto> page = new PageInfo<>(list);
         ModelAndView av = new ModelAndView();
         av.addObject("page", page);
@@ -173,6 +176,7 @@ public class FgHome {
         av.addObject("id", orderFormDto.getId());
         av.addObject("status", orderFormDto.getStatus());
         //查询条件--end
+        av.addObject("isOpen", isOpen);
         return av;
     }
 

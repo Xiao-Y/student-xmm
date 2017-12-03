@@ -69,49 +69,58 @@
                                     </span>
                                 </td>
                                 <td class="product-status">
-                                    <c:choose>
-                                        <c:when test="${orderFormDto.status == '1'}">
-                                            <span class="btn-primary btn-sm">客户提交</span>
-                                        </c:when>
-                                        <c:when test="${orderFormDto.status == '2'}">
-                                            <span class="btn-info btn-sm">商家确认</span>
-                                        </c:when>
-                                        <c:when test="${orderFormDto.status == '3'}">
-                                            <span class="btn-warning btn-sm">客户取消</span>
-                                        </c:when>
-                                        <c:when test="${orderFormDto.status == '4'}">
-                                            <span class="btn-danger btn-sm">商家取消</span>
-                                        </c:when>
-                                        <c:when test="${orderFormDto.status == '5'}">
-                                            <span class="btn-success btn-sm">交易完成</span>
-                                        </c:when>
-                                    </c:choose>
+                                        ${orderFormDto.statusName }
+                                        <%--<c:choose>
+                                            <c:when test="${orderFormDto.status == '1'}">
+                                                <span class="btn-primary btn-sm">客户提交</span>
+                                            </c:when>
+                                            <c:when test="${orderFormDto.status == '2'}">
+                                                <span class="btn-info btn-sm">商家确认</span>
+                                            </c:when>
+                                            <c:when test="${orderFormDto.status == '3'}">
+                                                <span class="btn-warning btn-sm">客户取消</span>
+                                            </c:when>
+                                            <c:when test="${orderFormDto.status == '4'}">
+                                                <span class="btn-danger btn-sm">商家取消</span>
+                                            </c:when>
+                                            <c:when test="${orderFormDto.status == '5'}">
+                                                <span class="btn-success btn-sm">交易完成</span>
+                                            </c:when>
+                                        </c:choose>--%>
                                 </td>
                                 <td class="product-date">
                                     <fmt:formatDate value="${orderFormDto.createDate }" pattern="yyyy-MM-dd HH:mm:ss"/>
                                 </td>
                                 <td class="product-remove">
-                                    <c:if test="${orderFormDto.status == '1'}">
-                                        <a href="javascript:;" name="cancelOrderForm"
-                                           url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=3">取消订单</a>
-                                    </c:if>
-                                    <c:if test="${orderFormDto.status == '3' || orderFormDto.status == '4' || orderFormDto.status == '5'}">
-                                        <a href="javascript:;" name="cancelOrderForm"
-                                           url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&delFlag=1">删除记录</a>
-                                    </c:if>
+                                    <c:forEach var="button" items="${orderFormDto.optionButton}">
+                                        <c:choose>
+                                            <%-- 删除订单 --%>
+                                            <c:when test="${button.key == 'DELETE_ORDER_FORM'}">
+                                                <a href="javascript:;" name="optionButton"
+                                                   title="${orderFormDto.id }&${button.key}&${button.value}">
+                                                    <span class="btn-danger btn-sm">${button.value}</span>
+                                                </a>
+                                            </c:when>
+                                            <%-- 继续支付 --%>
+                                            <c:when test="${button.key == 'AGPAID'}">
+                                                <c:if test="${isOpen}">
+                                                    <a href="javascript:;" name="agPaidButton"
+                                                       title="${orderFormDto.id }&${button.key}">
+                                                        <span class="btn-warning btn-sm">${button.value}</span>
+                                                    </a>
+                                                </c:if>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="javascript:;" name="optionButton"
+                                                   title="${orderFormDto.id }&${button.key}&${button.value}">
+                                                    <span class="btn-info btn-sm">${button.value}</span>
+                                                </a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
                                 </td>
                             </tr>
                         </c:forEach>
-                        <%--<tr>
-                            <td class="product-thumbnail"><a href="/fg/fgHome/orderDetail">E20171107084048655001</a>
-                            </td>
-                            <td class="product-consignee">billow</td>
-                            <td class="product-phone">15507529497</td>
-                            <td class="product-price"><span class="amount">￥8.63</span></td>
-                            <td class="product-status">客户提交</td>
-                            <td class="product-date">2017-11-07 08:40:48</td>
-                            <td class="product-remove"><a href="#">确认订单</a><a href="#">取消订单</a></td>
-                        </tr>--%>
                         </tbody>
                     </table>
                 </div>
@@ -135,27 +144,29 @@
 
 <jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
 <jsp:include page="/pub/pubTips.jsp" flush="true"/>
-
+<!-- Modal start -->
+<%-- 选择支付方式 --%>
+<jsp:include page="/WEB-INF/page/fg/modal/payModal.jsp" flush="true"/>
+<!-- Modal end -->
 <script type="text/javascript" src="${ctx }/static/plugins/pagination/jquery.pagination.js"></script>
 <script>
 
-    $(document).on('click', 'a[name="cancelOrderForm"]', function () {
+    $(document).on('click', 'a[name="agPaidButton"]', function () {
+        var title = $(this).attr("title").split("&");
+        var orderFormId = title[0];
+        showPayModal(orderFormId);
+    });
+    $(document).on('click', 'a[name="optionButton"]', function () {
         var tipBox = null;
-        var url = $(this).attr("url");
-        var status = url.split("&")[1].split("=")[1];
-        var str1 = "";
-        var str2 = "";
-        var type = "confirm";
-        // 1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成
-        if (status == '3') {
-            str1 = "确认取消订单？";
-            str2 = "正在取消订单...";
-        } else {//delFlag=1
-            str1 = "确定删除记录？";
-            str2 = "正在删除记录...";
-        }
+        var title = $(this).attr("title").split("&");
+        var orderFormId = title[0];
+        var statusCode = title[1];
+        var statusName = title[2];
+        var str1 = "确定" + statusName;
+        var str2 = "正在操作中...";
+        var url = path + "/orderForm/updateOrderForm?id=" + orderFormId + "&statusCode=" + statusCode;
         new TipBox({
-            type: type,
+            type: "confirm",
             str: str1,
             hasBtn: true,
             callBack: function () {

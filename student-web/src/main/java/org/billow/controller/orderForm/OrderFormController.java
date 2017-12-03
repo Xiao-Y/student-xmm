@@ -16,6 +16,7 @@ import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.constant.PagePathCst;
+import org.billow.utils.enumType.PayStatusEunm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -132,6 +133,7 @@ public class OrderFormController {
      * @param orderFormDto
      * @return
      */
+    @Deprecated
     @RequestMapping("/queryOrderFormList")
     public ModelAndView queryOrderFormList(HttpServletRequest request, OrderFormDto orderFormDto) {
         UserDto loginUser = LoginHelper.getLoginUser(request);
@@ -184,16 +186,26 @@ public class OrderFormController {
         JsonResult json = new JsonResult();
         String message = "";
         String type = "";
+        String statusCode = orderFormDto.getStatusCode();
         try {
-            orderFormService.updateByPrimaryKeySelective(orderFormDto);
-            //Status订单状态：1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成
-            if ("1".equals(orderFormDto.getDelFlag())) {//删除订单记录
+            String status = PayStatusEunm.getStatus(statusCode);
+            orderFormDto.setStatus(status);
+            if (PayStatusEunm.DELETE_ORDER_FORM.getNameCode().equals(statusCode)) {//删除订单记录
+                orderFormDto.setStatus(null);
+                orderFormDto.setDelFlag("1");
+            }
+            orderFormService.updateOrderForm(orderFormDto);
+            if (PayStatusEunm.DELETE_ORDER_FORM.getNameCode().equals(statusCode)) {//删除订单记录
                 message = MessageTipsCst.DELETE_SUCCESS;
-            } else if ("3".equals(orderFormDto.getStatus()) || "4".equals(orderFormDto.getStatus())) {
+            } else if (PayStatusEunm.BUSINESS_CONFIRMATION.getNameCode().equals(statusCode)) {//确认订单
+                message = "确认订单成功！";
+            } else if (PayStatusEunm.CONFIRMATION_SHOUHUO.getNameCode().equals(statusCode)) {//确认收货
+                message = "确认收货成功！";
+            } else if (PayStatusEunm.CUSTOMER_CANCELLATION.getNameCode().equals(statusCode)) {//客户取消
                 message = MessageTipsCst.ORDERFORM_CANCEL_SUCCESS;
-                //邮件通知
-                try {
-                    if ("3".equals(orderFormDto.getStatus()) && businessCancel) {//3-客户取消
+                if (businessCancel) {
+                    //邮件通知
+                    try {
                         StringBuilder mailContent = new StringBuilder();
                         mailContent.append("客户：");
                         mailContent.append(loginUser.getUserName());
@@ -207,31 +219,35 @@ public class OrderFormController {
                         mailContent.append("如果想要了解详细情况请与客户联系！");
                         mailContent.append("<br><br><br>");
                         emailServer.singleMailSend(toEmails, "客户取消了您的订单！", mailContent.toString());
-                    } else if ("4".equals(orderFormDto.getStatus()) && customerCancel) {//4-商家取消
-                        String mailContent = "订单号：" + orderFormDto.getId() + "<br> 非常抱歉你的订单被商家取消了，如果有疑问请与商家联系!<br><br><br>";
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        logger.error(e);
+                    }
+                }
+            } else if (PayStatusEunm.BUSINESS_CANCELLATION.getNameCode().equals(statusCode)) {//商家取消
+                message = MessageTipsCst.ORDERFORM_CANCEL_SUCCESS;
+                //邮件通知
+                try {
+                    if (customerCancel) {
+                        String mailContent = "订单号：" + orderFormDto.getId()
+                                + "<br> 非常抱歉你的订单被商家取消了，如果有疑问请与商家联系!<br><br><br>";
                         emailServer.singleMailSend(loginUser.getMail(), "商家取消了您的订单！", mailContent);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                     logger.error(e);
                 }
-            } else if ("2".equals(orderFormDto.getStatus())) {
-                message = "确认订单成功！";
-            } else if ("5".equals(orderFormDto.getStatus())) {
-                message = "交易成功！";
+            } else {
+                message = PayStatusEunm.getNameByNameCode(orderFormDto.getStatusCode());
             }
             type = MessageTipsCst.TYPE_SUCCES;
         } catch (Exception e) {
             e.printStackTrace();
             logger.error(e);
-            if ("1".equals(orderFormDto.getDelFlag())) {
+            if (PayStatusEunm.DELETE_ORDER_FORM.getNameCode().equals(statusCode)) {//删除订单记录
                 message = MessageTipsCst.DELETE_FAILURE;
-            } else if ("3".equals(orderFormDto.getStatus()) || "4".equals(orderFormDto.getStatus())) {
-                message = MessageTipsCst.ORDERFORM_CANCEL_FAILURE;
-            } else if ("2".equals(orderFormDto.getStatus())) {
-                message = "确认订单失败！";
-            } else if ("5".equals(orderFormDto.getStatus())) {
-                message = "交易完成失败！";
+            } else {
+                message = "订单状态修改失败";
             }
             type = MessageTipsCst.TYPE_ERROR;
         }
@@ -253,7 +269,8 @@ public class OrderFormController {
         PageHelper.startPage();
         //orderFormDto.setUserId(loginUser.getUserId());
         //orderFormDto.setDelFlag("0");
-        List<OrderFormDto> list = orderFormService.selectAll(orderFormDto);
+        orderFormDto.setIsCustomer(false);
+        List<OrderFormDto> list = orderFormService.selectAllAndOptionButton(orderFormDto);
         PageInfo<OrderFormDto> page = new PageInfo<>(list);
         ModelAndView av = new ModelAndView();
         av.addObject("page", page);
@@ -264,4 +281,4 @@ public class OrderFormController {
         //查询条件--end
         return av;
     }
-}  
+}

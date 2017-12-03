@@ -6,7 +6,7 @@ import org.billow.common.queues.Task.TaskQueueDaemonThread;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.bean.BeanUtils;
-import org.billow.utils.enumType.PayEunm;
+import org.billow.utils.enumType.PayStatusEunm;
 import org.billow.utils.property.PropertyUtil;
 
 /**
@@ -68,12 +68,12 @@ public class OrderFormTaskQueue implements Runnable {
             dto.setId(orderFormId);
             OrderFormDto orderFormDto = orderFormService.selectByPrimaryKey(dto);
             if (orderFormDto != null) {
-                if (PayEunm.TRADE_SUCCESS.getStatus().equals(orderFormDto.getStatus())) {
-                    dto.setStatus(PayEunm.BUSINESS_CONFIRMATION.getStatus());
+                if (PayStatusEunm.TRADE_SUCCESS.getStatus().equals(orderFormDto.getStatus())) {
+                    dto.setStatus(PayStatusEunm.BUSINESS_CONFIRMATION.getStatus());
                     orderFormService.updateByPrimaryKeySelective(dto);
                     logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId);
                 } else {
-                    logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId + "，[" + PayEunm.getName(orderFormDto.getStatus()) + "]订单状态不对...");
+                    logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId + "，[" + PayStatusEunm.getNameByStatus(orderFormDto.getStatus()) + "]订单状态不对...");
                 }
             } else {
                 logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId + "，订单不存在...");

@@ -8,7 +8,7 @@ import org.billow.api.pay.AlipayService;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.OrderFormPayLogDto;
 import org.billow.utils.StringUtils;
-import org.billow.utils.enumType.PayEunm;
+import org.billow.utils.enumType.PayStatusEunm;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,7 +71,7 @@ public class AlipayServiceImpl implements AlipayService {
         String trade_status = paramsMap.get("trade_status");//支付状态
         String total_amount = paramsMap.get("total_amount");//支付金额
         String info = JSON.toJSONString(paramsMap);//支付宝返回报文
-        logger.debug(PayEunm.getName(info));
+        logger.debug(PayStatusEunm.getNameByNameCode(StringUtils.upperCase(trade_status)));
         OrderFormPayLogDto log = new OrderFormPayLogDto();
         log.setId(UUID.generate());
         log.setCreateTime(new Date());
@@ -81,8 +81,8 @@ public class AlipayServiceImpl implements AlipayService {
         log.setBusinessNo(trade_no);
         log.setBuyerId(buyer_id);
         log.setTotalAmount(new BigDecimal(total_amount));
-        String status = PayEunm.getStatus(StringUtils.upperCase(trade_status));
-        logger.debug(PayEunm.getName(status));
+        String status = PayStatusEunm.getStatus(StringUtils.upperCase(trade_status));
+        logger.debug(PayStatusEunm.getNameByNameCode(status));
         log.setStatus(status);
         log.setInfo(info);
         //插入支付宝返回日志

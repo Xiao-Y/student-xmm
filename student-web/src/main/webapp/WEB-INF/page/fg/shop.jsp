@@ -271,7 +271,7 @@
 <jsp:include page="/pub/pubTips.jsp" flush="true"/>
 
 <!-- Modal start -->
-<jsp:include page="/WEB-INF/page/fg/pub/procuctModal.jsp" flush="true"/>
+<jsp:include page="/WEB-INF/page/fg/modal/procuctModal.jsp" flush="true"/>
 <!-- Modal end -->
 
 <script type="text/javascript" src="${ctx }/static/plugins/pagination/jquery.pagination.js"></script>

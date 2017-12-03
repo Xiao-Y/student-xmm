@@ -5,7 +5,7 @@ import org.billow.api.orderForm.OrderFormService;
 import org.billow.common.queues.Task.TaskQueueDaemonThread;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.utils.ToolsUtils;
-import org.billow.utils.enumType.PayEunm;
+import org.billow.utils.enumType.PayStatusEunm;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,7 +61,7 @@ public class OrderFormTaskQueueInit implements InitializingBean {
             long queueIntervalTime = ToolsUtils.splitTextData(orderFormQueueIntervalTime);
             //查询出支付成功的
             OrderFormDto dto = new OrderFormDto();
-            dto.setStatus(PayEunm.TRADE_SUCCESS.getStatus());
+            dto.setStatus(PayStatusEunm.TRADE_SUCCESS.getStatus());
             List<OrderFormDto> orderFormDtos = orderFormService.selectAll(dto);
             if (ToolsUtils.isNotEmpty(orderFormDtos)) {
                 Collections.reverse(orderFormDtos);

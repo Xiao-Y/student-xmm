@@ -5,6 +5,7 @@ import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.UserDto;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,4 +33,19 @@ public interface OrderFormService extends BaseService<OrderFormDto> {
      */
     Map<String, String> saveOrderForm(HttpServletResponse response, UserDto loginUser, String addressId,
                                       String[] commodityIds, String[] commodityNums) throws Exception;
+
+    /**
+     * 获取订单信息和可以操作的buttton
+     *
+     * @param orderFormDto
+     * @return
+     */
+    List<OrderFormDto> selectAllAndOptionButton(OrderFormDto orderFormDto);
+
+    /**
+     * 修改订单状态,并记录操作日志
+     *
+     * @param orderFormDto
+     */
+    void updateOrderForm(OrderFormDto orderFormDto) throws Exception;
 }

@@ -168,27 +168,6 @@
     </div>
 </div>
 <!-- cart-main-area end -->
-<%-- 选择支付方式 --%>
-<div class="modal fade" id="payModal">
-    <div class="modal-dialog">
-        <div class="modal-content message_align">
-            <div class="modal-header">
-                <h4 class="modal-title">支付选择</h4>
-            </div>
-            <div class="modal-body">
-                <p id="payContent">请选择你想要的支付方式</p>
-            </div>
-            <div class="modal-footer">
-                <a id="aliPay" href="#" class="btn btn-success">支付宝支付</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a id="wexinPay" href="#" class="btn btn-success" disabled="">微信支付</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="btn btn-success" data-dismiss="modal">暂不支付</a>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </div>
-        </div>
-    </div>
-</div>
 <input type="hidden" name="result" id="result" value="${result}">
 <!-- footer start -->
 <jsp:include page="/WEB-INF/page/fg/pub/footer.jsp" flush="true"/>
@@ -197,7 +176,9 @@
 <jsp:include page="/pub/pubTips.jsp" flush="true"/>
 
 <!-- Modal start -->
-<jsp:include page="/WEB-INF/page/fg/pub/addressModal.jsp" flush="true"/>
+<%-- 选择支付方式 --%>
+<jsp:include page="/WEB-INF/page/fg/modal/payModal.jsp" flush="true"/>
+<jsp:include page="/WEB-INF/page/fg/modal/procuctModal.jsp" flush="true"/>
 <!-- Modal end -->
 
 <script type="text/javascript" src="${ctx }/static/js/common/dataTool.js"></script>
@@ -221,15 +202,6 @@
         }
         //计算所有选种商品的总价格
         total();
-
-        /**
-         * 绑定支付选择
-         */
-        function showPayModal(orderFormId) {
-            $("#aliPay").attr("href", path + "/aliPay/openAliPayPage/" + orderFormId);
-            $("#wexinPay").attr("href", "#");
-            $("#payModal").modal();
-        }
 
         $("#checkBoxAll").on("click", function () {
             var checkBoxAll = $(this).is(':checked');

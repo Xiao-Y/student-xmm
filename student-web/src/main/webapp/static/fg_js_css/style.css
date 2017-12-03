@@ -598,10 +598,13 @@ a#scrollUp {
     width: 180px;
 }
 .table-content table td.product-remove {
-    width: 150px;
+    width: 180px;
 }
 .table-content table td.product-price {
     width: 130px;
+}
+.table-content table td.product-date {
+    width: 180px;
 }
 .table-content table td.product-name a:hover,
 .buttons-cart a:hover {

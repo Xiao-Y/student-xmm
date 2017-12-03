@@ -1,87 +1,3 @@
-
-sping-redis.xml
-集成redis，将redis当做缓存使用。
-org.billow.utils.redis.RedisKeyGenerator key的主键生成规则
-org.billow.utils.redis.RedisUtil redis的工具类
-
-自定义方法查询：
-如方法：getMenuChildList
-@Cacheable(keyGenerator = "key", value = "getMenuChildList")
-
-基类方法查询：使用的是aop
-selectByPrimaryKey
-
-
-已集成RabbitMQ的使用：
-	生产者：
-	1、在/student-web/src/main/resources/rabbitmq/rabbitmq-queue.xml中添加消息队列
-	
-		<rabbit:queue name="directQueueTest" durable="true" auto-delete="false" exclusive="false" />
-		
-	2、在/student-web/src/main/resources/rabbitmq/direct-exchange.xml中添加交换机并绑定消息队列
-	
-		<rabbit:direct-exchange name="directExchangeTest" durable="true" auto-delete="false">
-			<rabbit:bindings>
-				<rabbit:binding queue="directQueueTest" key="directQueueTestKey" />
-			</rabbit:bindings>
-		</rabbit:direct-exchange>
-	
-	3、添加消息生产者，/student-web/src/main/resources/rabbitmq/direct-producer.xml
-	
-		<bean id="rabbitMQProducer" class="org.billow.common.rabbitmq.sender.RabbitMQProducerImpl">
-			<!-- 消息模板 -->
-			<property name="rabbitTemplate" ref="rabbitTemplate" />
-			<!-- 交换器 -->
-			<property name="exchangeName" value="directExchangeTest" />
-			<!-- 路由key -->
-			<property name="routingKey" value="directQueueTestKey" />
-			<!-- <property name="virHostBeanKey" value="" /> -->
-		</bean>
-		注意：bean中的class不变，添加新的生产者修改id的名称，不可重复
-
-	4、使用参考：org.billow.controller.rabbitMQ.RabbitMQController
-		4.1、注入
-		@Autowired(required = false)
-		@Qualifier("rabbitMQProducer")
-		private RabbitMQProducer rabbitMQProducer;
-		4.2、发送
-		rabbitMQProducer.send(message, "billow", "也没啥");
-		
-	
-	消费者：
-	监听：
-	1、在/student-web/src/main/resources/rabbitmq/direct-consumer.xml中添加监听
-	
-	<rabbit:listener-container connection-factory="rmqconnectionFactory">
-		<rabbit:listener queues="directQueueTestListenter" ref="directMessageReceiver" />
-	</rabbit:listener-container>	
-
-	2、新建类DirectMessageReceiver
-	实现org.springframework.amqp.core.MessageListener
-	
-	非监听：
-	1、在/student-web/src/main/resources/rabbitmq/direct-consumer.xml中添加bean
-	
-	<bean id="rabbitMQConsume" class="org.billow.common.rabbitmq.consume.RabbitMQConsumeImpl">
-		<!-- 消息模板 -->
-		<property name="rabbitTemplate" ref="rabbitTemplate" />
-		<!-- 消息队列 -->
-		<property name="queueName" value="directQueueTest" />
-		<!-- 设置超时时间 -->
-		<property name="timeoutMillis" value="3000" />
-	</bean>
-	注意：bean中的class不变，添加新的生产者修改id的名称，不可重复
-	
-	2、使用：参考org.billow.controller.rabbitMQ.RabbitMQController.readQueueMessage() 
-	注入：
-	@Autowired(required = false)
-	@Qualifier("rabbitMQConsume")
-	private RabbitMQConsume rabbitMQConsume;
-	
-	MessageObject msg = rabbitMQConsume.receiveToMessageObject();
-	
-	
-
 系统配置：
 
 1、可以直接使用
@@ -116,25 +32,53 @@ student-web/src/main/env
     location="classpath:env.properties"
 
 
+按钮：
+用户：取消订单，继续支付，撤销订单，确认收货，申请退款
+0未支付-取消订单6，继续支付2，3
+2支付失败-继续支付
+3支付成功-null
+6取消订单-删除订单
+13发货中-确认收货10
+10确认收货-申请退款12
+9申请退款-同意-null
+14退款失败-线下协商,end
+97,16退款成功-null,end
+11申请退款-不同意-线下协商
+98,99交易完成-删除订单，null.end
+
+商家：确认订单，取消订单，申请退款-同意，申请退款-不同意，发货中
+3支付成功-确认订单5,取消订单7
+7取消订单-删除订单，（全额退款）end，
+5确认订单-发货中13
+12申请退款-处理中-申请退款-同意9，9申请退款-不同意11
+98,99交易完成，null.end
+
+操作：
 1.用户提交，未支付
 用户：取消订单，继续支付
 商家：
 
 已支付
 2.商家未确认
-用户：撤销订单
-商家：确认订单（自动？），取消订单
+商家：确认订单（10分钟自动，手动），取消订单（与客户线下协商）
 
-3.商家确认
--- 用户：撤销交易（三个月）
-商家：交易完成（自动）
+3.商家确认订单
+商家：发货中（60分钟自动，手动），取消订单（与客户线下协商）
 
-4.交易完成,未关闭交易（三个月自动）
-用户:申请退款
-商家:同意,不同意
+3.1.商家发货中
+用户：确认收货（7天自动，手动）
 
+4.用户确认收货
+用户:申请退款（与商家线下协商）
 
-1-未支付，2-已支付，
-5-商家确认，7-商家取消，9-申请退款-同意，11-申请退款-不同意
-6-客户取消，8-撤销订单，10-撤销交易?,12-申请退款-处理中，
-98-交易完成，99-关闭交易
+5.申请退款，交易未完成,未关闭交易（三个月自动）
+商家:同意,不同意（与客户线下协商）
+
+6.确认收货，不申请退款，申请退款-不同意
+交易完成（15天自动）
+
+状态：
+0-未支付，1-交易创建，等待买家付款，2-交易支付失败，3-交易支付成功
+5-商家确认，7-商家取消，9-申请退款-同意，11-申请退款-不同意，13-发货中
+6-客户取消，8-撤销订单，10-确认收货,12-申请退款-处理中，14-退款失败，16-退款成功
+97-支付完成后全额退款，关闭交易，98-交易完成，99-交易结束，不可退款

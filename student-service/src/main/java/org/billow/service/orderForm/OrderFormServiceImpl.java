@@ -1,5 +1,6 @@
 package org.billow.service.orderForm;
 
+import org.apache.ibatis.annotations.Case;
 import org.apache.log4j.Logger;
 import org.billow.api.orderForm.OrderFormService;
 import org.billow.dao.AddressDao;
@@ -15,8 +16,9 @@ import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
 import org.billow.service.base.BaseServiceImpl;
+import org.billow.utils.ToolsUtils;
 import org.billow.utils.date.DateTime;
-import org.billow.utils.enumType.PayEunm;
+import org.billow.utils.enumType.PayStatusEunm;
 import org.billow.utils.generator.OrderNumUtil;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.BeanUtils;
@@ -24,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -108,7 +111,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         AddressDto dto = addressDao.selectByPrimaryKey(addressDto);
         OrderFormDto orderFormDto = new OrderFormDto();
         orderFormDto.setId(orderFormId);
-        orderFormDto.setStatus(PayEunm.UNPAID.getStatus());
+        orderFormDto.setStatus(PayStatusEunm.UNPAID.getStatus());
         orderFormDto.setDelFlag("0");
         orderFormDto.setConsignee(dto.getConsignee());
         orderFormDto.setConsigneePhone(dto.getConsigneePhone());
@@ -123,6 +126,80 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         Map<String, String> map = this.mailSendContent(orderFormId, orderFormAmount, detailes, dto);
         map.put("orderFormId", orderFormId);
         return map;
+    }
+
+    @Override
+    public List<OrderFormDto> selectAllAndOptionButton(OrderFormDto orderFormDto) {
+        boolean isCustomer = orderFormDto.getIsCustomer();
+        List<OrderFormDto> orderFormDtos = orderFormDao.selectAll(orderFormDto);
+        if (ToolsUtils.isNotEmpty(orderFormDtos)) {
+            for (OrderFormDto dto : orderFormDtos) {
+                this.setOptionButton(dto, isCustomer);
+            }
+        }
+        return orderFormDtos;
+    }
+
+    @Override
+    public void updateOrderForm(OrderFormDto orderFormDto) throws Exception {
+        orderFormDao.updateByPrimaryKeySelective(orderFormDto);
+    }
+
+    /**
+     * 构建订单操作的button
+     *
+     * @param dto
+     * @param isCustomer 是否从客户端进入
+     */
+    private void setOptionButton(OrderFormDto dto, boolean isCustomer) {
+        Map<String, String> map = new HashMap<>();
+        String status = dto.getStatus();
+        dto.setStatusName(PayStatusEunm.getNameByStatus(status));
+        if (isCustomer) {
+            if (PayStatusEunm.UNPAID.getStatus().equals(status)) {//未支付
+                PayStatusEunm customerCancellation = PayStatusEunm.CUSTOMER_CANCELLATION;
+                map.put(customerCancellation.getNameCode(), "取消订单");
+                PayStatusEunm agpaid = PayStatusEunm.AGPAID;
+                map.put(agpaid.getNameCode(), agpaid.getName());
+            } else if (PayStatusEunm.TRADE_FAILURE.getStatus().equals(status)) {//支付失败
+                PayStatusEunm agpaid2 = PayStatusEunm.AGPAID;
+                map.put(agpaid2.getNameCode(), agpaid2.getName());
+            } else if (PayStatusEunm.CUSTOMER_CANCELLATION.getStatus().equals(status)) {//取消订单
+                PayStatusEunm deleteOrderform = PayStatusEunm.DELETE_ORDER_FORM;
+                map.put(deleteOrderform.getNameCode(), deleteOrderform.getName());
+            } else if (PayStatusEunm.TRADE_FINISHED.getStatus().equals(status)//交易结束，不可退款
+                    //发货中
+                    || PayStatusEunm.FAHUOZHONG.getStatus().equals(status)
+                    //支付完成后全额退款，关闭交易
+                    || PayStatusEunm.TRADE_CLOSED.getStatus().equals(status)
+                    //交易完成
+                    || PayStatusEunm.TRANSACTION_COMPLETION.getStatus().equals(status)) {
+                PayStatusEunm confirmationShouhuo = PayStatusEunm.CONFIRMATION_SHOUHUO;
+                map.put(confirmationShouhuo.getNameCode(), confirmationShouhuo.getName());
+            } else if (PayStatusEunm.REFUND_FAILURE.getStatus().equals(status)) {//退款失败
+                map.put("xianxia", "线下协商");
+            } else if (PayStatusEunm.APPLICATION_REFUND_DISAGREE.getStatus().equals(status)) {//申请退款-不同意
+                map.put("xianxia", "线下协商");
+            }
+        } else {
+            if (PayStatusEunm.TRADE_SUCCESS.getStatus().equals(status)) {//支付成功
+                PayStatusEunm businessCancellation = PayStatusEunm.BUSINESS_CANCELLATION;
+                map.put(businessCancellation.getNameCode(), "取消订单");
+                PayStatusEunm businessConfirmation = PayStatusEunm.BUSINESS_CONFIRMATION;
+                map.put(businessConfirmation.getNameCode(), "确认订单");
+            } else if (PayStatusEunm.BUSINESS_CANCELLATION.getStatus().equals(status)) {//取消订单
+                map.put("delete", "删除订单");
+            } else if (PayStatusEunm.BUSINESS_CONFIRMATION.getStatus().equals(status)) {//确认订单
+                PayStatusEunm fahuozhong = PayStatusEunm.FAHUOZHONG;
+                map.put(fahuozhong.getNameCode(), fahuozhong.getName());
+            } else if (PayStatusEunm.APPLICATION_REFUND_PROCESSING.getStatus().equals(status)) {//申请退款-处理中
+                PayStatusEunm applicationRefundAgree = PayStatusEunm.APPLICATION_REFUND_AGREE;
+                map.put(applicationRefundAgree.getNameCode(), applicationRefundAgree.getName());
+                PayStatusEunm applicationRefundDisagree = PayStatusEunm.APPLICATION_REFUND_DISAGREE;
+                map.put(applicationRefundDisagree.getNameCode(), applicationRefundDisagree.getName());
+            }
+        }
+        dto.setOptionButton(map);
     }
 
     /**
