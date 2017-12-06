@@ -165,20 +165,23 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
                 PayStatusEunm agpaid2 = PayStatusEunm.AGPAID;
                 map.put(agpaid2.getNameCode(), agpaid2.getName());
             } else if (PayStatusEunm.CUSTOMER_CANCELLATION.getStatus().equals(status)) {//取消订单
+                PayStatusEunm agpaid = PayStatusEunm.AGPAID;
+                map.put(agpaid.getNameCode(), agpaid.getName());
                 PayStatusEunm deleteOrderform = PayStatusEunm.DELETE_ORDER_FORM;
                 map.put(deleteOrderform.getNameCode(), deleteOrderform.getName());
             } else if (PayStatusEunm.CONFIRMATION_GOODS_RECEIPT.getStatus().equals(status)) {//确认收货
                 PayStatusEunm appRefundPro = PayStatusEunm.APPLICATION_REFUND_PROCESSING;
                 map.put(appRefundPro.getNameCode(), "申请退款");
+            } else if (PayStatusEunm.CONSIGNMENT.getStatus().equals(status)) {//发货中
+                PayStatusEunm confirmationGoodsReceipt = PayStatusEunm.CONFIRMATION_GOODS_RECEIPT;
+                map.put(confirmationGoodsReceipt.getNameCode(), confirmationGoodsReceipt.getName());
             } else if (PayStatusEunm.TRADE_FINISHED.getStatus().equals(status)//交易结束，不可退款
-                    //发货中
-                    || PayStatusEunm.CONSIGNMENT.getStatus().equals(status)
                     //支付完成后全额退款，关闭交易
                     || PayStatusEunm.TRADE_CLOSED.getStatus().equals(status)
                     //交易完成
                     || PayStatusEunm.TRANSACTION_COMPLETION.getStatus().equals(status)) {
-                PayStatusEunm confirmationGoodsReceipt = PayStatusEunm.CONFIRMATION_GOODS_RECEIPT;
-                map.put(confirmationGoodsReceipt.getNameCode(), confirmationGoodsReceipt.getName());
+                PayStatusEunm deleteOrderform = PayStatusEunm.DELETE_ORDER_FORM;
+                map.put(deleteOrderform.getNameCode(), deleteOrderform.getName());
             } else if (PayStatusEunm.REFUND_FAILURE.getStatus().equals(status)) {//退款失败
                 map.put("xianxia", "线下协商");
             } else if (PayStatusEunm.APPLICATION_REFUND_DISAGREE.getStatus().equals(status)) {//申请退款-不同意

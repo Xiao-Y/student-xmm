@@ -129,6 +129,12 @@
                                            class="layui-btn layui-btn-small layui-btn-warm"
                                            title="${orderFormDto.id }&${button.key}&${button.value}">${button.value}</a>
                                     </c:when>
+                                    <%-- 申请退款-同意 --%>
+                                    <c:when test="${button.key == 'APPLICATION_REFUND_AGREE'}">
+                                        <a href="javascript:;" name="optionButton"
+                                           class="layui-btn layui-btn-small"
+                                           title="${orderFormDto.id }&${button.key}&${button.value}">${button.value}</a>
+                                    </c:when>
                                     <c:otherwise>
                                         <a href="javascript:;" name="optionButton"
                                            class="layui-btn layui-btn-small layui-btn-normal"

@@ -24,6 +24,9 @@ layui.use(['layer', 'form'], function () {
         var str1 = "确定" + statusName;
         var str2 = "正在操作中...";
         var url = path + "/orderForm/updateOrderForm?id=" + orderFormId + "&statusCode=" + statusCode;
+        if (statusCode == 'APPLICATION_REFUND_AGREE') {
+            url = path + "/aliPay/tradeRefund/" + orderFormId;
+        }
         new TipBox({
             type: "confirm",
             str: str1,
