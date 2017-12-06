@@ -5,6 +5,7 @@ import org.billow.api.orderForm.OrderFormService;
 import org.billow.common.queues.Task.TaskQueueDaemonThread;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.utils.ToolsUtils;
+import org.billow.utils.enumType.OrderFormTaskQueueEunm;
 import org.billow.utils.enumType.PayStatusEunm;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,9 @@ public class OrderFormTaskQueueInit implements InitializingBean {
                         //队列任务间隔时间
                         time = autoMinTime + (i * queueIntervalTime);
                     }
-                    new OrderFormTaskQueue(orderFormDto.getId(), time);
+                    String typeCode = OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONFIRMATION.getTypeCode();
+                    String orderFormId = orderFormDto.getId();
+                    new OrderFormTaskQueue(typeCode, time, orderFormId).putOrderFormTask();
                 }
             }
         } catch (Exception e) {

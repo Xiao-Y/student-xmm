@@ -1,4 +1,4 @@
-package org.billow.common.queues.Task;
+package org.billow.queue.test1;
 
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
@@ -29,14 +29,20 @@ public class Task<T extends Runnable> implements Delayed {
 
     private final Long n;
 
-    public Task(T t) {
+    public Task() {
+        this.task = null;
         this.time = null;
-        this.task = t;
         this.n = atomic.getAndIncrement();
     }
 
     public Task(long timeout, T t) {
         this.time = System.nanoTime() + timeout;
+        this.task = t;
+        this.n = atomic.getAndIncrement();
+    }
+
+    public Task(T t) {
+        this.time = System.nanoTime() + 100000L;
         this.task = t;
         this.n = atomic.getAndIncrement();
     }
@@ -80,9 +86,14 @@ public class Task<T extends Runnable> implements Delayed {
 
     @Override
     public boolean equals(Object object) {
-        if (object instanceof Task) {
+        System.out.println(object);
+        System.out.println(this);
+        System.out.println(object.hashCode());
+        System.out.println(hashCode());
+        /*if (object instanceof Task) {
             return object.hashCode() == hashCode() ? true : false;
         }
-        return false;
+        return false;*/
+        return object.hashCode() == hashCode() ? true : false;
     }
 }

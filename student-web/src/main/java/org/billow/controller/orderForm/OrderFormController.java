@@ -7,6 +7,7 @@ import org.billow.api.orderForm.OrderFormService;
 import org.billow.api.orderForm.ShoppingCartService;
 import org.billow.common.email.EmailServer;
 import org.billow.common.login.LoginHelper;
+import org.billow.common.queues.OrderFormTaskQueue;
 import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.OrderFormDetailDto;
 import org.billow.model.expand.OrderFormDto;
@@ -16,6 +17,7 @@ import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.constant.PagePathCst;
+import org.billow.utils.enumType.OrderFormTaskQueueEunm;
 import org.billow.utils.enumType.PayStatusEunm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -187,6 +189,7 @@ public class OrderFormController {
         String message = "";
         String type = "";
         String statusCode = orderFormDto.getStatusCode();
+        String orderFormId = orderFormDto.getId();
         try {
             String status = PayStatusEunm.getStatus(statusCode);
             orderFormDto.setStatus(status);
@@ -199,6 +202,9 @@ public class OrderFormController {
                 message = MessageTipsCst.DELETE_SUCCESS;
             } else if (PayStatusEunm.BUSINESS_CONFIRMATION.getNameCode().equals(statusCode)) {//确认订单
                 message = "确认订单成功！";
+                //移除自动确认队列中的任务
+                String typeCode = OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONFIRMATION.getTypeCode();
+                new OrderFormTaskQueue(typeCode, orderFormId).endOrderFormTask();
             } else if (PayStatusEunm.CONFIRMATION_SHOUHUO.getNameCode().equals(statusCode)) {//确认收货
                 message = "确认收货成功！";
             } else if (PayStatusEunm.CUSTOMER_CANCELLATION.getNameCode().equals(statusCode)) {//客户取消

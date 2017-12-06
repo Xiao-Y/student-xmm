@@ -15,6 +15,7 @@ import org.billow.common.queues.OrderFormTaskQueue;
 import org.billow.model.expand.OrderFormDetailDto;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.UserDto;
+import org.billow.utils.enumType.OrderFormTaskQueueEunm;
 import org.billow.utils.pay.alipay.AliPayApi;
 import org.billow.utils.pay.alipay.AliPayApiConfig;
 import org.billow.utils.pay.alipay.AliPayApiConfigKit;
@@ -168,7 +169,9 @@ public class AliPay {
             alipayService.saveAlipayData(paramsMap);
             try {
                 //插入自动确认订单队列
-                new OrderFormTaskQueue(paramsMap.get("out_trade_no"));
+                String typeCode = OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONFIRMATION.getTypeCode();
+                String orderFormId = paramsMap.get("out_trade_no");
+                new OrderFormTaskQueue(typeCode, orderFormId).putOrderFormTask();
             } catch (Exception e) {
                 e.printStackTrace();
                 logger.error("插入自动确认订单队列错误" + e);
