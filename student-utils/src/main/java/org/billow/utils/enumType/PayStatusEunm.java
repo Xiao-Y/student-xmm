@@ -46,7 +46,7 @@ public enum PayStatusEunm {
      */
     APPLICATION_REFUND_DISAGREE("11", "APPLICATION_REFUND_DISAGREE", "申请退款-不同意"),
     /**
-     * 发货中
+     * 13-发货中
      */
     CONSIGNMENT("13", "CONSIGNMENT", "发货中"),
     /**

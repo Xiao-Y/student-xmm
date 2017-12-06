@@ -5,7 +5,14 @@ package org.billow.utils.enumType;
  */
 public enum OrderFormTaskQueueEunm {
 
-    ORDER_FORM_AUTO_CONFIRMATION("orderFormAutoConfirmation", "订单自动确认");
+    /**
+     * 订单自动确认
+     */
+    ORDER_FORM_AUTO_CONFIRMATION("orderFormAutoConfirmation", "订单自动确认"),
+    /**
+     * 订单自动发货中
+     */
+    ORDER_FORM_AUTO_CONSIGNMENT("orderFormAutoConsignment", "订单自动发货中");
 
     // 成员变量
     private String typeName;

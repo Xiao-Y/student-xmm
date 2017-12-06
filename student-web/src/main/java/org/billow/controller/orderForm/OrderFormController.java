@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -197,16 +198,21 @@ public class OrderFormController {
                 orderFormDto.setStatus(null);
                 orderFormDto.setDelFlag("1");
             }
+            orderFormDto.setUpdateDate(new Date());
             orderFormService.updateOrderForm(orderFormDto);
             if (PayStatusEunm.DELETE_ORDER_FORM.getNameCode().equals(statusCode)) {//删除订单记录
                 message = MessageTipsCst.DELETE_SUCCESS;
             } else if (PayStatusEunm.BUSINESS_CONFIRMATION.getNameCode().equals(statusCode)) {//确认订单
                 message = "确认订单成功！";
-                //移除自动确认队列中的任务
+                //移除自动确认订单队列中的任务
                 String typeCode = OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONFIRMATION.getTypeCode();
                 new OrderFormTaskQueue(typeCode, orderFormId).endOrderFormTask();
             } else if (PayStatusEunm.CONFIRMATION_GOODS_RECEIPT.getNameCode().equals(statusCode)) {//确认收货
                 message = "确认收货成功！";
+            } else if (PayStatusEunm.CONSIGNMENT.getNameCode().equals(statusCode)) {//发货中
+                //移除自动发货中队列中的任务
+                String typeCode = OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONSIGNMENT.getTypeCode();
+                new OrderFormTaskQueue(typeCode, orderFormId).endOrderFormTask();
             } else if (PayStatusEunm.CUSTOMER_CANCELLATION.getNameCode().equals(statusCode)) {//客户取消
                 message = MessageTipsCst.ORDERFORM_CANCEL_SUCCESS;
                 if (businessCancel) {

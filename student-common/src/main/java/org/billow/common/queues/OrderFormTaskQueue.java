@@ -11,6 +11,8 @@ import org.billow.utils.enumType.OrderFormTaskQueueEunm;
 import org.billow.utils.enumType.PayStatusEunm;
 import org.billow.utils.property.PropertyUtil;
 
+import java.util.Date;
+
 /**
  * 订单操作队列<br/>
  *
@@ -27,12 +29,11 @@ public class OrderFormTaskQueue implements Runnable {
     private String typeCode;
     // 延时时间
     private Long orderFormAutoTime;
-    //是否开启自动确认
     private boolean orderFormAutoFlag;
 
-    public OrderFormTaskQueue() {
-        //是否开启自动确认
-        this.orderFormAutoFlag = PropertyUtil.getPropertyBoolean("orderForm.auto.flag");
+    public OrderFormTaskQueue(String typeCode) {
+        this.typeCode = typeCode;
+        this.init();
     }
 
     /**
@@ -44,8 +45,7 @@ public class OrderFormTaskQueue implements Runnable {
     public OrderFormTaskQueue(String typeCode, String orderFormId) {
         this.typeCode = typeCode;
         this.orderFormId = orderFormId;
-        //是否开启自动确认
-        this.orderFormAutoFlag = PropertyUtil.getPropertyBoolean("orderForm.auto.flag");
+        this.init();
     }
 
     /**
@@ -59,8 +59,45 @@ public class OrderFormTaskQueue implements Runnable {
         this.typeCode = typeCode;
         this.orderFormAutoTime = orderFormAutoTime;
         this.orderFormId = orderFormId;
+        this.init();
+    }
+
+    public void init() {
+        //订单自动确认
+        if (OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONFIRMATION.getTypeCode().equals(this.typeCode)) {
+            //是否开启自动确认
+            this.orderFormAutoFlag = PropertyUtil.getPropertyBoolean("orderForm.auto.confirm.flag");
+            //订单自动确认时间
+            String autoTime = PropertyUtil.getProperty("orderForm.auto.confirm.time");
+            if (ToolsUtils.isNotEmpty(autoTime) && this.orderFormAutoTime == null) {
+                this.orderFormAutoTime = ToolsUtils.splitTextData(autoTime);
+            }
+        } else if (OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONSIGNMENT.getTypeCode().equals(this.typeCode)) {
+            //是否开启自动确认
+            this.orderFormAutoFlag = PropertyUtil.getPropertyBoolean("orderForm.auto.consignment.flag");
+            //订单自动确认时间
+            String autoTime = PropertyUtil.getProperty("orderForm.auto.consignment.time");
+            if (ToolsUtils.isNotEmpty(autoTime) && this.orderFormAutoTime == null) {
+                this.orderFormAutoTime = ToolsUtils.splitTextData(autoTime);
+            }
+        }
+    }
+
+    /**
+     * 添加新任务
+     */
+    public void putOrderFormTask() {
         //是否开启自动确认
-        this.orderFormAutoFlag = PropertyUtil.getPropertyBoolean("orderForm.auto.flag");
+        if (!orderFormAutoFlag) return;
+        //订单自动确认时间
+        if (this.orderFormAutoTime == null) {
+            this.orderFormAutoTime = this.getOrderFormAutoTime();
+        }
+        if (this.orderFormAutoTime == null) {
+            throw new RuntimeException("延时消息队列中延时时间不能为空！");
+        }
+        TaskQueueDaemonThread.getInstance().putTask(orderFormAutoTime, this);
+        logger.info("<<<<<<<< 添加[" + OrderFormTaskQueueEunm.getTypeName(this.typeCode) + "]任务,业务号:" + orderFormId + "，延时：" + orderFormAutoTime);
     }
 
     /**
@@ -73,26 +110,6 @@ public class OrderFormTaskQueue implements Runnable {
         logger.info(">>>>>>>> 销毁[" + OrderFormTaskQueueEunm.getTypeName(this.typeCode) + "]任务,业务号:" + orderFormId);
     }
 
-    /**
-     * 添加新任务
-     */
-    public void putOrderFormTask() {
-        //是否开启自动确认
-        if (!orderFormAutoFlag) return;
-        this.orderFormAutoTime = this.getOrderFormAutoTime();
-        if (this.orderFormAutoTime == null) {
-            //订单自动确认时间
-            if (OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONFIRMATION.getTypeCode().equals(this.typeCode)) {
-                this.orderFormAutoTime = ToolsUtils.splitTextData(PropertyUtil.getProperty("orderForm.auto.time"));
-            }
-        }
-        if (this.orderFormAutoTime == null) {
-            throw new RuntimeException("延时消息队列中延时时间不能为空！");
-        }
-        TaskQueueDaemonThread.getInstance().putTask(orderFormAutoTime, this);
-        logger.info("<<<<<<<< 添加[" + OrderFormTaskQueueEunm.getTypeName(this.typeCode) + "]任务,业务号:" + orderFormId + "，延时：" + orderFormAutoTime);
-    }
-
     @Override
     public void run() {
         //是否开启自动确认
@@ -101,10 +118,34 @@ public class OrderFormTaskQueue implements Runnable {
         try {
             if (OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONFIRMATION.getTypeCode().equals(this.typeCode)) {
                 this.autoOrderFormConfirmation();
+            } else if (OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONSIGNMENT.getTypeCode().equals(this.typeCode)) {
+                this.autoOrderFormConsignment();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("[" + OrderFormTaskQueueEunm.getTypeName(this.typeCode) + "]失败：" + orderFormId);
+            logger.error("处理[" + OrderFormTaskQueueEunm.getTypeName(this.typeCode) + "]失败：" + orderFormId);
+        }
+    }
+
+    /**
+     * 订单自动发货中
+     */
+    private void autoOrderFormConsignment() throws Exception {
+        OrderFormService orderFormService = BeanUtils.getBean("orderFormServiceImpl");
+        OrderFormDto dto = new OrderFormDto();
+        dto.setId(orderFormId);
+        OrderFormDto orderFormDto = orderFormService.selectByPrimaryKey(dto);
+        if (orderFormDto != null) {
+            if (PayStatusEunm.BUSINESS_CONFIRMATION.getStatus().equals(orderFormDto.getStatus())) {
+                dto.setStatus(PayStatusEunm.CONSIGNMENT.getStatus());
+                dto.setUpdateDate(new Date());
+                orderFormService.updateByPrimaryKeySelective(dto);
+                logger.info(">>>>>>>> 处理[订单自动发货中]任务:" + orderFormId);
+            } else {
+                logger.info(">>>>>>>> 处理[订单自动发货中]任务:" + orderFormId + "，[" + PayStatusEunm.getNameByStatus(orderFormDto.getStatus()) + "]订单状态不对...");
+            }
+        } else {
+            logger.info(">>>>>>>> 处理[订单自动发货中]任务:" + orderFormId + "，订单不存在...");
         }
     }
 
@@ -119,13 +160,21 @@ public class OrderFormTaskQueue implements Runnable {
         if (orderFormDto != null) {
             if (PayStatusEunm.TRADE_SUCCESS.getStatus().equals(orderFormDto.getStatus())) {
                 dto.setStatus(PayStatusEunm.BUSINESS_CONFIRMATION.getStatus());
+                dto.setUpdateDate(new Date());
                 orderFormService.updateByPrimaryKeySelective(dto);
-                logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId);
+                logger.info(">>>>>>>> 处理[订单自动确认]任务:" + orderFormId);
+                //订单自动发货中
+                try {
+                    new OrderFormTaskQueue(OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONSIGNMENT.getTypeCode(), orderFormId).putOrderFormTask();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    logger.error(e);
+                }
             } else {
-                logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId + "，[" + PayStatusEunm.getNameByStatus(orderFormDto.getStatus()) + "]订单状态不对...");
+                logger.info(">>>>>>>> 处理[订单自动确认]任务:" + orderFormId + "，[" + PayStatusEunm.getNameByStatus(orderFormDto.getStatus()) + "]订单状态不对...");
             }
         } else {
-            logger.debug(">>>>>>>> 处理订单自动确认任务:" + orderFormId + "，订单不存在...");
+            logger.info(">>>>>>>> 处理[订单自动确认]任务:" + orderFormId + "，订单不存在...");
         }
     }
 

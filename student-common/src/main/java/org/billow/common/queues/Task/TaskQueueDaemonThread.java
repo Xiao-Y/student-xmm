@@ -56,7 +56,7 @@ public class TaskQueueDaemonThread {
             }
         });
         daemonThread.setDaemon(true);
-        daemonThread.setName("Task Queue Daemon Thread");
+        daemonThread.setName("Task Queue OrderForm Thread");
         daemonThread.start();
     }
 
