@@ -205,7 +205,7 @@ public class OrderFormController {
                 //移除自动确认队列中的任务
                 String typeCode = OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONFIRMATION.getTypeCode();
                 new OrderFormTaskQueue(typeCode, orderFormId).endOrderFormTask();
-            } else if (PayStatusEunm.CONFIRMATION_SHOUHUO.getNameCode().equals(statusCode)) {//确认收货
+            } else if (PayStatusEunm.CONFIRMATION_GOODS_RECEIPT.getNameCode().equals(statusCode)) {//确认收货
                 message = "确认收货成功！";
             } else if (PayStatusEunm.CUSTOMER_CANCELLATION.getNameCode().equals(statusCode)) {//客户取消
                 message = MessageTipsCst.ORDERFORM_CANCEL_SUCCESS;

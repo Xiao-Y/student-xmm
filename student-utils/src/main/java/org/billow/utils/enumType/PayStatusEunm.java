@@ -48,7 +48,7 @@ public enum PayStatusEunm {
     /**
      * 发货中
      */
-    FAHUOZHONG("13", "FAHUOZHONG", "发货中"),
+    CONSIGNMENT("13", "CONSIGNMENT", "发货中"),
     /**
      * 6-客户取消
      */
@@ -65,7 +65,7 @@ public enum PayStatusEunm {
     /**
      * 10-确认收货
      */
-    CONFIRMATION_SHOUHUO("10", "CONFIRMATION_SHOUHUO", "确认收货"),
+    CONFIRMATION_GOODS_RECEIPT("10", "CONFIRMATION_GOODS_RECEIPT", "确认收货"),
     /**
      * 12-申请退款-处理中
      */

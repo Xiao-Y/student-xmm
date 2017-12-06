@@ -167,18 +167,18 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             } else if (PayStatusEunm.CUSTOMER_CANCELLATION.getStatus().equals(status)) {//取消订单
                 PayStatusEunm deleteOrderform = PayStatusEunm.DELETE_ORDER_FORM;
                 map.put(deleteOrderform.getNameCode(), deleteOrderform.getName());
-            } else if (PayStatusEunm.CONFIRMATION_SHOUHUO.getStatus().equals(status)) {//确认收货
+            } else if (PayStatusEunm.CONFIRMATION_GOODS_RECEIPT.getStatus().equals(status)) {//确认收货
                 PayStatusEunm appRefundPro = PayStatusEunm.APPLICATION_REFUND_PROCESSING;
                 map.put(appRefundPro.getNameCode(), "申请退款");
             } else if (PayStatusEunm.TRADE_FINISHED.getStatus().equals(status)//交易结束，不可退款
                     //发货中
-                    || PayStatusEunm.FAHUOZHONG.getStatus().equals(status)
+                    || PayStatusEunm.CONSIGNMENT.getStatus().equals(status)
                     //支付完成后全额退款，关闭交易
                     || PayStatusEunm.TRADE_CLOSED.getStatus().equals(status)
                     //交易完成
                     || PayStatusEunm.TRANSACTION_COMPLETION.getStatus().equals(status)) {
-                PayStatusEunm confirmationShouhuo = PayStatusEunm.CONFIRMATION_SHOUHUO;
-                map.put(confirmationShouhuo.getNameCode(), confirmationShouhuo.getName());
+                PayStatusEunm confirmationGoodsReceipt = PayStatusEunm.CONFIRMATION_GOODS_RECEIPT;
+                map.put(confirmationGoodsReceipt.getNameCode(), confirmationGoodsReceipt.getName());
             } else if (PayStatusEunm.REFUND_FAILURE.getStatus().equals(status)) {//退款失败
                 map.put("xianxia", "线下协商");
             } else if (PayStatusEunm.APPLICATION_REFUND_DISAGREE.getStatus().equals(status)) {//申请退款-不同意
@@ -193,8 +193,8 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             } else if (PayStatusEunm.BUSINESS_CANCELLATION.getStatus().equals(status)) {//取消订单
                 map.put("delete", "删除订单");
             } else if (PayStatusEunm.BUSINESS_CONFIRMATION.getStatus().equals(status)) {//确认订单
-                PayStatusEunm fahuozhong = PayStatusEunm.FAHUOZHONG;
-                map.put(fahuozhong.getNameCode(), fahuozhong.getName());
+                PayStatusEunm consignment = PayStatusEunm.CONSIGNMENT;
+                map.put(consignment.getNameCode(), consignment.getName());
             } else if (PayStatusEunm.APPLICATION_REFUND_PROCESSING.getStatus().equals(status)) {//申请退款-处理中
                 PayStatusEunm applicationRefundAgree = PayStatusEunm.APPLICATION_REFUND_AGREE;
                 map.put(applicationRefundAgree.getNameCode(), "同意");
