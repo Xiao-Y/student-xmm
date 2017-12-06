@@ -167,6 +167,9 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             } else if (PayStatusEunm.CUSTOMER_CANCELLATION.getStatus().equals(status)) {//取消订单
                 PayStatusEunm deleteOrderform = PayStatusEunm.DELETE_ORDER_FORM;
                 map.put(deleteOrderform.getNameCode(), deleteOrderform.getName());
+            } else if (PayStatusEunm.CONFIRMATION_SHOUHUO.getStatus().equals(status)) {//确认收货
+                PayStatusEunm appRefundPro = PayStatusEunm.APPLICATION_REFUND_PROCESSING;
+                map.put(appRefundPro.getNameCode(), "申请退款");
             } else if (PayStatusEunm.TRADE_FINISHED.getStatus().equals(status)//交易结束，不可退款
                     //发货中
                     || PayStatusEunm.FAHUOZHONG.getStatus().equals(status)
@@ -194,9 +197,9 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
                 map.put(fahuozhong.getNameCode(), fahuozhong.getName());
             } else if (PayStatusEunm.APPLICATION_REFUND_PROCESSING.getStatus().equals(status)) {//申请退款-处理中
                 PayStatusEunm applicationRefundAgree = PayStatusEunm.APPLICATION_REFUND_AGREE;
-                map.put(applicationRefundAgree.getNameCode(), applicationRefundAgree.getName());
+                map.put(applicationRefundAgree.getNameCode(), "同意");
                 PayStatusEunm applicationRefundDisagree = PayStatusEunm.APPLICATION_REFUND_DISAGREE;
-                map.put(applicationRefundDisagree.getNameCode(), applicationRefundDisagree.getName());
+                map.put(applicationRefundDisagree.getNameCode(), "不同意");
             }
         }
         dto.setOptionButton(map);

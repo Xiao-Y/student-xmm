@@ -118,32 +118,6 @@ public class AliPay {
     }
 
     /**
-     [DEBUG][2017/11/29 21:43]###########################notifyResult start#########################################
-     [DEBUG][2017/11/30 10:00]gmt_create:2017-11-30 10:00:18
-     [DEBUG][2017/11/30 10:00]charset:UTF-8
-     [DEBUG][2017/11/30 10:00]gmt_payment:2017-11-30 10:00:30
-     [DEBUG][2017/11/30 10:00]notify_time:2017-11-30 10:00:32
-     [DEBUG][2017/11/30 10:00]subject:OY特色水煮鱼
-     [DEBUG][2017/11/30 10:00]buyer_id:2088102175139669
-     [DEBUG][2017/11/30 10:00]passback_params:%7B%22userId%22%3A%22billow%22%7D
-     [DEBUG][2017/11/30 10:00]invoice_amount:79.35
-     [DEBUG][2017/11/30 10:00]version:1.0
-     [DEBUG][2017/11/30 10:00]notify_id:0d2ee9eded503a558457b8378f89082l3e
-     [DEBUG][2017/11/30 10:00]fund_bill_list:[{"amount":"79.35","fundChannel":"ALIPAYACCOUNT"}]
-     [DEBUG][2017/11/30 10:00]notify_type:trade_status_sync
-     [DEBUG][2017/11/30 10:00]out_trade_no:E20171130095858857000
-     [DEBUG][2017/11/30 10:00]total_amount:79.35
-     [DEBUG][2017/11/30 10:00]trade_status:TRADE_SUCCESS
-     [DEBUG][2017/11/30 10:00]trade_no:2017113021001004660200620195
-     [DEBUG][2017/11/30 10:00]auth_app_id:2016082500310007
-     [DEBUG][2017/11/30 10:00]receipt_amount:79.35
-     [DEBUG][2017/11/30 10:00]point_amount:0.00
-     [DEBUG][2017/11/30 10:00]app_id:2016082500310007
-     [DEBUG][2017/11/30 10:00]buyer_pay_amount:79.35
-     [DEBUG][2017/11/30 10:00]seller_id:2088102172949100
-     [DEBUG][2017/11/29 21:43]#############################notifyResult end#######################################
-     */
-    /**
      * 支付结果的异步回调
      *
      * @param response

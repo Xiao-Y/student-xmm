@@ -83,37 +83,59 @@
                             <fmt:formatNumber type="currency" value="${orderFormDto.orderformAmount }"/>
                         </td>
                         <td>
-                            <c:choose>
-                                <c:when test="${orderFormDto.status == '1'}">
-                                    <span class="layui-btn layui-btn-normal layui-btn-radius layui-btn-mini">客户提交</span>
-                                </c:when>
-                                <c:when test="${orderFormDto.status == '2'}">
-                                    <span class="layui-btn layui-btn-warm layui-btn-radius layui-btn-mini">商家确认</span>
-                                </c:when>
-                                <c:when test="${orderFormDto.status == '3'}">
-                                    <span class="layui-btn layui-btn-danger layui-btn-radius layui-btn-mini">客户取消</span>
-                                </c:when>
-                                <c:when test="${orderFormDto.status == '4'}">
-                                    <span class="layui-btn layui-btn-danger layui-btn-radius layui-btn-mini">商家取消</span>
-                                </c:when>
-                                <c:when test="${orderFormDto.status == '5'}">
-                                    <span class="layui-btn layui-btn-primary layui-btn-radius layui-btn-mini">交易完成</span>
-                                </c:when>
-                            </c:choose>
+                                ${orderFormDto.statusName }
+                                <%--<c:choose>
+                                    <c:when test="${orderFormDto.status == '1'}">
+                                        <span class="layui-btn layui-btn-normal layui-btn-radius layui-btn-small">客户提交</span>
+                                    </c:when>
+                                    <c:when test="${orderFormDto.status == '2'}">
+                                        <span class="layui-btn layui-btn-warm layui-btn-radius layui-btn-small">商家确认</span>
+                                    </c:when>
+                                    <c:when test="${orderFormDto.status == '3'}">
+                                        <span class="layui-btn layui-btn-danger layui-btn-radius layui-btn-small">客户取消</span>
+                                    </c:when>
+                                    <c:when test="${orderFormDto.status == '4'}">
+                                        <span class="layui-btn layui-btn-danger layui-btn-radius layui-btn-small">商家取消</span>
+                                    </c:when>
+                                    <c:when test="${orderFormDto.status == '5'}">
+                                        <span class="layui-btn layui-btn-primary layui-btn-radius layui-btn-small">交易完成</span>
+                                    </c:when>
+                                </c:choose>--%>
                         </td>
                         <td><fmt:formatDate value="${orderFormDto.createDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                         <td>
                                 <%-- 1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成 --%>
-                            <c:if test="${orderFormDto.status == '1'}">
-                                <a href="javascript:;" class="layui-btn layui-btn-mini" name="cancelOrderForm"
-                                   url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=2">确认订单</a>
-                                <a href="javascript:;" class="layui-btn layui-btn-mini" name="cancelOrderForm"
-                                   url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=4">取消订单</a>
-                            </c:if>
-                            <c:if test="${orderFormDto.status == '2'}">
-                                <a href="javascript:;" class="layui-btn layui-btn-mini" name="cancelOrderForm"
-                                   url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=5">交易完成</a>
-                            </c:if>
+                                <%--<c:if test="${orderFormDto.status == '1'}">
+                                    <a href="javascript:;" class="layui-btn layui-btn-small" name="cancelOrderForm"
+                                       url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=2">确认订单</a>
+                                    <a href="javascript:;" class="layui-btn layui-btn-small" name="cancelOrderForm"
+                                       url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=4">取消订单</a>
+                                </c:if>
+                                <c:if test="${orderFormDto.status == '2'}">
+                                    <a href="javascript:;" class="layui-btn layui-btn-small" name="cancelOrderForm"
+                                       url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=5">交易完成</a>
+                                </c:if>--%>
+                            <c:forEach var="button" items="${orderFormDto.optionButton}">
+                                <c:choose>
+                                    <%-- 商家已取消订单 --%>
+                                    <c:when test="${button.key == 'BUSINESS_CANCELLATION'}">
+                                        <a href="javascript:;" name="optionButton"
+                                           class="layui-btn layui-btn-small layui-btn-danger"
+                                           title="${orderFormDto.id }&${button.key}&${button.value}">${button.value}</a>
+                                    </c:when>
+                                    <%-- 申请退款-不同意 --%>
+                                    <c:when test="${button.key == 'APPLICATION_REFUND_DISAGREE'}">
+                                        <a href="javascript:;" name="optionButton"
+                                           class="layui-btn layui-btn-small layui-btn-warm"
+                                           title="${orderFormDto.id }&${button.key}&${button.value}">${button.value}</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="javascript:;" name="optionButton"
+                                           class="layui-btn layui-btn-small layui-btn-normal"
+                                           title="${orderFormDto.id }&${button.key}&${button.value}">${button.value}</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         </td>
                     </tr>
                 </c:forEach>
