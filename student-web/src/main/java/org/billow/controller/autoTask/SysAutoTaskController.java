@@ -9,22 +9,25 @@ import org.billow.model.expand.ScheduleJobDto;
 import org.billow.service.TaskManagerService;
 import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
+import org.billow.utils.bean.BeanUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.constant.PagePathCst;
+import org.billow.utils.constant.QuartzCst;
+import org.quartz.CronScheduleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 自动任务管理
- * 
+ *
  * @author XiaoY
  * @date: 2017年5月8日 下午8:11:46
  */
@@ -32,153 +35,187 @@ import java.util.List;
 @RequestMapping("/sysAutoTask")
 public class SysAutoTaskController {
 
-	private static final Logger logger = Logger.getLogger(SysAutoTaskController.class);
+    private static final Logger logger = Logger.getLogger(SysAutoTaskController.class);
 
-	@Autowired
-	private ScheduleJobService scheduleJobService;
+    @Autowired
+    private ScheduleJobService scheduleJobService;
+    @Autowired
+    private TaskManagerService taskManagerService;
 
-	@Autowired
-	private TaskManagerService taskManagerService;
+    /**
+     * 显示自动任务列表
+     * <p>
+     * <br>
+     * added by liuyongtao<br>
+     *
+     * @param scheduleJobDto
+     * @return
+     * @date 2017年5月11日 下午2:59:15
+     */
+    @RequestMapping("/findAutoTask")
+    public ModelAndView findAutoTask(ScheduleJobDto scheduleJobDto) {
+        ModelAndView av = new ModelAndView();
+        PageHelper.startPage();
+        List<ScheduleJobDto> jods = scheduleJobService.selectAll(scheduleJobDto);
+        PageInfo<ScheduleJobDto> page = new PageInfo<>(jods);
+        av.addObject("page", page);
+        av.setViewName(PagePathCst.BASEPATH_AUTOTASK + "autoTaskManage");
+        return av;
+    }
 
-	/**
-	 * 显示自动任务列表
-	 * 
-	 * <br>
-	 * added by liuyongtao<br>
-	 * 
-	 * @param scheduleJobDto
-	 * @return
-	 * 
-	 * @date 2017年5月11日 下午2:59:15
-	 */
-	@RequestMapping("/findAutoTask")
-	public ModelAndView findAutoTask(ScheduleJobDto scheduleJobDto) {
-		ModelAndView av = new ModelAndView();
-		PageHelper.startPage();
-		List<ScheduleJobDto> jods = scheduleJobService.selectAll(scheduleJobDto);
-		PageInfo<ScheduleJobDto> page = new PageInfo<>(jods);
-		av.addObject("page", page);
-		av.setViewName(PagePathCst.BASEPATH_AUTOTASK + "autoTaskManage");
-		return av;
-	}
+    /**
+     * 自动任务修改页面
+     * <p>
+     * <br>
+     * added by liuyongtao<br>
+     *
+     * @param jobId jobId为-1表示是添加，不为-1表示修改
+     * @return
+     * @date 2017年5月11日 下午2:59:31
+     */
+    @RequestMapping("/editAutoTask")
+    public ModelAndView editAutoTask(@RequestParam(required = false, value = "jobId") Integer jobId) {
+        ModelAndView av = new ModelAndView();
+        if (jobId != null) {// 表示编辑
+            ScheduleJobDto dto = new ScheduleJobDto();
+            dto.setJobId(jobId);
+            dto = scheduleJobService.selectByPrimaryKey(dto);
+            av.addObject("task", dto);
+        }
+        av.setViewName(PagePathCst.BASEPATH_AUTOTASK + "autoTaskEdit");
+        return av;
+    }
 
-	/**
-	 * 自动任务修改页面
-	 * 
-	 * <br>
-	 * added by liuyongtao<br>
-	 * 
-	 * @param scheduleJobDto
-	 *            jobId为-1表示是添加，不为-1表示修改
-	 * @return
-	 * 
-	 * @date 2017年5月11日 下午2:59:31
-	 */
-	@RequestMapping("/editAutoTask/{jobId}")
-	public ModelAndView editAutoTask(@PathVariable("jobId") Integer jobId) {
-		ModelAndView av = new ModelAndView();
-		if (jobId.compareTo(-1) != 0) {// 表示编辑
-			ScheduleJobDto dto = new ScheduleJobDto();
-			dto.setJobId(jobId);
-			dto = scheduleJobService.selectByPrimaryKey(dto);
-			av.addObject("task", dto);
-		}
-		av.setViewName(PagePathCst.BASEPATH_AUTOTASK + "autoTaskEdit");
-		return av;
-	}
+    /**
+     * 启用、禁用自动任务
+     * <p>
+     * <br>
+     * added by liuyongtao<br>
+     *
+     * @param jobId     自动任务id
+     * @param jobStatus 任务状态，1-启用，0-禁用
+     * @return
+     * @date 2017年5月11日 下午2:58:16
+     */
+    @ResponseBody
+    @RequestMapping("/updateJobStatus/{jobId}")
+    public JsonResult updateJobStatus(@PathVariable("jobId") Integer jobId, String jobStatus) {
+        JsonResult json = new JsonResult();
+        ScheduleJobDto dto = new ScheduleJobDto();
+        dto.setJobId(jobId);
+        dto.setJobStatus(jobStatus);
+        dto.setUpdateTime(new Date());
+        try {
+            taskManagerService.updateJobStatus(dto);
+            json.setType(MessageTipsCst.TYPE_SUCCES);
+            json.setMessage(MessageTipsCst.UPDATE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.setType(MessageTipsCst.TYPE_ERROR);
+            json.setMessage(MessageTipsCst.UPDATE_FAILURE);
+            logger.error(e);
+        }
+        return json;
+    }
 
-	/**
-	 * 启用、禁用自动任务
-	 * 
-	 * <br>
-	 * added by liuyongtao<br>
-	 * 
-	 * @param jobId
-	 *            自动任务id
-	 * @param jobStatus
-	 *            任务状态，1-启用，0-禁用
-	 * @return
-	 * 
-	 * @date 2017年5月11日 下午2:58:16
-	 */
-	@ResponseBody
-	@RequestMapping("/updateJobStatus/{jobId}")
-	public JsonResult updateJobStatus(@PathVariable("jobId") Integer jobId, String jobStatus) {
-		JsonResult json = new JsonResult();
-		ScheduleJobDto dto = new ScheduleJobDto();
-		dto.setJobId(jobId);
-		dto.setJobStatus(jobStatus);
-		dto.setUpdateTime(new Date());
-		try {
-			taskManagerService.updateJobStatus(dto);
-			json.setSuccess(true);
-			json.setMessage(MessageTipsCst.UPDATE_SUCCESS);
-		} catch (Exception e) {
-			e.printStackTrace();
-			json.setSuccess(false);
-			json.setMessage(MessageTipsCst.UPDATE_FAILURE);
-		}
-		return json;
-	}
+    /**
+     * 删除自动任务
+     * <p>
+     * <br>
+     * added by liuyongtao<br>
+     *
+     * @param jobId
+     * @return
+     * @date 2017年5月12日 上午8:42:28
+     */
+    @ResponseBody
+    @RequestMapping("/deleteAutoTask/{jobId}")
+    public JsonResult deleteAutoTask(@PathVariable("jobId") int jobId) {
+        JsonResult json = new JsonResult();
+        try {
+            taskManagerService.deleteAutoTask(jobId);
+            json.setType(MessageTipsCst.TYPE_SUCCES);
+            json.setMessage(MessageTipsCst.UPDATE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.setType(MessageTipsCst.TYPE_ERROR);
+            json.setMessage(MessageTipsCst.UPDATE_FAILURE);
+            logger.error(e);
+        }
+        return json;
+    }
 
-	/**
-	 * 删除自动任务
-	 * 
-	 * <br>
-	 * added by liuyongtao<br>
-	 * 
-	 * @param jobId
-	 * @return
-	 * 
-	 * @date 2017年5月12日 上午8:42:28
-	 */
-	@ResponseBody
-	@RequestMapping("/deleteAutoTask/{jobId}")
-	public JsonResult deleteAutoTask(@PathVariable("jobId") int jobId) {
-		JsonResult json = new JsonResult();
-		try {
-			taskManagerService.deleteAutoTask(jobId);
-			json.setSuccess(true);
-			json.setMessage(MessageTipsCst.UPDATE_SUCCESS);
-		} catch (Exception e) {
-			e.printStackTrace();
-			json.setSuccess(false);
-			json.setMessage(MessageTipsCst.UPDATE_FAILURE);
-		}
-		return json;
-	}
+    /**
+     * 保存自动任务
+     *
+     * @param scheduleJobDto
+     * @return
+     * @author XiaoY
+     * @date: 2017年5月22日 上午10:07:54
+     */
+    @ResponseBody
+    @RequestMapping("/saveAutoTask")
+    public JsonResult saveAutoTask(ScheduleJobDto scheduleJobDto) {
+        JsonResult json = new JsonResult();
+        try {
+            taskManagerService.saveAutoTask(scheduleJobDto);
+            json.setType(MessageTipsCst.TYPE_SUCCES);
+            json.setMessage(MessageTipsCst.UPDATE_SUCCESS);
+            json.setRoot("/sysAutoTask/findAutoTask");
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.setType(MessageTipsCst.TYPE_ERROR);
+            json.setMessage(MessageTipsCst.UPDATE_FAILURE);
+            logger.error(e);
+        }
+        return json;
+    }
 
-	/**
-	 * 保存自动任务
-	 * 
-	 * @param scheduleJobDto
-	 * @return
-	 * @author XiaoY
-	 * @date: 2017年5月22日 上午10:07:54
-	 */
-	@ResponseBody
-	@RequestMapping("/saveAutoTask")
-	public JsonResult saveAutoTask(ScheduleJobDto scheduleJobDto) {
-		JsonResult json = new JsonResult();
-		List<String> list = new ArrayList<>();
-		try {
-			list = taskManagerService.saveAutoTask(scheduleJobDto);
-			if (ToolsUtils.isNotEmpty(list)) {
-				json.setSuccess(false);
-				String returnStr = StringUtils.join(list, "&");
-				json.setMessage(returnStr);
-				json.setRoot("exceptionFlag");
-				logger.info("==================" + returnStr + "====================");
-				return json;
-			}
-			json.setSuccess(true);
-			json.setMessage(MessageTipsCst.UPDATE_SUCCESS);
-			json.setRoot("/sysAutoTask/findAutoTask");
-		} catch (Exception e) {
-			e.printStackTrace();
-			json.setSuccess(false);
-			json.setMessage(MessageTipsCst.UPDATE_FAILURE);
-		}
-		return json;
-	}
+    /**
+     * 立即执行自动任务
+     *
+     * @param scheduleJobDto
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/immediateExecutionTask")
+    public JsonResult immediateExecutionTask(ScheduleJobDto scheduleJobDto) {
+        JsonResult json = new JsonResult();
+        try {
+            taskManagerService.immediateExecutionTask(scheduleJobDto);
+            json.setType(MessageTipsCst.TYPE_SUCCES);
+            json.setMessage(MessageTipsCst.UPDATE_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.setType(MessageTipsCst.TYPE_ERROR);
+            json.setMessage(MessageTipsCst.SERVICE_ERRER);
+            logger.error(e);
+        }
+        return json;
+    }
+
+    /**
+     * 校验自动任务添加、修改时参数的设置
+     * <p>
+     * <br>
+     * added by liuyongtao<br>
+     *
+     * @param scheduleJobDto
+     * @return
+     * @date 2017年5月14日 下午12:11:55
+     */
+    @ResponseBody
+    @RequestMapping("/checkAutoTask")
+    public JsonResult checkAutoTask(ScheduleJobDto scheduleJobDto) {
+        JsonResult json = new JsonResult();
+        try {
+            json = taskManagerService.checkAutoTask(scheduleJobDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            json.setType(MessageTipsCst.TYPE_ERROR);
+            json.setMessage(MessageTipsCst.SERVICE_ERRER);
+            logger.error(e);
+        }
+        return json;
+    }
 }

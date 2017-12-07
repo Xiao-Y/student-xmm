@@ -32,7 +32,7 @@
     <import resource="classpath:spring/spring-tx.xml"/>
     <!-- 定时任务 -->
     <!-- 调度工厂:动态配置自动任务 -->
-    <!-- <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" /> -->
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>
     <!-- 整合邮件服务 -->
     <import resource="classpath:spring/spring-email.xml"/>
 </beans>  

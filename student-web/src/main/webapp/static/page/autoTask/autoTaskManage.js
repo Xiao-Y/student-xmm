@@ -1,72 +1,79 @@
 layui.config({
-	base : path + '/plugins/layui/modules/'
+    base: path + '/plugins/layui/modules/'
 });
 
-layui.use(['laypage', 'layer', 'form'], function() {
-	var $ = layui.jquery, laypage = layui.laypage,form = layui.form(), layer = parent.layer === undefined
-			? layui.layer
-			: parent.layer;
-	// 分页
-	laypage({
-		cont : 'page',
-		pages : $("#pages").val(), // 总页数
-		groups : 5, // 连续显示分页数
-		curr : $("#pageNum").val(),
-		jump : function(obj, first) {
-			// 得到了当前页，用于向服务端请求对应数据
-			if (!first) {
-				location.href = path
-						+ '/sysAutoTask/findAutoTask?pageNo='
-						+ obj.curr;
-			}
-		}
-	});
-	
-	//绑定开头事件
-	form.on('switch', function(field){
-		var checked = field.elem.checked;
-		var jobId = field.elem.value;
-		//checked true 表示启用，否则禁用
-		var jobStatus = checked === true ? 1 : 0;
-		var url = path + "/sysAutoTask/updateJobStatus/" + jobId;
-		$.post(
-			url,
-			{jobStatus : jobStatus},
-			function(data, status){
-				if(data.success === false){
-					if(checked === true){
-						field.elem.checked = false;
-					}else{
-						field.elem.checked = true;
-					}
-				}
-				form.render('checkbox');
-				tipsRB(data);
-			});
-	});
-	
-	/**
-	 * 提示信息
-	 * 
-	 * @param {}
-	 *            info
-	 */
-	function tipsRB(data) {
-		var message = data.message;
-		var success = data.success;
-		if (success === true) {
-			message = '<font color="#00CC00">' + message + '</font>';
-		} else {
-			message = '<font color="#FF0000">' + message + '</font>';
-		}
-		var content = '<div style="padding: 40px 80px;"><div style="height: 75px;">'
-				+ message + '</div></div>';
-		layer.open({
-			type : 1,
-			offset : 'rb', // 具体配置参考：offset参数项
-			content : content,
-			time : 2000,// 2s后自动关闭
-			shade : 0// 不显示遮罩
-		});
-	}
+layui.use(['layer', 'form'], function () {
+    var $ = layui.jquery, form = layui.form(), layer = parent.layer === undefined
+        ? layui.layer
+        : parent.layer;
+});
+
+
+$(function () {
+
+    $("input[name='jobStatus']").on('click', function (field) {
+        var checked = $(this).is(':checked');
+        var jobId = $(this).val();
+        //checked true 表示启用，否则禁用
+        var jobStatus = checked === true ? 1 : 0;
+        var url = path + "/sysAutoTask/updateJobStatus/" + jobId;
+        $.post(
+            url,
+            {jobStatus: jobStatus},
+            function (obj, status) {
+                var message = obj.message;
+                var type = obj.type;
+                if (type == 'success') {
+                    new TipBox({
+                        type: type, str: message, hasBtn: true, setTime: 1500
+                    });
+                } else {
+                    new TipBox({type: type, str: message, hasBtn: true})
+                }
+            });
+    });
+
+    $("a[name='executionTask']").on('click', function (field) {
+        var $this = this;
+        var index = $("a[name='executionTask']").index($this);
+        var checked = $("input[name='jobStatus']").eq(index).is(':checked');
+        if (!checked) {
+            new TipBox({type: 'error', str: "不是计划任务", hasBtn: true});
+            return;
+        }
+        var jobGroup = $($this).attr("jobGroup");
+        var jobName = $($this).attr("jobName");
+        var url = $($this).attr("url");
+        $.post(
+            url,
+            {jobGroup: jobGroup, jobName: jobName},
+            function (obj, status) {
+                var message = obj.message;
+                var type = obj.type;
+                if (type == 'success') {
+                    new TipBox({
+                        type: type, str: message, hasBtn: true, setTime: 1500
+                    });
+                } else {
+                    new TipBox({type: type, str: message, hasBtn: true})
+                }
+            });
+    });
+
+    //分页使用
+    $('.M-box').pagination({
+        coping: true,
+        jump: true,//是否开启跳转到指定页数
+        isHide: false,//总页数为0或1时隐藏分页控件
+        homePage: '首页',
+        endPage: '末页',
+        prevContent: '上页',
+        nextContent: '下页',
+        pageCount: $("#pages").val(),//总数据
+        showData: $("#pageSize").val(),//每页显示
+        current: $("#pageNum").val(),//当前第几页
+        callback: function (api) {
+            location.href = path + '/sysAutoTask/findAutoTask?pageNo=' + api.getCurrent();
+        }
+    });
 });

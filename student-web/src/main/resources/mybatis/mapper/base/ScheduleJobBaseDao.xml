@@ -34,6 +34,9 @@
 			<if test="null != jobName">
 				and job_name = #{jobName,jdbcType=VARCHAR}
 			</if>
+			<if test="null != jobStatus">
+				and job_status = #{jobStatus,jdbcType=VARCHAR}
+			</if>
 		</where>
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
