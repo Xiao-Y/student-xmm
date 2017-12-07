@@ -245,7 +245,7 @@ public class AliPay {
         AlipayTradeQueryModel model = new AlipayTradeQueryModel();
         model.setOutTradeNo(orderFormId);
         boolean tradeQuery = AliPayApi.isTradeQuery(model);
-        System.out.println(tradeQuery);
+        logger.debug(tradeQuery);
     }
 
     /**
