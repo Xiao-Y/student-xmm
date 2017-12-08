@@ -97,7 +97,7 @@
                                             <%-- 删除订单 --%>
                                             <c:when test="${button.key == 'DELETE_ORDER_FORM'}">
                                                 <a href="javascript:;" name="optionButton"
-                                                   title="${orderFormDto.id }&${button.key}&${button.value}">
+                                                    param="${orderFormDto.id }&${button.key}&${button.value}">
                                                     <span class="btn-danger btn-sm">${button.value}</span>
                                                 </a>
                                             </c:when>
@@ -105,14 +105,14 @@
                                             <c:when test="${button.key == 'AGPAID'}">
                                                 <c:if test="${isOpen}">
                                                     <a href="javascript:;" name="agPaidButton"
-                                                       title="${orderFormDto.id }&${button.key}">
+                                                       param="${orderFormDto.id }&${button.key}">
                                                         <span class="btn-warning btn-sm">${button.value}</span>
                                                     </a>
                                                 </c:if>
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="javascript:;" name="optionButton"
-                                                   title="${orderFormDto.id }&${button.key}&${button.value}">
+                                                   param="${orderFormDto.id }&${button.key}&${button.value}">
                                                     <span class="btn-info btn-sm">${button.value}</span>
                                                 </a>
                                             </c:otherwise>
@@ -158,10 +158,10 @@
     });
     $(document).on('click', 'a[name="optionButton"]', function () {
         var tipBox = null;
-        var title = $(this).attr("title").split("&");
-        var orderFormId = title[0];
-        var statusCode = title[1];
-        var statusName = title[2];
+        var param = $(this).attr("param").split("&");
+        var orderFormId = param[0];
+        var statusCode = param[1];
+        var statusName = param[2];
         var str1 = "确定" + statusName;
         var str2 = "正在操作中...";
         var url = path + "/orderForm/updateOrderForm?id=" + orderFormId + "&statusCode=" + statusCode;

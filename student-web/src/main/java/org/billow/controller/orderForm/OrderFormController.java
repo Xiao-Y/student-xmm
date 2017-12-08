@@ -210,6 +210,7 @@ public class OrderFormController {
             } else if (PayStatusEunm.CONFIRMATION_GOODS_RECEIPT.getNameCode().equals(statusCode)) {//确认收货
                 message = "确认收货成功！";
             } else if (PayStatusEunm.CONSIGNMENT.getNameCode().equals(statusCode)) {//发货中
+                message = "发货中！";
                 //移除自动发货中队列中的任务
                 String typeCode = OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONSIGNMENT.getTypeCode();
                 new OrderFormTaskQueue(typeCode, orderFormId).endOrderFormTask();

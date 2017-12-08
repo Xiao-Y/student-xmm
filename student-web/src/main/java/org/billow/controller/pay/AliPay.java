@@ -75,8 +75,8 @@ public class AliPay {
         UserDto loginUser = LoginHelper.getLoginUser(request);
         if (orderFormDto != null) {
             //支付完成回调
-            //String returnUrl = systemDomainName + "/aliPay/returnResult";
-            String returnUrl = "http:localhost:8099/aliPay/returnResult";
+            String returnUrl = systemDomainName + "/aliPay/returnResult";
+            //String returnUrl = "http:localhost:8099/aliPay/returnResult";
             //支付结果的回调
             String notifyUrl = systemDomainName + "/aliPay/notifyResult";
             //String notifyUrl = "";
