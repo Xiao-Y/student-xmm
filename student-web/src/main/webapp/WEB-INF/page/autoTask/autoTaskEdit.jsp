@@ -10,20 +10,25 @@
     <script type="text/javascript" src="${ctx }/static/page/autoTask/autoTaskEdit.js"></script>
 </head>
 <body style="padding: 10px;">
+<blockquote class="layui-elem-quote">
+    <a href="${ctx}/sysAutoTask/findAutoTask?pageNo=${pageNo }" class="layui-btn layui-btn-small">
+        <i class="fa fa-reply" aria-hidden="true"></i>
+        返回
+    </a>
+</blockquote>
 <form class="layui-form" data-type="ajax" action="${ctx }/sysAutoTask/saveAutoTask">
-    <input type="hidden" name="jobId" value="${task.jobId }">
+    <input type="hidden" id="jobId" name="jobId" value="${task.jobId }">
     <div class="layui-form-item">
         <label class="layui-form-label">任务分组</label>
         <div class="layui-input-block">
-            <input type="text" name="jobGroup" lay-verify="required" required placeholder="请输入标题" autocomplete="off"
-                   class="layui-input"
-                   value="${task.jobGroup }">
+            <input type="text" id="jobGroup" name="jobGroup" lay-verify="required" required placeholder="请输入标题"
+                   autocomplete="off" class="layui-input" value="${task.jobGroup }">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">任务名称</label>
         <div class="layui-input-block">
-            <input type="tel" name="jobName" lay-verify="required" autocomplete="off" class="layui-input"
+            <input type="tel" id="jobName" name="jobName" lay-verify="required" autocomplete="off" class="layui-input"
                    value="${task.jobName }">
         </div>
     </div>
@@ -78,6 +83,10 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
+            <a href="${ctx}/sysAutoTask/findAutoTask?pageNo=${pageNo }" class="layui-btn">
+                <i class="fa fa-reply" aria-hidden="true"></i>
+                返回
+            </a>
             <button class="layui-btn" lay-submit lay-filter="*">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>

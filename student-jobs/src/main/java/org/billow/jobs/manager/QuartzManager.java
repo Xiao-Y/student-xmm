@@ -3,8 +3,9 @@ package org.billow.jobs.manager;
 import org.apache.log4j.Logger;
 import org.billow.jobs.quartzJobFactory.QuartzJobFactory;
 import org.billow.jobs.quartzJobFactory.QuartzJobFactoryDisallowConcurrentExecution;
+import org.billow.utils.enumType.AutoTaskJobConcurrentEnum;
+import org.billow.utils.enumType.AutoTaskJobStatusEnum;
 import org.billow.model.expand.ScheduleJobDto;
-import org.billow.utils.constant.QuartzCst;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.Job;
@@ -216,8 +217,8 @@ public class QuartzManager {
         CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
         // 不存在，创建一个
         if (null == trigger) {
-            Class<? extends Job> clazz = null;
-            if (QuartzCst.CONCURRENT_NOT.equals(job.getIsConcurrent())) {
+            Class<? extends Job> clazz;
+            if (AutoTaskJobConcurrentEnum.CONCURRENT_NOT.getIsConcurrent().equals(job.getIsConcurrent())) {
                 clazz = QuartzJobFactory.class;
             } else {
                 clazz = QuartzJobFactoryDisallowConcurrentExecution.class;

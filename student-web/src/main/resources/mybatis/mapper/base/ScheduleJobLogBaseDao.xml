@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.billow.dao.ScheduleJobLogDao">
+	<resultMap id="BaseResultMap" type="org.billow.model.expand.ScheduleJobLogDto">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="job_name" property="jobName" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="job_group" property="jobGroup" jdbcType="VARCHAR" />
+        <result column="job_id" property="jobId" jdbcType="INTEGER" />
+        <result column="info" property="info" jdbcType="CLOB" />
+	</resultMap>
+	<sql id="base_column_list">
+		job_name,create_time,job_group,job_id,id,info
+	</sql>
+	<!-- 公用查询条件 -->
+	<sql id="selectCondition">
+		<where>
+			<if test="null != jobName and '' != jobName">
+				and job_name = #{jobName}
+			</if>
+			<if test="null != createTime and '' != createTime">
+				and create_time = #{createTime}
+			</if>
+			<if test="null != jobGroup and '' != jobGroup">
+				and job_group = #{jobGroup}
+			</if>
+			<if test="null != jobId and '' != jobId">
+				and job_id = #{jobId}
+			</if>
+			<if test="null != id and '' != id">
+				and id = #{id}
+			</if>
+			<if test="null != info and '' != info">
+				and info = #{info}
+			</if>
+		</where>
+	</sql>
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.ScheduleJobLogDto">
+		select
+		<include refid="base_column_list" />
+		from sys_schedule_job_log
+		<include refid="selectCondition" />
+	</select>
+	<select id="selectAllCount" resultType="java.lang.Integer" parameterType="org.billow.model.expand.ScheduleJobLogDto">
+		select count(*)
+		from sys_schedule_job_log
+		<include refid="selectCondition" />
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.billow.model.expand.ScheduleJobLogDto">
+		select
+		<include refid="base_column_list" />
+		from sys_schedule_job_log
+		where 1=1
+		and id = #{id}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="org.billow.model.expand.ScheduleJobLogDto">
+		delete from sys_schedule_job_log
+		where 1=1
+		and id = #{id}
+	</delete>
+	<insert id="insert" parameterType="org.billow.model.expand.ScheduleJobLogDto">
+		insert into sys_schedule_job_log (job_name,create_time,job_group,job_id,id,info)
+		values (
+			#{jobName,jdbcType=VARCHAR},
+			#{createTime,jdbcType=TIMESTAMP},
+			#{jobGroup,jdbcType=VARCHAR},
+			#{jobId,jdbcType=INTEGER},
+			#{id,jdbcType=VARCHAR},
+			#{info,jdbcType=CLOB}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="org.billow.model.expand.ScheduleJobLogDto">
+		insert into sys_schedule_job_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="null != jobName">
+				job_name,
+			</if>
+			<if test="null != createTime">
+				create_time,
+			</if>
+			<if test="null != jobGroup">
+				job_group,
+			</if>
+			<if test="null != jobId">
+				job_id,
+			</if>
+			<if test="null != id">
+				id,
+			</if>
+			<if test="null != info">
+				info,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="null != jobName">
+				#{jobName,jdbcType=VARCHAR},
+			</if>
+			<if test="null != createTime">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != jobGroup">
+				#{jobGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="null != jobId">
+				#{jobId,jdbcType=INTEGER},
+			</if>
+			<if test="null != id">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="null != info">
+				#{info,jdbcType=CLOB},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="org.billow.model.expand.ScheduleJobLogDto">
+		update sys_schedule_job_log
+		<set>
+			<if test="null != jobName">
+				job_name = #{jobName,jdbcType=VARCHAR},
+			</if>
+			<if test="null != createTime">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="null != jobGroup">
+				job_group = #{jobGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="null != jobId">
+				job_id = #{jobId,jdbcType=INTEGER},
+			</if>
+			<if test="null != id">
+				id = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="null != info">
+				info = #{info,jdbcType=CLOB},
+			</if>
+		</set>
+		where 1=1
+		and id = #{id}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="org.billow.model.expand.ScheduleJobLogDto">
+		update sys_schedule_job_log
+		set
+			job_name = #{jobName,jdbcType=VARCHAR},
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+			job_group = #{jobGroup,jdbcType=VARCHAR},
+			job_id = #{jobId,jdbcType=INTEGER},
+			info = #{info,jdbcType=CLOB}
+		where 1=1
+		and id = #{id}
+	</update>
+</mapper>

@@ -73,7 +73,7 @@ public enum PayStatusEunm {
     /**
      * 97-未付款交易超时关闭，或支付完成后全额退款
      */
-    TRADE_CLOSED("98", "TRADE_CLOSED", "交易关闭"),
+    TRADE_CLOSED("97", "TRADE_CLOSED", "交易关闭"),
     /**
      * 98-交易完成
      */

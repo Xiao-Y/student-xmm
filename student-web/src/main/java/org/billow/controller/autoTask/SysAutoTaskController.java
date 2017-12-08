@@ -1,24 +1,18 @@
 package org.billow.controller.autoTask;
 
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.billow.api.system.ScheduleJobService;
 import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.ScheduleJobDto;
 import org.billow.service.TaskManagerService;
 import org.billow.utils.PageHelper;
-import org.billow.utils.ToolsUtils;
-import org.billow.utils.bean.BeanUtils;
 import org.billow.utils.constant.MessageTipsCst;
 import org.billow.utils.constant.PagePathCst;
-import org.billow.utils.constant.QuartzCst;
-import org.quartz.CronScheduleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -69,13 +63,14 @@ public class SysAutoTaskController {
      * <br>
      * added by liuyongtao<br>
      *
-     * @param jobId jobId为-1表示是添加，不为-1表示修改
+     * @param scheduleJobDto jobId jobId为null表示是添加，不为null表示修改
      * @return
      * @date 2017年5月11日 下午2:59:31
      */
     @RequestMapping("/editAutoTask")
-    public ModelAndView editAutoTask(@RequestParam(required = false, value = "jobId") Integer jobId) {
+    public ModelAndView editAutoTask(ScheduleJobDto scheduleJobDto) {
         ModelAndView av = new ModelAndView();
+        Integer jobId = scheduleJobDto.getJobId();
         if (jobId != null) {// 表示编辑
             ScheduleJobDto dto = new ScheduleJobDto();
             dto.setJobId(jobId);
@@ -83,6 +78,7 @@ public class SysAutoTaskController {
             av.addObject("task", dto);
         }
         av.setViewName(PagePathCst.BASEPATH_AUTOTASK + "autoTaskEdit");
+        av.addObject("pageNo", scheduleJobDto.getPageNo());
         return av;
     }
 
@@ -93,13 +89,14 @@ public class SysAutoTaskController {
      * added by liuyongtao<br>
      *
      * @param jobId     自动任务id
-     * @param jobStatus 任务状态，1-启用，0-禁用
+     * @param jobStatus 任务状态，0-禁用，1-启用
+     * @param pageNum   当前页
      * @return
      * @date 2017年5月11日 下午2:58:16
      */
     @ResponseBody
     @RequestMapping("/updateJobStatus/{jobId}")
-    public JsonResult updateJobStatus(@PathVariable("jobId") Integer jobId, String jobStatus) {
+    public JsonResult updateJobStatus(@PathVariable("jobId") Integer jobId, String jobStatus, Integer pageNum) {
         JsonResult json = new JsonResult();
         ScheduleJobDto dto = new ScheduleJobDto();
         dto.setJobId(jobId);
@@ -109,6 +106,7 @@ public class SysAutoTaskController {
             taskManagerService.updateJobStatus(dto);
             json.setType(MessageTipsCst.TYPE_SUCCES);
             json.setMessage(MessageTipsCst.UPDATE_SUCCESS);
+            json.setRoot("/sysAutoTask/findAutoTask?pageNum" + pageNum);
         } catch (Exception e) {
             e.printStackTrace();
             json.setType(MessageTipsCst.TYPE_ERROR);

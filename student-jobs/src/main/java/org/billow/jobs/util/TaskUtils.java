@@ -1,76 +1,94 @@
 package org.billow.jobs.util;
 
-import java.lang.reflect.InvocationTargetException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.billow.api.system.ScheduleJobLogService;
+import org.billow.api.system.ScheduleJobService;
 import org.billow.model.expand.ScheduleJobDto;
+import org.billow.model.expand.ScheduleJobLogDto;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.bean.BeanUtils;
+import org.billow.utils.enumType.AutoTaskJobStatusEnum;
+import org.billow.utils.generator.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 自动任务工具类
- * 
+ *
  * @author liuyongtao
- * 
  * @date 2017年5月8日 上午10:24:57
  */
 public class TaskUtils {
 
-	public final static Logger log = Logger.getLogger(TaskUtils.class);
+    public final static Logger log = Logger.getLogger(TaskUtils.class);
 
-	/**
-	 * 通过反射调用scheduleJob中定义的方法
-	 * 
-	 * @param scheduleJob
-	 */
-	public static void invokMethod(ScheduleJobDto scheduleJob) {
-		Object object = null;
-		Class<?> clazz = null;
-		Method method = null;
-		// springId不为空先按springId查找bean
-		if (ToolsUtils.isNotEmpty(scheduleJob.getSpringId())) {
-			try {
-				object = BeanUtils.getBean(scheduleJob.getSpringId());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if (ToolsUtils.isNotEmpty(scheduleJob.getBeanClass())) {
-			try {
-				clazz = Class.forName(scheduleJob.getBeanClass());
-				object = clazz.newInstance();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+    @Autowired
+    private ScheduleJobService scheduleJobService;
 
-		if (object == null) {
-			log.error("任务名称 = [" + scheduleJob.getJobName() + "] 未启动成功，请检查是否配置正确！！！");
-			return;
-		}
-
-		clazz = object.getClass();
-		try {
-			// 获取自动任务要执行的方法
-			method = clazz.getDeclaredMethod(scheduleJob.getMethodName());
-		} catch (NoSuchMethodException e) {
-			log.error("任务名称 = [" + scheduleJob.getJobName() + "] 未启动成功，方法名设置错误！！！");
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		}
-
-		if (method != null) {
-			try {
-				method.invoke(object);
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			}
-		} else {
-			log.error("任务名称 = [" + scheduleJob.getJobName() + "] 方法名设置错误！！！");
-		}
-	}
+    /**
+     * 通过反射调用scheduleJob中定义的方法
+     *
+     * @param scheduleJob
+     */
+    public static void invokMethod(ScheduleJobDto scheduleJob) throws Exception {
+        Object object = null;
+        Class<?> clazz = null;
+        Method method = null;
+        boolean expFlag = false;
+        Exception exception = new Exception();
+        try {
+            // springId不为空先按springId查找bean
+            if (ToolsUtils.isNotEmpty(scheduleJob.getSpringId())) {
+                object = BeanUtils.getBean(scheduleJob.getSpringId());
+            } else if (ToolsUtils.isNotEmpty(scheduleJob.getBeanClass())) {
+                clazz = Class.forName(scheduleJob.getBeanClass());
+                object = clazz.newInstance();
+            }
+            if (object == null) {
+                throw new RuntimeException("任务名称 = [" + scheduleJob.getJobName() + "] 未启动成功，请检查是否配置正确！！！");
+            }
+            clazz = object.getClass();
+            // 获取自动任务要执行的方法
+            method = clazz.getDeclaredMethod(scheduleJob.getMethodName());
+            if (method == null) {
+                throw new RuntimeException("任务名称 = [" + scheduleJob.getJobName() + "] 方法名设置错误！！！");
+            }
+            method.invoke(object);
+        } catch (Exception e) {
+            e.printStackTrace();
+            expFlag = true;
+            exception = e;
+            throw e;
+        } finally {
+            if (expFlag) {//发生异常停止这个自动任务，写异常日志
+                try {
+                    ScheduleJobDto dto = new ScheduleJobDto();
+                    dto.setJobId(scheduleJob.getJobId());
+                    dto.setJobStatus(AutoTaskJobStatusEnum.JOB_STATUS_EXCEPTION.getStatus());
+                    ScheduleJobService scheduleJobService = BeanUtils.getBean("scheduleJobServiceImpl");
+                    scheduleJobService.updateJobStatus(dto);
+                    if (exception != null) {
+                        StringWriter sw = new StringWriter();
+                        exception.printStackTrace(new PrintWriter(sw, true));
+                        ScheduleJobLogDto logDto = new ScheduleJobLogDto();
+                        logDto.setId(UUID.generate());
+                        logDto.setJobId(scheduleJob.getJobId());
+                        logDto.setJobGroup(scheduleJob.getJobGroup());
+                        logDto.setJobName(scheduleJob.getJobName());
+                        logDto.setCreateTime(new Date());
+                        logDto.setInfo(sw.toString());
+                        ScheduleJobLogService scheduleJobLogService = BeanUtils.getBean("scheduleJobLogServiceImpl");
+                        scheduleJobLogService.insert(logDto);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    log.error(e);
+                }
+            }
+        }
+    }
 }

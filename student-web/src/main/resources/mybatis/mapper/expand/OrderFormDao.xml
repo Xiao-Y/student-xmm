@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="org.billow.dao.OrderFormDao">
-	
+
+    <select id="findAutoOrderForm" resultMap="BaseResultMap"
+            parameterType="org.billow.model.expand.OrderFormDto">
+        select
+        <include refid="base_column_list"/>
+        from t_order_form r WHERE 1=1
+        <if test="statusList != null and statusList.size() > 0">
+            and r.status in
+            <foreach collection="statusList" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="updateDate != null">
+            and r.update_date &lt;= #{updateDate,jdbcType=TIMESTAMP}
+        </if>
+    </select>
 </mapper>

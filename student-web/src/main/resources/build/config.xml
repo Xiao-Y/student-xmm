@@ -7,35 +7,35 @@
 	<!-- 版本 -->
 	<version>2.0</version>
 	<!-- 表名 -->
-	<tableName>t_order_form_pay_log</tableName>
+	<tableName>sys_schedule_job_log</tableName>
 
-	<controllerPackageName>org.billow.controller.orderForm</controllerPackageName>
-	<controllerClazzName>OrderFormPayLogController</controllerClazzName>
-	<explainController>订单支付日志表（支付、退款）控制器</explainController>
+	<controllerPackageName>org.billow.controller.system</controllerPackageName>
+	<controllerClazzName>ScheduleJobLogController</controllerClazzName>
+	<explainController>自动任务信息日志控制器</explainController>
 
-	<servicePackageName>org.billow.api.orderForm</servicePackageName>
-	<serviceClazzName>OrderFormPayLogService</serviceClazzName>
-	<explainService>订单支付日志表（支付、退款）接口</explainService>
+	<servicePackageName>org.billow.api.system</servicePackageName>
+	<serviceClazzName>ScheduleJobLogService</serviceClazzName>
+	<explainService>自动任务信息日志接口</explainService>
 
-	<serviceImplPackageName>org.billow.service.orderForm</serviceImplPackageName>
-	<serviceImplClazzName>OrderFormPayLogServiceImpl</serviceImplClazzName>
-	<explainServiceImpl>订单支付日志表（支付、退款）实现类</explainServiceImpl>
+	<serviceImplPackageName>org.billow.service.system</serviceImplPackageName>
+	<serviceImplClazzName>ScheduleJobLogServiceImpl</serviceImplClazzName>
+	<explainServiceImpl>自动任务信息日志实现类</explainServiceImpl>
 
 	<daoPackageName>org.billow.dao</daoPackageName>
-	<daoClazzName>OrderFormPayLogDao</daoClazzName>
-	<explainDao>订单支付日志表（支付、退款）接口</explainDao>
+	<daoClazzName>ScheduleJobLogDao</daoClazzName>
+	<explainDao>自动任务信息日志接口</explainDao>
 
 	<modelBasePackageName>org.billow.model.domain</modelBasePackageName>
-	<modelBaseClazzName>OrderFormPayLogBase</modelBaseClazzName>
-	<explainModelBase>订单支付日志表（支付、退款）数据库模型</explainModelBase>
+	<modelBaseClazzName>ScheduleJobLogBase</modelBaseClazzName>
+	<explainModelBase>自动任务信息日志数据库模型</explainModelBase>
 
 	<modelPackageName>org.billow.model.expand</modelPackageName>
-	<modelClazzName>OrderFormPayLogDto</modelClazzName>
-	<explainModel>订单支付日志表（支付、退款）model模型</explainModel>
+	<modelClazzName>ScheduleJobLogDto</modelClazzName>
+	<explainModel>自动任务信息日志model模型</explainModel>
 
 	<mapperBasePackageName>mybatis.mapper.base</mapperBasePackageName>
-	<mapperBaseXMLName>OrderFormPayLogBaseDao</mapperBaseXMLName>
+	<mapperBaseXMLName>ScheduleJobLogBaseDao</mapperBaseXMLName>
 
 	<mapperPackageName>mybatis.mapper.expand</mapperPackageName>
-	<mapperXMLName>OrderFormPayLogDao</mapperXMLName>
+	<mapperXMLName>ScheduleJobLogDao</mapperXMLName>
 </root>

@@ -70,3 +70,12 @@ layui.use('form', function () {
     var arry = ['isConcurrent_radio', 'jobStatus_radio'];
     pubPopForm.checkedDisplay(arry, form);
 });
+
+$(function () {
+    var jobId = $("#jobId").val();
+    if (jobId != '') {
+        $("#jobGroup").attr("readonly", true);
+        $("#jobName").attr("readonly", true);
+
+    }
+});

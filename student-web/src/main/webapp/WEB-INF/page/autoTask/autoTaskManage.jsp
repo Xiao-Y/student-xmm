@@ -37,11 +37,12 @@
                     <th>任务分组</th>
                     <th>任务名称</th>
                     <th>cron表达式</th>
-                    <th style="width: 28px">是否有状态</th>
+                    <th style="width: 28px">多线程</th>
                     <th>执行方法</th>
                     <th>创建时间</th>
                     <th>更新时间</th>
                     <th style="width: 28px">任务状态</th>
+                    <th style="width: 28px">是否运行</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -50,17 +51,10 @@
                     <tr>
                         <td>${task.jobGroup }</td>
                         <td>
-                            <a href="${ctx }/sysAutoTask/editAutoTask?jobId=${task.jobId}">${task.jobName }</a>
+                            <a href="${ctx }/sysAutoTask/editAutoTask?pageNo=${page.pageNum}&jobId=${task.jobId}" title="查看详细">${task.jobName }</a>
                         </td>
                         <td>${task.cronExpression }</td>
-                        <td>
-                            <c:if test="${task.isConcurrent == 1 }">
-                                <i class="fa fa-check-circle fa-2x"/>
-                            </c:if>
-                            <c:if test="${task.isConcurrent == 0 }">
-                                <i class="fa fa-ban fa-2x"/>
-                            </c:if>
-                        </td>
+                        <td>${task.isConcurrentName}</td>
                         <td>${task.methodName }</td>
                         <td>
                             <fmt:formatDate value="${task.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -68,6 +62,7 @@
                         <td>
                             <fmt:formatDate value="${task.updateTime }" pattern="yyyy-MM-dd HH:mm:ss"/>
                         </td>
+                        <td>${task.statusName }</td>
                         <td>
                             <input type="checkbox" value="${task.jobId }" style="width: 20px"
                                    <c:if test="${task.jobStatus == 1 }">checked</c:if> name="jobStatus"/>

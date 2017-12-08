@@ -16,16 +16,20 @@ $(function () {
         var jobId = $(this).val();
         //checked true 表示启用，否则禁用
         var jobStatus = checked === true ? 1 : 0;
+        var pageNum = $("#pageNum").val();
         var url = path + "/sysAutoTask/updateJobStatus/" + jobId;
         $.post(
             url,
-            {jobStatus: jobStatus},
+            {jobStatus: jobStatus, pageNum: pageNum},
             function (obj, status) {
                 var message = obj.message;
                 var type = obj.type;
+                var root = obj.root;
                 if (type == 'success') {
                     new TipBox({
-                        type: type, str: message, hasBtn: true, setTime: 1500
+                        type: type, str: message, hasBtn: true, setTime: 1500, callBack: function () {
+                            location.href = root;
+                        }
                     });
                 } else {
                     new TipBox({type: type, str: message, hasBtn: true})

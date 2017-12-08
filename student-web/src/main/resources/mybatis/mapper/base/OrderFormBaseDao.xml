@@ -8,7 +8,7 @@
         <result column="orderform_amount" property="orderformAmount" jdbcType="DECIMAL"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="consignee_phone" property="consigneePhone" jdbcType="VARCHAR"/>
-        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
         <result column="consignee_address" property="consigneeAddress" jdbcType="VARCHAR"/>

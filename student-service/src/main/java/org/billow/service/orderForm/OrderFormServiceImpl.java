@@ -23,6 +23,7 @@ import org.billow.utils.generator.OrderNumUtil;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -58,6 +59,8 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     private AddressDao addressDao;
     @Autowired
     private ShoppingCartDao shoppingCartDao;
+    @Value("${orderForm.trade.closed}")
+    private int tradeClosed;
 
     @Resource
     @Override
@@ -143,6 +146,42 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     @Override
     public void updateOrderForm(OrderFormDto orderFormDto) throws Exception {
         orderFormDao.updateByPrimaryKeySelective(orderFormDto);
+    }
+
+    @Override
+    public void updateOrderFormAutoTradeClosed() throws Exception {
+        OrderFormDto orderFormDto = new OrderFormDto();
+        orderFormDto.setUpdateDate(new DateTime(new DateTime().addDay((0 - tradeClosed)), DateTime.YEAR_TO_SECOND));
+        List<String> statusList = new ArrayList<>();
+        statusList.add(PayStatusEunm.REFUND_SUCCESS.getStatus());
+        statusList.add(PayStatusEunm.APPLICATION_REFUND_DISAGREE.getStatus());
+        statusList.add(PayStatusEunm.CONFIRMATION_GOODS_RECEIPT.getStatus());
+        orderFormDto.setStatusList(statusList);
+        List<OrderFormDto> list = orderFormDao.findAutoOrderForm(orderFormDto);
+        if (ToolsUtils.isNotEmpty(list)) {
+            for (OrderFormDto dto : list) {
+                String statusOld = dto.getStatus();
+                String statusNew = null;
+                String statusNameOld;
+                String statusNameNew;
+                OrderFormDto formDto = new OrderFormDto();
+                formDto.setId(dto.getId());
+                if (PayStatusEunm.CONFIRMATION_GOODS_RECEIPT.getStatus().equals(statusOld)) {
+                    statusNew = PayStatusEunm.TRANSACTION_COMPLETION.getStatus();
+                } else if (PayStatusEunm.APPLICATION_REFUND_DISAGREE.getStatus().equals(statusOld)) {
+                    statusNew = PayStatusEunm.TRADE_FINISHED.getStatus();
+                } else if (PayStatusEunm.REFUND_SUCCESS.getStatus().equals(statusOld)) {
+                    statusNew = PayStatusEunm.TRADE_CLOSED.getStatus();
+                }
+                if (ToolsUtils.isNotEmpty(statusNew)) {
+                    formDto.setUpdateDate(new Date());
+                    orderFormDao.updateByPrimaryKeySelective(formDto);
+                    statusNameOld = PayStatusEunm.getNameByStatus(statusOld);
+                    statusNameNew = PayStatusEunm.getNameByStatus(statusNew);
+                    logger.info("交易结束自动任务：" + statusNameOld + "--->" + statusNameNew);
+                }
+            }
+        }
     }
 
     /**

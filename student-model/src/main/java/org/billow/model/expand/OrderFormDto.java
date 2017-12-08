@@ -27,6 +27,8 @@ public class OrderFormDto extends OrderFormBase {
     private String statusCode;
     //是否从客户端口进入
     private boolean isCustomer;
+    //状态集合
+    private List<String> statusList;
 
     /**
      * 状态的英文名
@@ -103,6 +105,24 @@ public class OrderFormDto extends OrderFormBase {
      */
     public void setOptionButton(Map<String, String> optionButton) {
         this.optionButton = optionButton;
+    }
+
+    /**
+     * 状态集合
+     *
+     * @return
+     */
+    public List<String> getStatusList() {
+        return statusList;
+    }
+
+    /**
+     * 状态集合
+     *
+     * @param statusList
+     */
+    public void setStatusList(List<String> statusList) {
+        this.statusList = statusList;
     }
 
     /**

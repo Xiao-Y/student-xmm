@@ -385,6 +385,7 @@ public class SetData {
 				break;
 			case "CHAR":
 			case "VARCHAR":
+			case "TEXT":
 				javaType = "String";
 				break;
 			case "TIMESTAMP":

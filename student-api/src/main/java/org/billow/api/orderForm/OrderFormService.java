@@ -48,4 +48,14 @@ public interface OrderFormService extends BaseService<OrderFormDto> {
      * @param orderFormDto
      */
     void updateOrderForm(OrderFormDto orderFormDto) throws Exception;
+
+    /**
+     * 更新订单状态自动任务<p/>
+     * 1.退款成功-97-支付完成后全额退款，关闭交易<br/>
+     * 2.申请退款-不同意-99-交易结束，不可退款<br/>
+     * 3.确认收货-15天-98-交易完成”<br/>
+     *
+     * @throws Exception
+     */
+    void updateOrderFormAutoTradeClosed() throws Exception;
 }
