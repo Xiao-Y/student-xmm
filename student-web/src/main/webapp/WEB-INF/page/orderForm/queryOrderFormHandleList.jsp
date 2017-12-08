@@ -34,21 +34,21 @@
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">订单号</label>
-                        <div class="layui-input-block">
+                        <div class="layui-input-inline">
                             <input type="text" id="id" name="id" placeholder="请输入订单号" autocomplete="off"
                                    class="layui-input" value="${id}">
                         </div>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">订单状态</label>
-                        <div class="layui-input-block">
-                            <input type="radio" name="status" value="" title="所有状态" checked>
-                            <input type="radio" name="status" value="1" title="客户提交">
-                            <input type="radio" name="status" value="2" title="商家确认">
-                            <input type="radio" name="status" value="3" title="客户取消">
-                            <input type="radio" name="status" value="4" title="商家取消">
-                            <input type="radio" name="status" value="5" title="交易完成">
-                            <input type="hidden" id="status_radio" name="status_radio" value="${status}">
+                        <div class="layui-input-inline">
+                            <select id="status" name="status" lay-ignore>
+                                <option value=""></option>
+                                <c:forEach items="${map}" var="status">
+                                    <option value="${status.key}">${status.value}</option>
+                                </c:forEach>
+                            </select>
+                            <input type="hidden" id="status_select" name="status_select" value="${status}">
                         </div>
                     </div>
                 </div>
@@ -82,39 +82,9 @@
                         <td>
                             <fmt:formatNumber type="currency" value="${orderFormDto.orderformAmount }"/>
                         </td>
-                        <td>
-                                ${orderFormDto.statusName }
-                                <%--<c:choose>
-                                    <c:when test="${orderFormDto.status == '1'}">
-                                        <span class="layui-btn layui-btn-normal layui-btn-radius layui-btn-small">客户提交</span>
-                                    </c:when>
-                                    <c:when test="${orderFormDto.status == '2'}">
-                                        <span class="layui-btn layui-btn-warm layui-btn-radius layui-btn-small">商家确认</span>
-                                    </c:when>
-                                    <c:when test="${orderFormDto.status == '3'}">
-                                        <span class="layui-btn layui-btn-danger layui-btn-radius layui-btn-small">客户取消</span>
-                                    </c:when>
-                                    <c:when test="${orderFormDto.status == '4'}">
-                                        <span class="layui-btn layui-btn-danger layui-btn-radius layui-btn-small">商家取消</span>
-                                    </c:when>
-                                    <c:when test="${orderFormDto.status == '5'}">
-                                        <span class="layui-btn layui-btn-primary layui-btn-radius layui-btn-small">交易完成</span>
-                                    </c:when>
-                                </c:choose>--%>
-                        </td>
+                        <td>${orderFormDto.statusName }</td>
                         <td><fmt:formatDate value="${orderFormDto.createDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                         <td>
-                                <%-- 1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成 --%>
-                                <%--<c:if test="${orderFormDto.status == '1'}">
-                                    <a href="javascript:;" class="layui-btn layui-btn-small" name="cancelOrderForm"
-                                       url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=2">确认订单</a>
-                                    <a href="javascript:;" class="layui-btn layui-btn-small" name="cancelOrderForm"
-                                       url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=4">取消订单</a>
-                                </c:if>
-                                <c:if test="${orderFormDto.status == '2'}">
-                                    <a href="javascript:;" class="layui-btn layui-btn-small" name="cancelOrderForm"
-                                       url="${ctx }/orderForm/updateOrderForm?id=${orderFormDto.id }&status=5">交易完成</a>
-                                </c:if>--%>
                             <c:forEach var="button" items="${orderFormDto.optionButton}">
                                 <c:choose>
                                     <%-- 商家已取消订单 --%>

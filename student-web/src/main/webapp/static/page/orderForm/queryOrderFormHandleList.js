@@ -5,8 +5,9 @@ layui.config({
 layui.use(['layer', 'form'], function () {
     var $ = layui.jquery, layer = parent.layer === undefined ? layui.layer : parent.layer;
     var form = layui.form();
+
     //用于显示radio的选种
-    var arry = ['status_radio'];
+    var arry = ['status_select'];
     pubPopForm.checkedDisplay(arry, form);
 
     $('#search').on('click', function () {
@@ -56,48 +57,6 @@ layui.use(['layer', 'form'], function () {
             }
         });
     });
-    // $(document).on('click', 'a[name="cancelOrderForm"]', function () {
-    //     var tipBox = null;
-    //     var url = $(this).attr("url");
-    //     var status = url.split("&")[1].split("=")[1];
-    //     var str1 = "";
-    //     var str2 = "";
-    //     var type = "confirm";
-    //     // 1-客户提交，2-商家确认，3-客户取消，4-商家取消，5-交易完成
-    //     if (status == '1') {//delFlag=1
-    //         str1 = "确定删除记录？";
-    //         str2 = "正在删除记录...";
-    //     } else if (status == '2') {
-    //         str1 = "是否确认订单？";
-    //         str2 = "正在确认订单...";
-    //         type = "confirm1";
-    //     } else if (status == '3' || status == '4') {
-    //         str1 = "确认取消订单？";
-    //         str2 = "正在取消订单...";
-    //     } else if (status == '5') {
-    //         str1 = "确认交易完成？";
-    //         str2 = "正在交易完成...";
-    //     }
-    //     new TipBox({
-    //         type: type,
-    //         str: str1,
-    //         hasBtn: true,
-    //         callBack: function () {
-    //             $.ajax({
-    //                 type: 'POST',
-    //                 url: url,
-    //                 dataType: 'json',
-    //                 beforeSend: function (XHR) {
-    //                     tipBox = new TipBox({type: 'load', str: str2});
-    //                 },
-    //                 success: function (data) {
-    //                     tipBox.close();
-    //                     tipsTable(data);
-    //                 }
-    //             });
-    //         }
-    //     });
-    // });
 });
 
 $(function () {
@@ -115,7 +74,7 @@ $(function () {
         current: $("#pageNum").val(),//当前第几页
         callback: function (api) {
             var id = $("#id").val();
-            var status = $("input[name='status']:checked").val();
+            var status = $("#status").val();
             location.href = path + '/orderForm/queryOrderFormHandleList?pageNo=' + api.getCurrent() + "&id=" + id + "&status=" + status;
         }
     });

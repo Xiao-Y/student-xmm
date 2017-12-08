@@ -284,10 +284,12 @@ public class OrderFormController {
         //orderFormDto.setDelFlag("0");
         orderFormDto.setIsCustomer(false);
         List<OrderFormDto> list = orderFormService.selectAllAndOptionButton(orderFormDto);
+        Map<String,String> map = orderFormService.getQueryStatus();
         PageInfo<OrderFormDto> page = new PageInfo<>(list);
         ModelAndView av = new ModelAndView();
         av.addObject("page", page);
         av.setViewName(PagePathCst.BASEPATH_ORDER_FORM + "queryOrderFormHandleList");
+        av.addObject("map", map);
         //查询条件--start
         av.addObject("id", orderFormDto.getId());
         av.addObject("status", orderFormDto.getStatus());

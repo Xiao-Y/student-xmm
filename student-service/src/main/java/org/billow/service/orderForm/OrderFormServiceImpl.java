@@ -1,6 +1,5 @@
 package org.billow.service.orderForm;
 
-import org.apache.ibatis.annotations.Case;
 import org.apache.log4j.Logger;
 import org.billow.api.orderForm.OrderFormService;
 import org.billow.dao.AddressDao;
@@ -27,7 +26,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,6 +33,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * 订单信息实现类<br>
@@ -183,6 +182,15 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
                 }
             }
         }
+    }
+
+    @Override
+    public Map<String, String> getQueryStatus() {
+        Map<String, String> map = new TreeMap<>();
+        for (PayStatusEunm c : PayStatusEunm.values()) {
+            map.put(c.getStatus(), c.getName());
+        }
+        return map;
     }
 
     /**

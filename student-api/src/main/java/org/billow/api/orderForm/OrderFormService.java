@@ -58,4 +58,11 @@ public interface OrderFormService extends BaseService<OrderFormDto> {
      * @throws Exception
      */
     void updateOrderFormAutoTradeClosed() throws Exception;
+
+    /**
+     * 获取订单的所有状态
+     *
+     * @return
+     */
+    Map<String, String> getQueryStatus();
 }
