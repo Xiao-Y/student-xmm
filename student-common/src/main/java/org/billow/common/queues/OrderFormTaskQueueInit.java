@@ -88,6 +88,7 @@ public class OrderFormTaskQueueInit implements InitializingBean {
             //查询出支付成功的
             OrderFormDto dto = new OrderFormDto();
             dto.setStatus(PayStatusEunm.BUSINESS_CONFIRMATION.getStatus());
+            dto.setUpdateDateAscOrderBy(true);
             List<OrderFormDto> orderFormDtos = orderFormService.selectAll(dto);
             if (ToolsUtils.isNotEmpty(orderFormDtos)) {
                 Collections.reverse(orderFormDtos);
@@ -124,6 +125,7 @@ public class OrderFormTaskQueueInit implements InitializingBean {
             //查询出支付成功的
             OrderFormDto dto = new OrderFormDto();
             dto.setStatus(PayStatusEunm.TRADE_SUCCESS.getStatus());
+            dto.setUpdateDateAscOrderBy(true);
             List<OrderFormDto> orderFormDtos = orderFormService.selectAll(dto);
             if (ToolsUtils.isNotEmpty(orderFormDtos)) {
                 Collections.reverse(orderFormDtos);

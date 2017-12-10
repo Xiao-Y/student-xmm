@@ -97,7 +97,7 @@
                                             <%-- 删除订单 --%>
                                             <c:when test="${button.key == 'DELETE_ORDER_FORM'}">
                                                 <a href="javascript:;" name="optionButton"
-                                                    param="${orderFormDto.id }&${button.key}&${button.value}">
+                                                   param="${orderFormDto.id }&${button.key}&${button.value}">
                                                     <span class="btn-danger btn-sm">${button.value}</span>
                                                 </a>
                                             </c:when>
@@ -105,7 +105,7 @@
                                             <c:when test="${button.key == 'AGPAID'}">
                                                 <c:if test="${isOpen}">
                                                     <a href="javascript:;" name="agPaidButton"
-                                                       param="${orderFormDto.id }&${button.key}">
+                                                       param="${orderFormDto.id }">
                                                         <span class="btn-warning btn-sm">${button.value}</span>
                                                     </a>
                                                 </c:if>
@@ -152,8 +152,7 @@
 <script>
 
     $(document).on('click', 'a[name="agPaidButton"]', function () {
-        var title = $(this).attr("title").split("&");
-        var orderFormId = title[0];
+        var orderFormId = $(this).attr("param");
         showPayModal(orderFormId);
     });
     $(document).on('click', 'a[name="optionButton"]', function () {

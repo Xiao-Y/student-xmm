@@ -60,6 +60,8 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     private ShoppingCartDao shoppingCartDao;
     @Value("${orderForm.trade.closed}")
     private int tradeClosed;
+    @Value("${orderForm.confirmation.goods.receipt}")
+    private int confirmGoodsReceipt;
 
     @Resource
     @Override
@@ -133,6 +135,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     @Override
     public List<OrderFormDto> selectAllAndOptionButton(OrderFormDto orderFormDto) {
         boolean isCustomer = orderFormDto.getIsCustomer();
+        orderFormDto.setCreateDateDescOrderBy(true);
         List<OrderFormDto> orderFormDtos = orderFormDao.selectAll(orderFormDto);
         if (ToolsUtils.isNotEmpty(orderFormDtos)) {
             for (OrderFormDto dto : orderFormDtos) {
@@ -179,6 +182,30 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
                     statusNameOld = PayStatusEunm.getNameByStatus(statusOld);
                     statusNameNew = PayStatusEunm.getNameByStatus(statusNew);
                     logger.info("交易结束自动任务：" + statusNameOld + "--->" + statusNameNew);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void updateOrderFormAutoConfirmReceipt() throws Exception {
+        OrderFormDto orderFormDto = new OrderFormDto();
+        orderFormDto.setUpdateDate(new DateTime(new DateTime().addDay((0 - confirmGoodsReceipt)), DateTime.YEAR_TO_SECOND));
+        orderFormDto.setStatus(PayStatusEunm.CONSIGNMENT.getStatus());
+        List<OrderFormDto> list = orderFormDao.findAutoOrderForm(orderFormDto);
+        if (ToolsUtils.isNotEmpty(list)) {
+            for (OrderFormDto dto : list) {
+                String statusOld = dto.getStatus();
+                String statusNew = PayStatusEunm.CONFIRMATION_GOODS_RECEIPT.getStatus();
+                String statusNameOld = PayStatusEunm.getNameByStatus(statusOld);
+                String statusNameNew = PayStatusEunm.getNameByStatus(statusNew);
+                OrderFormDto formDto = new OrderFormDto();
+                formDto.setId(dto.getId());
+                if (ToolsUtils.isNotEmpty(statusNew)) {
+                    formDto.setUpdateDate(new Date());
+                    formDto.setStatus(statusNew);
+                    orderFormDao.updateByPrimaryKeySelective(formDto);
+                    logger.info("确认收货自动任务：" + statusNameOld + "--->" + statusNameNew);
                 }
             }
         }

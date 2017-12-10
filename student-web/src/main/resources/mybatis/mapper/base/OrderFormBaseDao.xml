@@ -50,7 +50,12 @@
                 and consignee_address = #{consigneeAddress}
             </if>
         </where>
-        ORDER BY update_date DESC
+        <if test="createDateDescOrderBy">
+            ORDER BY create_date DESC
+        </if>
+        <if test="updateDateAscOrderBy">
+            ORDER BY update_date ASC
+        </if>
     </sql>
     <select id="selectAll" resultMap="BaseResultMap" parameterType="org.billow.model.expand.OrderFormDto">
         select

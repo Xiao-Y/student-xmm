@@ -16,5 +16,6 @@
         <if test="updateDate != null">
             and r.update_date &lt;= #{updateDate,jdbcType=TIMESTAMP}
         </if>
+        ORDER BY r.update_date ASC
     </select>
 </mapper>

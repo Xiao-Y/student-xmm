@@ -60,6 +60,13 @@ public interface OrderFormService extends BaseService<OrderFormDto> {
     void updateOrderFormAutoTradeClosed() throws Exception;
 
     /**
+     * 自动将发货中7天修改为确认收货
+     *
+     * @throws Exception
+     */
+    void updateOrderFormAutoConfirmReceipt() throws Exception;
+
+    /**
      * 获取订单的所有状态
      *
      * @return

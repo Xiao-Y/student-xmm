@@ -29,6 +29,14 @@ public class OrderFormDto extends OrderFormBase {
     private boolean isCustomer;
     //状态集合
     private List<String> statusList;
+    /**
+     * 是否按照createDate的desc排序
+     */
+    private boolean createDateDescOrderBy;
+    /**
+     * 是否按照createDate的Asc排序
+     */
+    private boolean updateDateAscOrderBy;
 
     /**
      * 状态的英文名
@@ -123,6 +131,42 @@ public class OrderFormDto extends OrderFormBase {
      */
     public void setStatusList(List<String> statusList) {
         this.statusList = statusList;
+    }
+
+    /**
+     * 是否按照createDate的desc排序
+     *
+     * @return
+     */
+    public boolean getCreateDateDescOrderBy() {
+        return createDateDescOrderBy;
+    }
+
+    /**
+     * 是否按照createDate的desc排序
+     *
+     * @param createDateDescOrderBy
+     */
+    public void setCreateDateDescOrderBy(boolean createDateDescOrderBy) {
+        this.createDateDescOrderBy = createDateDescOrderBy;
+    }
+
+    /**
+     * 是否按照createDate的Asc排序
+     *
+     * @return
+     */
+    public boolean getUpdateDateAscOrderBy() {
+        return updateDateAscOrderBy;
+    }
+
+    /**
+     * 是否按照createDate的Asc排序
+     *
+     * @param updateDateAscOrderBy
+     */
+    public void setUpdateDateAscOrderBy(boolean updateDateAscOrderBy) {
+        this.updateDateAscOrderBy = updateDateAscOrderBy;
     }
 
     /**
