@@ -13,6 +13,9 @@
                 #{item}
             </foreach>
         </if>
+        <if test="null != status and '' != status">
+            and status = #{status}
+        </if>
         <if test="updateDate != null">
             and r.update_date &lt;= #{updateDate,jdbcType=TIMESTAMP}
         </if>
