@@ -29,12 +29,6 @@
             <artifactId>student-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- 用于代码生成 -->
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.20</version>
-        </dependency>
     </dependencies>
     <build>
         <finalName>${final.name}</finalName>
@@ -113,7 +107,7 @@
         <profile>
             <id>dev</id>
             <properties>
-                <runtime.env>src/main/env/dev</runtime.env>
+                <runtime.env>${project.basedir.config}/src/main/env/dev</runtime.env>
                 <final.name>student-web-dev</final.name>
             </properties>
             <activation>
@@ -124,7 +118,7 @@
         <profile>
             <id>pro</id>
             <properties>
-                <runtime.env>src/main/env/pro</runtime.env>
+                <runtime.env>${project.basedir.config}/src/main/env/pro</runtime.env>
                 <final.name>student-web-pro</final.name>
             </properties>
         </profile>

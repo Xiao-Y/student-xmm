@@ -7,35 +7,35 @@
 	<!-- 版本 -->
 	<version>2.0</version>
 	<!-- 表名 -->
-	<tableName>sys_schedule_job_log</tableName>
+	<tableName>m_test</tableName>
 
-	<controllerPackageName>org.billow.controller.system</controllerPackageName>
-	<controllerClazzName>ScheduleJobLogController</controllerClazzName>
+	<controllerPackageName>org.billow.controller.test</controllerPackageName>
+	<controllerClazzName>TestController</controllerClazzName>
 	<explainController>自动任务信息日志控制器</explainController>
 
-	<servicePackageName>org.billow.api.system</servicePackageName>
-	<serviceClazzName>ScheduleJobLogService</serviceClazzName>
+	<servicePackageName>org.billow.api.test</servicePackageName>
+	<serviceClazzName>TestService</serviceClazzName>
 	<explainService>自动任务信息日志接口</explainService>
 
-	<serviceImplPackageName>org.billow.service.system</serviceImplPackageName>
-	<serviceImplClazzName>ScheduleJobLogServiceImpl</serviceImplClazzName>
+	<serviceImplPackageName>org.billow.service.test</serviceImplPackageName>
+	<serviceImplClazzName>TestServiceImpl</serviceImplClazzName>
 	<explainServiceImpl>自动任务信息日志实现类</explainServiceImpl>
 
 	<daoPackageName>org.billow.dao</daoPackageName>
-	<daoClazzName>ScheduleJobLogDao</daoClazzName>
+	<daoClazzName>TestDao</daoClazzName>
 	<explainDao>自动任务信息日志接口</explainDao>
 
 	<modelBasePackageName>org.billow.model.domain</modelBasePackageName>
-	<modelBaseClazzName>ScheduleJobLogBase</modelBaseClazzName>
+	<modelBaseClazzName>TestBase</modelBaseClazzName>
 	<explainModelBase>自动任务信息日志数据库模型</explainModelBase>
 
 	<modelPackageName>org.billow.model.expand</modelPackageName>
-	<modelClazzName>ScheduleJobLogDto</modelClazzName>
+	<modelClazzName>TestDto</modelClazzName>
 	<explainModel>自动任务信息日志model模型</explainModel>
 
 	<mapperBasePackageName>mybatis.mapper.base</mapperBasePackageName>
-	<mapperBaseXMLName>ScheduleJobLogBaseDao</mapperBaseXMLName>
+	<mapperBaseXMLName>TestBaseDao</mapperBaseXMLName>
 
 	<mapperPackageName>mybatis.mapper.expand</mapperPackageName>
-	<mapperXMLName>ScheduleJobLogDao</mapperXMLName>
+	<mapperXMLName>TestDao</mapperXMLName>
 </root>
