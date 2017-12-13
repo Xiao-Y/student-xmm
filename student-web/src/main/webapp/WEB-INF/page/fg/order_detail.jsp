@@ -27,8 +27,8 @@
 <div class="breadcrumb-area">
     <div class="container">
         <ol class="breadcrumb">
-            <li><a href="/fg/fgHome/index"><i class="fa fa-home"></i></a></li>
-            <li><a href="/fg/fgHome/order?pageNo=${pageNo }">我的订单</a></li>
+            <li><a href="${ctx }/fg/fgHome/index"><i class="fa fa-home"></i></a></li>
+            <li><a href="${ctx }/fg/fgHome/order?pageNo=${pageNo }">我的订单</a></li>
             <li class="active">订单详细</li>
         </ol>
     </div>
@@ -57,7 +57,7 @@
                                     <td class="product-thumbnail commodityOption">
                                         <input type="hidden" value="${orderFormDetail.commodityId}" name="commodityId">
                                         <a href="#" name="modelView">
-                                            <img src="/upload/${orderFormDetail.commodityImg}" alt="商品图片"/>
+                                            <img src="${ctx }/upload/${orderFormDetail.commodityImg}" alt="商品图片"/>
                                         </a>
                                     </td>
                                     <td class="product-name">
@@ -76,7 +76,7 @@
                                 </tr>
                             </c:forEach>
                             <%--<tr>
-                                <td class="product-thumbnail"><a href="#"><img src="/static/fg_js_css/img/product/2.jpg"
+                                <td class="product-thumbnail"><a href="#"><img src="/static/fg_js_css/img/product/2.png"
                                                                                alt=""/></a></td>
                                 <td class="product-name"><a href="#">Vestibulum dictum magna</a></td>
                                 <td class="product-price"><span class="amount">£50.00</span></td>

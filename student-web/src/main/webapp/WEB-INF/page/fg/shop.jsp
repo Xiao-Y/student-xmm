@@ -72,7 +72,7 @@
                                                 <div class="product-img">
                                                     <a href="javascript:void(0);">
                                                         <img class="lazy" alt="商品图片"
-                                                             data-original="/upload/${commodity.img }"/>
+                                                             data-original="${ctx }/upload/${commodity.img }"/>
                                                     </a>
                                                     <c:if test="${commodity.status == '0'}">
                                                         <span class="hot-label">无货</span>
@@ -157,7 +157,7 @@
                                                 <div class="product-img">
                                                     <a href="javascript:void(0);">
                                                         <img class="lazy" alt="商品图片"
-                                                             data-original="/upload/${commodity.img }"/>
+                                                             data-original="${ctx }/upload/${commodity.img }"/>
                                                     </a>
                                                     <c:if test="${commodity.status == '0'}">
                                                         <span class="hot-label">无货</span>
@@ -275,12 +275,12 @@
 <!-- Modal end -->
 
 <script type="text/javascript" src="${ctx }/static/plugins/pagination/jquery.pagination.js"></script>
-<script src="/static/plugins/tuupola-jquery_lazyload/jquery.lazyload.js"></script>
+<script src="${ctx }/static/plugins/tuupola-jquery_lazyload/jquery.lazyload.js"></script>
 
 <script>
 
     $("img.lazy").lazyload({
-        placeholder: "/upload/load.gif",
+        placeholder: path + "/upload/load.gif",
         effect: "fadeIn"
     });
 

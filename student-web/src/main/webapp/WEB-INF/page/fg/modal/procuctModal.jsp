@@ -185,7 +185,7 @@
                         }
                     }
                     $("#pro-rating").html(htmlStr);
-                    $("#commodityImag").attr("src", "/upload/" + commodity.img);
+                    $("#commodityImag").attr("src", path + "/upload/" + commodity.img);
                     $("#commodityName").html("<a href='#'>" + commodity.commodityName + "</a>");
                     $("#unitPrice").html('¥' + commodity.unitPrice + '/' + commodity.spec);
                     $("#commodityInfo").html("商品信息：" + commodity.commodityInfo);

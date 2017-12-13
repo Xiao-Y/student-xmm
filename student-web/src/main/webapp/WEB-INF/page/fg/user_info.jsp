@@ -11,7 +11,7 @@
     <!-- favicon
     ============================================ -->
     <jsp:include page="/static/fg_js_css/pubCss.jsp" flush="true"/>
-    <link rel="stylesheet" href="/static/plugins/bootstrapValidator/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="${ctx }/static/plugins/bootstrapValidator/bootstrapValidator.min.css">
 
 </head>
 
@@ -98,8 +98,8 @@
 <jsp:include page="/static/fg_js_css/pubJs.jsp" flush="true"/>
 <jsp:include page="/pub/pubTips.jsp" flush="true"/>
 
-<script src="/static/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
-<script src="/static/plugins/bootstrapValidator/zh_CN.js"></script>
+<script src="${ctx }/static/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
+<script src="${ctx }/static/plugins/bootstrapValidator/zh_CN.js"></script>
 
 <script>
 

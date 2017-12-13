@@ -28,9 +28,9 @@
 <div class="slider-container">
     <!-- Slider Image -->
     <div id="mainSlider" class="nivoSlider slider-image">
-        <img src="/static/fg_js_css/img/slider/8.jpg" alt="" title="#htmlcaption1">
-        <img src="/static/fg_js_css/img/slider/6.jpg" alt="" title="#htmlcaption2">
-        <img src="/static/fg_js_css/img/slider/9.jpg" alt="" title="#htmlcaption3">
+        <img src="${ctx }/static/fg_js_css/img/slider/8.jpg" alt="" title="#htmlcaption1">
+        <img src="${ctx }/static/fg_js_css/img/slider/6.jpg" alt="" title="#htmlcaption2">
+        <img src="${ctx }/static/fg_js_css/img/slider/9.jpg" alt="" title="#htmlcaption3">
     </div>
     <!-- Slider Caption 1 -->
     <div id="htmlcaption1" class="nivo-html-caption slider-caption-1">
@@ -114,7 +114,7 @@
                     <!-- Nav tabs -->
                     <ul class="custom-tab text-center mb-40">
                         <li class="active"><a href="javascript:void(0);" data-toggle="tab">蔬菜/鱼/肉/配料类</a></li>
-                        <li><a href="/fg/fgHome/shop">查看更多......</a></li>
+                        <li><a href="${ctx }/fg/fgHome/shop">查看更多......</a></li>
                     </ul>
                     <!-- Tab panes -->
                     <div class="row">
@@ -128,7 +128,7 @@
                                                 <div class="product-img">
                                                     <a href="javascript:void(0);">
                                                         <img class="lazy" alt="商品图片"
-                                                             data-original="/upload/${commodity.img }"/>
+                                                             data-original="${ctx }/upload/${commodity.img }"/>
                                                     </a>
                                                     <span class="new-label">新品</span>
                                                     <div class="product-action commodityOption">
@@ -197,7 +197,7 @@
                                             <div class="product-img">
                                                 <a href="javascript:void(0);">
                                                     <img class="lazy" alt="商品图片"
-                                                         data-original="/upload/${commodity.img }"/>
+                                                         data-original="${ctx }/upload/${commodity.img }"/>
                                                 </a>
                                                 <span class="hot-label">热销</span>
                                                 <div class="product-action commodityOption">
@@ -256,7 +256,7 @@
                     <div class="blog-wrapper mb-40">
                         <div class="blog-img">
                             <a href="#">
-                                <img class="lazy" alt="商品图片" data-original="/static/fg_js_css/img/blog/1.jpg"/>
+                                <img class="lazy" alt="商品图片" data-original="${ctx }/static/fg_js_css/img/blog/1.jpg"/>
                             </a>
                         </div>
                         <div class="blog-info">
@@ -268,7 +268,7 @@
                     <div class="blog-wrapper mb-40">
                         <div class="blog-img">
                             <a href="#">
-                                <img class="lazy" alt="商品图片" data-original="/static/fg_js_css/img/blog/2.jpg"/>
+                                <img class="lazy" alt="商品图片" data-original="${ctx }/static/fg_js_css/img/blog/2.jpg"/>
                             </a>
                         </div>
                         <div class="blog-info">
@@ -279,7 +279,7 @@
                 <div class="col-lg-12">
                     <div class="blog-wrapper mb-40">
                         <div class="blog-img">
-                            <a href="#"><img src="/static/fg_js_css/img/blog/1.jpg" alt=""/></a>
+                            <a href="#"><img src="${ctx }/static/fg_js_css/img/blog/1.jpg" alt=""/></a>
                         </div>
                         <div class="blog-info">
                             <h3><a href="#">查看更多...</a></h3>
@@ -289,7 +289,7 @@
                 <div class="col-lg-12">
                     <div class="blog-wrapper mb-40">
                         <div class="blog-img">
-                            <a href="#"><img src="/static/fg_js_css/img/blog/2.jpg" alt=""/></a>
+                            <a href="#"><img src="${ctx }/static/fg_js_css/img/blog/2.jpg" alt=""/></a>
                         </div>
                         <div class="blog-info">
                             <h3><a href="#">查看更多...</a></h3>
@@ -311,12 +311,12 @@
 <!-- Modal start -->
 <jsp:include page="/WEB-INF/page/fg/modal/procuctModal.jsp" flush="true"/>
 <!-- Modal end -->
-<script src="/static/plugins/tuupola-jquery_lazyload/jquery.lazyload.js"></script>
+<script src="${ctx }/static/plugins/tuupola-jquery_lazyload/jquery.lazyload.js"></script>
 
 <script>
 
     $("img.lazy").lazyload({
-        placeholder: "/upload/load.gif",
+        placeholder: "${ctx }/upload/load.gif",
         effect: "fadeIn"
     });
 </script>

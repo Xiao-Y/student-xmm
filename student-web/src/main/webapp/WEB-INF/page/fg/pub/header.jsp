@@ -1,41 +1,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/pub/taglib.jsp" %>
 <header class="header-pos">
     <div class="header-area header-middle">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2 col-sm-3 col-xs-12">
                     <div class="logo">
-                        <a href="index.html"><img src="/static/fg_js_css/img/logo/logo.jpg" alt=""/></a>
+                        <a href="index.html"><img src="${ctx }/static/fg_js_css/img/logo/logo.jpg" alt=""/></a>
                     </div>
                 </div>
                 <div class="col-md-10 col-sm-9 col-xs-12 text-right xs-center">
                     <div class="main-menu display-inline hidden-sm hidden-xs">
                         <nav>
                             <ul>
-                                <li><a href="/fg/fgHome/index">首页</a></li>
-                                <li><a href="/fg/fgHome/shop">商品列表</a></li>
+                                <li><a href="${ctx }/fg/fgHome/index">首页</a></li>
+                                <li><a href="${ctx }/fg/fgHome/shop">商品列表</a></li>
                                 <li>
-                                    <a href="/fg/fgHome/order">订单管理</a>
+                                    <a href="${ctx }/fg/fgHome/order">订单管理</a>
                                     <%--<div class="mega-menu">
                                         <ul>
                                             <li><a href="/fg/fgHome/order">我的订单</a></li>
                                         </ul>
                                     </div>--%>
                                 </li>
-                                <li><a href="/fg/fgHome/address">收货地址</a>
+                                <li><a href="${ctx }/fg/fgHome/address">收货地址</a>
                                     <div class="mega-menu">
                                         <ul>
-                                            <li><a href="/fg/fgHome/address">我的收货地址</a></li>
-                                            <li><a href="/fg/fgHome/editAddress?type=add">添加新收货地址</a></li>
+                                            <li><a href="${ctx }/fg/fgHome/address">我的收货地址</a></li>
+                                            <li><a href="${ctx }/fg/fgHome/editAddress?type=add">添加新收货地址</a></li>
                                         </ul>
                                     </div>
                                 </li>
                                 <li><a href="#">${currentUser.userName }</a>
                                     <div class="mega-menu">
                                         <ul>
-                                            <li><a href="/home/login">注销登陆</a></li>
-                                            <li><a href="/fg/fgHome/userInfo">修改个人信息</a></li>
-                                            <li><a href="/fg/fgHome/editPassword">修改密码</a></li>
+                                            <li><a href="${ctx }/home/login">注销登陆</a></li>
+                                            <li><a href="${ctx }/fg/fgHome/userInfo">修改个人信息</a></li>
+                                            <li><a href="${ctx }/fg/fgHome/editPassword">修改密码</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -55,7 +56,7 @@
                     <!-- 搜索end -->
                     <!-- 购物车start -->
                     <div class="shopping-cart ml-20 display-inline">
-                        <a href="/fg/fgHome/shoppingCart" id="myShoppingCart"><b>我的购物车</b>(${shoppingCount})</a>
+                        <a href="${ctx }/fg/fgHome/shoppingCart" id="myShoppingCart"><b>我的购物车</b>(${shoppingCount})</a>
                         <%--<ul>
                             <li>
                                 <div class="cart-img">
@@ -140,10 +141,10 @@
                     <div class="mobile-menu">
                         <nav id="mobile-menu-active">
                             <ul>
-                                <li><a href="/fg/fgHome/index">首页</a></li>
-                                <li><a href="/fg/fgHome/shop">商品列表</a></li>
+                                <li><a href="${ctx }/fg/fgHome/index">首页</a></li>
+                                <li><a href="${ctx }/fg/fgHome/shop">商品列表</a></li>
                                 <li>
-                                    <a href="/fg/fgHome/order">订单管理</a>
+                                    <a href="${ctx }/fg/fgHome/order">订单管理</a>
                                    <%-- <div class="mega-menu">
                                         <ul>
                                             <li><a href="/fg/fgHome/order">我的订单</a></li>
@@ -152,20 +153,20 @@
                                         </ul>
                                     </div>--%>
                                 </li>
-                                <li><a href="/fg/fgHome/address">收货地址</a>
+                                <li><a href="${ctx }/fg/fgHome/address">收货地址</a>
                                     <div class="mega-menu">
                                         <ul>
-                                            <li><a href="/fg/fgHome/address">我的收货地址</a></li>
-                                            <li><a href="/fg/fgHome/editAddress?type=add">添加新收货地址</a></li>
+                                            <li><a href="${ctx }/fg/fgHome/address">我的收货地址</a></li>
+                                            <li><a href="${ctx }/fg/fgHome/editAddress?type=add">添加新收货地址</a></li>
                                         </ul>
                                     </div>
                                 </li>
                                 <li><a href="#">${currentUser.userName }</a>
                                     <div class="mega-menu">
                                         <ul>
-                                            <li><a href="/home/login">注销登陆</a></li>
-                                            <li><a href="/fg/fgHome/userInfo">修改个人信息</a></li>
-                                            <li><a href="/fg/fgHome/editPassword">修改密码</a></li>
+                                            <li><a href="${ctx }/home/login">注销登陆</a></li>
+                                            <li><a href="${ctx }/fg/fgHome/userInfo">修改个人信息</a></li>
+                                            <li><a href="${ctx }/fg/fgHome/editPassword">修改密码</a></li>
                                         </ul>
                                     </div>
                                 </li>

@@ -60,10 +60,10 @@
                                     <td class="product-phone">${address.consigneePhone }</td>
                                     <td class="product-status">${address.consigneeAddress }</td>
                                     <td class="product-remove">
-                                        <a href="/fg/fgHome/editAddress?type=edit&id=${address.id }"
+                                        <a href="${ctx }/fg/fgHome/editAddress?type=edit&id=${address.id }"
                                            class="btn-primary btn-sm">修改</a>
                                         <a class="btn-danger btn-sm" href="#" name="del"
-                                           url="/fg/fgHome/deleteAddress?id=${address.id }">删除</a>
+                                           url="${ctx }/fg/fgHome/deleteAddress?id=${address.id }">删除</a>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -68,7 +68,7 @@
                                         <div class="product-img">
                                             <a href="#">
                                                 <img class="lazy" alt="商品图片"
-                                                     data-original="/upload/${commodity.img }"/>
+                                                     data-original="${ctx }/upload/${commodity.img }"/>
                                             </a>
                                             <c:if test="${commodity.valid == '0'}">
                                                 <span class="hot-label">已下架</span>
@@ -102,7 +102,7 @@
                             <%--<tr>
                                 <td class="product-thumbnail"><input name="checkBoxItem" type="checkbox"></td>
                                 <td class="product-thumbnail">
-                                    <a href="#"><img src="/static/fg_js_css/img/product/2.jpg" alt=""/></a>
+                                    <a href="#"><img src="/static/fg_js_css/img/product/2.png" alt=""/></a>
                                 </td>
                                 <td class="product-name"><a href="#">Vestibulum dictum magna</a></td>
                                 <td class="product-price"><span class="amount">£50.00</span></td>
@@ -182,12 +182,12 @@
 <!-- Modal end -->
 
 <script type="text/javascript" src="${ctx }/static/js/common/dataTool.js"></script>
-<script src="/static/plugins/tuupola-jquery_lazyload/jquery.lazyload.js"></script>
+<script src="${ctx }/static/plugins/tuupola-jquery_lazyload/jquery.lazyload.js"></script>
 
 <script>
 
     $("img.lazy").lazyload({
-        placeholder: "/upload/load.gif",
+        placeholder: path + "/upload/load.gif",
         effect: "fadeIn"
     });
 

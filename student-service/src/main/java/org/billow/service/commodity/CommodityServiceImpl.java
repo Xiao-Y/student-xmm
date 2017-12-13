@@ -39,7 +39,7 @@ public class CommodityServiceImpl extends BaseServiceImpl<CommodityDto> implemen
     @Override
     public void updateCommodityImg(String imgBase64, String path, String commodityId) throws Exception {
         imgBase64 = imgBase64.split(",")[1];
-        String fileName = commodityId + ".png";
+        String fileName = commodityId + ".jpg";
         ImageUtils.decodeBase64ToImage(imgBase64, path, fileName);
         CommodityDto commodityDto = new CommodityDto();
         commodityDto.setId(commodityId);
