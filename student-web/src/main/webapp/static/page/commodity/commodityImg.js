@@ -60,7 +60,7 @@ $(function () {
                         var formData = new FormData();
                         formData.append("imgBase64", fileImg);
                         $.ajax({
-                            url: "/commodity/uploadCommodityImg/" + $("#commodityId").val(),
+                            url: path + "/commodity/uploadCommodityImg/" + $("#commodityId").val(),
                             type: 'POST',
                             data: formData,
                             contentType: false,
@@ -153,6 +153,7 @@ $(function () {
                 window.close();
             }
             $('#tipModel').modal("hide");
+            window.opener.location.reload();
         });
     }());
 

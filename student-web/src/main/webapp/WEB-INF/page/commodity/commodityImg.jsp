@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>编辑商品图片</title>
-    <link rel="stylesheet" type="text/css" href="/static/plugins/jquery-cropper/css/normalize.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/plugins/jquery-cropper/css/default.css">
-    <link rel="stylesheet" href="/static/plugins/jquery-cropper/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/plugins/jquery-cropper/dist/cropper.css">
-    <link rel="stylesheet" href="/static/plugins/jquery-cropper/css/main.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/plugins/jquery-cropper/css/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/plugins/jquery-cropper/css/default.css">
+    <link rel="stylesheet" href="${ctx}/static/plugins/jquery-cropper/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${ctx}/static/plugins/jquery-cropper/dist/cropper.css">
+    <link rel="stylesheet" href="${ctx}/static/plugins/jquery-cropper/css/main.css">
 </head>
 <body>
 <div class="htmleaf-container">
@@ -111,9 +111,9 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script src="/static/plugins/jquery-cropper/assets/js/jquery.min.js"></script>
-<script src="/static/plugins/jquery-cropper/assets/js/bootstrap.min.js"></script>
-<script src="/static/plugins/jquery-cropper/dist/cropper.js"></script>
-<script src="/static/page/commodity/commodityImg.js"></script>
+<script src="${ctx}/static/plugins/jquery-cropper/assets/js/jquery.min.js"></script>
+<script src="${ctx}/static/plugins/jquery-cropper/assets/js/bootstrap.min.js"></script>
+<script src="${ctx}/static/plugins/jquery-cropper/dist/cropper.js"></script>
+<script src="${ctx}/static/page/commodity/commodityImg.js"></script>
 </body>
 </html>
