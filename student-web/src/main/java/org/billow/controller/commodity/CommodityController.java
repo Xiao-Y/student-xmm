@@ -41,7 +41,7 @@ public class CommodityController {
     private CommodityService commodityService;
     //商品图片路径
     @Value("${commodity.img.upload}")
-    private String path;
+    private String upload;
     //默认图片名称
     @Value("${commodity.img.default}")
     private String defaultImg;
@@ -173,7 +173,8 @@ public class CommodityController {
      */
     @RequestMapping(value = "/getCommodityImg")
     public ModelAndView getCommodityImg(HttpServletRequest request, CommodityDto commodityDto) {
-        String imgPath = path + "\\" + defaultImg;
+        String path = request.getSession().getServletContext().getRealPath(upload);
+        String imgPath = "/" + upload + "/" + defaultImg;
 
         //获取商品图片的名称
         String img = commodityDto.getImg();
@@ -181,14 +182,11 @@ public class CommodityController {
             String imgPathTemp = path + "\\" + img;
             File targetFile = new File(imgPathTemp);
             if (targetFile.exists()) {
-                imgPath = imgPathTemp;
+                imgPath = "/" + upload + "/" + img;
             }
         }
-        File imageFile = new File(imgPath);
-        String imgageToBase64 = ImageUtils.encodeImgageToBase64(imageFile);
-        String su = "data:image/png;base64,";
         ModelAndView av = new ModelAndView();
-        commodityDto.setImg(su + imgageToBase64);
+        commodityDto.setImg(imgPath);
         av.addObject("commodityDto", commodityDto);
         av.setViewName(PagePathCst.BASEPATH_COMMODITY + "commodityImg");
         return av;
@@ -210,6 +208,7 @@ public class CommodityController {
         String message = "";
         String type = "";
         try {
+            String path = request.getSession().getServletContext().getRealPath(upload);
             commodityService.updateCommodityImg(imgBase64, path, commodityId);
             message = MessageTipsCst.UPLOAD_SUCCESS;
             type = MessageTipsCst.TYPE_SUCCES;

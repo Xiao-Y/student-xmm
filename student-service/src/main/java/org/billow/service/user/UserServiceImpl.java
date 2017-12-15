@@ -200,4 +200,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto> implements UserSer
         userRoleDao.deleteUserRoleByUserId(user.getUserId());
         userDao.deleteByPrimaryKey(user);
     }
+
+    @Override
+    public UserDto getUserByOpenId(String openId) {
+        return userDao.getUserByOpenId(openId);
+    }
 }

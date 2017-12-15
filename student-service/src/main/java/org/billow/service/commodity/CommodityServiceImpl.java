@@ -29,6 +29,9 @@ public class CommodityServiceImpl extends BaseServiceImpl<CommodityDto> implemen
     private CommodityDao commodityDao;
     @Value("${commodity.img.default}")
     private String defaultImg;
+    //商品图片备份路径
+    @Value("${commodity.img.upload.copy}")
+    private String uploadCopy;
 
     @Resource
     @Override
@@ -38,9 +41,11 @@ public class CommodityServiceImpl extends BaseServiceImpl<CommodityDto> implemen
 
     @Override
     public void updateCommodityImg(String imgBase64, String path, String commodityId) throws Exception {
-        imgBase64 = imgBase64.split(",")[1];
+        String imgBase64Temp = imgBase64.split(",")[1];
         String fileName = commodityId + ".jpg";
-        ImageUtils.decodeBase64ToImage(imgBase64, path, fileName);
+        ImageUtils.decodeBase64ToImage(imgBase64Temp, path, fileName);
+        //商品图片备份路径
+        ImageUtils.decodeBase64ToImage(imgBase64Temp, uploadCopy, fileName);
         CommodityDto commodityDto = new CommodityDto();
         commodityDto.setId(commodityId);
         commodityDto.setImg(fileName);

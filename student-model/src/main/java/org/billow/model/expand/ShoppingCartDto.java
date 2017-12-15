@@ -12,6 +12,16 @@ import org.billow.model.domain.ShoppingCartBase;
  */
 public class ShoppingCartDto extends ShoppingCartBase {
 
+    private boolean selected;
+
+    public boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
     public ShoppingCartDto() {
         super();
     }

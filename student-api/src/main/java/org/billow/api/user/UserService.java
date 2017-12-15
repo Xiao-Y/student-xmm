@@ -63,7 +63,7 @@ public interface UserService extends BaseService<UserDto> {
      * @param loginUser 登陆用户
      * @return
      */
-    UserDto userEdit(UserDto loginUser,UserDto user);
+    UserDto userEdit(UserDto loginUser, UserDto user);
 
     /**
      * 保存用户信息和角色信息
@@ -79,4 +79,12 @@ public interface UserService extends BaseService<UserDto> {
      * @param user
      */
     void deleteDel(UserDto user);
+
+    /**
+     * 微信通过openId登陆
+     *
+     * @param openId
+     * @return
+     */
+    UserDto getUserByOpenId(String openId);
 }

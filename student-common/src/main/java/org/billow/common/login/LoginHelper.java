@@ -48,10 +48,12 @@ public class LoginHelper {
      *
      * @param request
      * @param userDto
+     * @return sessionId
      */
-    public static void setLoginUser(HttpServletRequest request, UserDto userDto) {
+    public static String setLoginUser(HttpServletRequest request, UserDto userDto) {
         HttpSession session = request.getSession();
         session.setAttribute(CommonCst.CURRENT_USER, userDto);
+        return session.getId();
     }
 
     /**
@@ -62,7 +64,11 @@ public class LoginHelper {
      */
     public static int getShoppingCount(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        int shoppingCount = (int) session.getAttribute(CommonCst.SHOPPING_COUNT);
+        Object attribute = session.getAttribute(CommonCst.SHOPPING_COUNT);
+        int shoppingCount = 0;
+        if (attribute != null) {
+            shoppingCount = (int) attribute;
+        }
         return shoppingCount;
     }
 

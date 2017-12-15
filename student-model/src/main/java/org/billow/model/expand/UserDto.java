@@ -21,6 +21,15 @@ public class UserDto extends UserBase {
     private String roles;
     //超级系统管理员用户名
     private String superSystemAdminUser;
+    private String sessionId;
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 
     /**
      * 旧密码

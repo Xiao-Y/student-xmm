@@ -40,7 +40,7 @@ public class CommodityBase extends BaseModel implements Serializable {
     private String valid;
     // 等级
     private String grade;
-    // 商品名称
+    // 商品id
     private String id;
     // 单价
     private BigDecimal unitPrice;
