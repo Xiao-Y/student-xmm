@@ -76,7 +76,7 @@ public class Home {
         commodityDto.setStatus("1");
         commodityDto.setValid("1");
         //首页显示最新商品
-        PageHelper.startPage(4);
+        PageHelper.startPage(8);
         commodityDto.setObjectOrderBy("new");
         List<CommodityDto> newList = commodityService.selectAll(commodityDto);
         if (ToolsUtils.isNotEmpty(newList)) {

@@ -3,7 +3,6 @@ package org.billow.mobile;
 import org.apache.log4j.Logger;
 import org.billow.api.orderForm.ShoppingCartService;
 import org.billow.common.login.LoginHelper;
-import org.billow.controller.orderForm.ShoppingCartController;
 import org.billow.model.custom.JsonResult;
 import org.billow.model.expand.CommodityDto;
 import org.billow.model.expand.ShoppingCartDto;
