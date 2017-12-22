@@ -37,6 +37,48 @@ public class OrderFormDto extends OrderFormBase {
      * 是否按照createDate的Asc排序
      */
     private boolean updateDateAscOrderBy;
+    /**
+     * 订单详细
+     */
+    private List<OrderFormDetailDto> orderFormDetailDtos;
+    //是否查询订单详细
+    private boolean queryOrderFormDetail;
+
+    /**
+     * 是否查询订单详细
+     *
+     * @return
+     */
+    public boolean getQueryOrderFormDetail() {
+        return queryOrderFormDetail;
+    }
+
+    /**
+     * 是否查询订单详细
+     *
+     * @param queryOrderFormDetail
+     */
+    public void setQueryOrderFormDetail(boolean queryOrderFormDetail) {
+        this.queryOrderFormDetail = queryOrderFormDetail;
+    }
+
+    /**
+     * 订单详细
+     *
+     * @return
+     */
+    public List<OrderFormDetailDto> getOrderFormDetailDtos() {
+        return orderFormDetailDtos;
+    }
+
+    /**
+     * 订单详细
+     *
+     * @param orderFormDetailDtos
+     */
+    public void setOrderFormDetailDtos(List<OrderFormDetailDto> orderFormDetailDtos) {
+        this.orderFormDetailDtos = orderFormDetailDtos;
+    }
 
     /**
      * 状态的英文名

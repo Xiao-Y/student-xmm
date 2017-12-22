@@ -36,6 +36,10 @@ public class Cart {
     private String upload;
     @Value("${system.domain.name}")
     private String systemDomainName;
+    @Value("${mail.auto.send}")
+    private boolean emailAutoSend;
+    @Value("${mail.auto.default.to}")
+    private String toEmails;
 
     @Autowired
     private ShoppingCartService shoppingCartService;

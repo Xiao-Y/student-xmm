@@ -2,6 +2,7 @@ package org.billow.api.orderForm;
 
 import org.billow.api.base.BaseService;
 import org.billow.model.expand.OrderFormDto;
+import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
 
 import javax.servlet.http.HttpServletResponse;
@@ -72,4 +73,15 @@ public interface OrderFormService extends BaseService<OrderFormDto> {
      * @return
      */
     Map<String, String> getQueryStatus();
+
+    /**
+     * 保存订单信息<br/>
+     * 1、保存订单信息(不包含地址信息)
+     * 2、保存订单详细信息
+     * 3、删除购物车中已经购买的商品
+     *
+     * @param shoppingCartDtos
+     * @return
+     */
+    Map<String, String> saveOrderForm(HttpServletResponse response, UserDto loginUser, List<ShoppingCartDto> shoppingCartDtos);
 }

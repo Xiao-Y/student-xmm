@@ -140,6 +140,12 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         if (ToolsUtils.isNotEmpty(orderFormDtos)) {
             for (OrderFormDto dto : orderFormDtos) {
                 this.setOptionButton(dto, isCustomer);
+                if (orderFormDto.getQueryOrderFormDetail()) {
+                    OrderFormDetailDto orderFormDetailDto = new OrderFormDetailDto();
+                    orderFormDetailDto.setCommodityId(dto.getId());
+                    List<OrderFormDetailDto> orderFormDetailDtos = orderFormDetailDao.selectAll(orderFormDetailDto);
+                    dto.setOrderFormDetailDtos(orderFormDetailDtos);
+                }
             }
         }
         return orderFormDtos;
@@ -217,6 +223,62 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         for (PayStatusEunm c : PayStatusEunm.values()) {
             map.put(c.getStatus(), c.getName());
         }
+        return map;
+    }
+
+    @Override
+    public Map<String, String> saveOrderForm(HttpServletResponse response, UserDto loginUser, List<ShoppingCartDto> shoppingCartDtos) {
+        //订单金额
+        BigDecimal orderFormAmount = new BigDecimal(0.00);
+        //订单id
+        String orderFormId = OrderNumUtil.makeOrderNum();
+        // 2、保存订单详细信息
+        for (int i = 0; i < shoppingCartDtos.size(); i++) {
+            ShoppingCartDto shoppingCart = shoppingCartDtos.get(i);
+            CommodityDto commodityDto = new CommodityDto();
+            commodityDto.setId(shoppingCart.getCommodityId());
+            //查询商品信息
+            CommodityDto dto = commodityDao.selectByPrimaryKey(commodityDto);
+            //如果是无货或者已下架商品不出单
+            if ("0".equals(dto.getStatus()) || "0".equals(dto.getValid())) {
+                continue;
+            }
+            OrderFormDetailDto orderFormDetailDto = new OrderFormDetailDto();
+            BeanUtils.copyProperties(dto, orderFormDetailDto);
+            orderFormDetailDto.setOrderFormId(orderFormId);
+            orderFormDetailDto.setId(UUID.generate());
+            orderFormDetailDto.setCommodityNum(new Integer(shoppingCart.getCommodityNum()));
+            orderFormDetailDto.setCommodityId(dto.getId());
+            orderFormDetailDto.setCommodityImg(dto.getImg());
+            //计算订单金额
+            orderFormAmount = orderFormAmount.add(new BigDecimal(shoppingCart.getCommodityNum()).multiply(dto.getUnitPrice()));
+            //orderFormDetailDao.insert(orderFormDetailDto);
+            // 3、删除购物车中已经购买的商品
+            ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
+            shoppingCartDto.setId(loginUser.getUserId().toString());
+            shoppingCartDto.setCommodityId(dto.getId());
+            //shoppingCartDao.deleteByPrimaryKey(shoppingCartDto);
+            //4更新商品销售数量
+            dto.setQuantity(dto.getQuantity() + new Integer(shoppingCart.getCommodityNum()));
+            //commodityDao.updateByPrimaryKeySelective(dto);
+        }
+        // 1、保存订单信息
+        OrderFormDto orderFormDto = new OrderFormDto();
+        orderFormDto.setId(orderFormId);
+        orderFormDto.setStatus(PayStatusEunm.UNPAID.getStatus());
+        orderFormDto.setDelFlag("0");
+//        orderFormDto.setConsignee(dto.getConsignee());
+//        orderFormDto.setConsigneePhone(dto.getConsigneePhone());
+//        orderFormDto.setConsigneeAddress(dto.getConsigneeAddress());
+        orderFormDto.setOrderformAmount(orderFormAmount.setScale(2));
+        orderFormDto.setCreateDate(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
+        orderFormDto.setUpdateDate(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
+        orderFormDto.setUserId(loginUser.getUserId());
+        //orderFormDao.insert(orderFormDto);
+        logger.info("订单生成，订单号：" + orderFormId);
+        //返回订单号
+        Map<String, String> map = new HashMap<>();
+        map.put("orderFormId", orderFormId);
         return map;
     }
 
