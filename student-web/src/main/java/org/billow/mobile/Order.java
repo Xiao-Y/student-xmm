@@ -119,10 +119,17 @@ public class Order {
         return json;
     }
 
+    /**
+     * 修改订单状态，订单号，订单状态
+     *
+     * @param request
+     * @param orderFormDto
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/updateOrderForm")
     public JsonResult updateOrderForm(HttpServletRequest request, OrderFormDto orderFormDto) {
-        request.setAttribute("orderFormService",orderFormService);
+        request.setAttribute("orderFormService", orderFormService);
         JsonResult jsonResult = orderFormController.updateOrderForm(request, orderFormDto);
         return jsonResult;
     }

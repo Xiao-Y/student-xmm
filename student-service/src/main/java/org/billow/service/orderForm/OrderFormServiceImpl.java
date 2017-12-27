@@ -302,6 +302,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
         Map<String, String> map = new HashMap<>();
         String status = dto.getStatus();
         dto.setStatusName(PayStatusEunm.getNameByStatus(status));
+        dto.setStatusCode(PayStatusEunm.getNameCode(status));
         if (isCustomer) {
             if (PayStatusEunm.UNPAID.getStatus().equals(status)) {//未支付
                 PayStatusEunm customerCancellation = PayStatusEunm.CUSTOMER_CANCELLATION;
