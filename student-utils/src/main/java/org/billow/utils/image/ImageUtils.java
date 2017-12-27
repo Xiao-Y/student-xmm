@@ -1,5 +1,9 @@
 package org.billow.utils.image;
 
+import org.billow.utils.RequestUtils;
+import org.billow.utils.ToolsUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -18,7 +22,28 @@ import java.net.URL;
  * @author liuyongtao
  * @create 2017-11-17 16:59
  */
+@Service
 public class ImageUtils {
+
+    //商品图片路径
+    private static String upload;
+    private static String systemDomainName;
+    private static String defaultImg;
+
+    @Value("${commodity.img.upload}")
+    public void setUpload(String uploadTemp) {
+        ImageUtils.upload = uploadTemp;
+    }
+
+    @Value("${system.domain.name}")
+    public void setSystemDomainName(String systemDomainNameTemp) {
+        ImageUtils.systemDomainName = systemDomainNameTemp;
+    }
+
+    @Value("${commodity.img.default}")
+    public void setDefaultImg(String defaultImg) {
+        ImageUtils.defaultImg = defaultImg;
+    }
 
     /**
      * 将网络图片进行Base64位编码<br/>
@@ -96,5 +121,14 @@ public class ImageUtils {
         if (file.exists()) {
             file.delete();
         }
+    }
+
+    public static String getImgPath(String img) {
+        String contextPath = RequestUtils.getRequest().getSession().getServletContext().getContextPath();
+        if (ToolsUtils.isEmpty(img)) {
+            img = defaultImg;
+        }
+        img = systemDomainName + contextPath + "/" + upload + "/" + img;
+        return img;
     }
 }

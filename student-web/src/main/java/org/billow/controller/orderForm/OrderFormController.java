@@ -199,6 +199,9 @@ public class OrderFormController {
                 orderFormDto.setDelFlag("1");
             }
             orderFormDto.setUpdateDate(new Date());
+            if (orderFormService == null) {
+                orderFormService = (OrderFormService) request.getAttribute("orderFormService");
+            }
             orderFormService.updateOrderForm(orderFormDto);
             if (PayStatusEunm.DELETE_ORDER_FORM.getNameCode().equals(statusCode)) {//删除订单记录
                 message = MessageTipsCst.DELETE_SUCCESS;
@@ -284,7 +287,7 @@ public class OrderFormController {
         //orderFormDto.setDelFlag("0");
         orderFormDto.setIsCustomer(false);
         List<OrderFormDto> list = orderFormService.selectAllAndOptionButton(orderFormDto);
-        Map<String,String> map = orderFormService.getQueryStatus();
+        Map<String, String> map = orderFormService.getQueryStatus();
         PageInfo<OrderFormDto> page = new PageInfo<>(list);
         ModelAndView av = new ModelAndView();
         av.addObject("page", page);

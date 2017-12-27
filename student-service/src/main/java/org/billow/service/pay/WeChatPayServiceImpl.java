@@ -7,9 +7,7 @@ import org.billow.api.orderForm.OrderFormService;
 import org.billow.api.pay.PayService;
 import org.billow.model.expand.OrderFormDto;
 import org.billow.model.expand.OrderFormPayLogDto;
-import org.billow.utils.StringUtils;
 import org.billow.utils.ToolsUtils;
-import org.billow.utils.enumType.PayStatusEunm;
 import org.billow.utils.generator.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +17,16 @@ import java.net.URLDecoder;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * 微信支付
+ *
+ * @author liuyongtao
+ * @create 2017-12-26 16:43
+ */
 @Service
-public class AlipayServiceImpl implements PayService {
+public class WeChatPayServiceImpl implements PayService {
 
-    private final static Logger logger = Logger.getLogger(AlipayServiceImpl.class);
+    private final static Logger logger = Logger.getLogger(WeChatPayServiceImpl.class);
 
     @Autowired
     private OrderFormPayLogService orderFormPayLogService;
@@ -30,8 +34,8 @@ public class AlipayServiceImpl implements PayService {
     private OrderFormService orderFormService;
 
     @Override
-    public void savePayData(Map<String, String> paramsMap) throws Exception {
-        logger.debug("########################  保存支付宝返回报文,更新订单状态 start ####################################");
+    public void savePayData(Map<String, String> paramsMap) throws Exception{
+        logger.debug("########################  保存微信返回报文,更新订单状态 start ####################################");
         //操作用户信息
         Integer userId = null;
         String userName = null;
@@ -46,14 +50,14 @@ public class AlipayServiceImpl implements PayService {
         }
         //支付信息
         String orderFormId = paramsMap.get("out_trade_no");//订单号
-        String trade_no = paramsMap.get("trade_no");//支付宝交易号
-        String buyer_id = paramsMap.get("buyer_id");//买家支付宝号
-        String trade_status = paramsMap.get("trade_status");//支付状态
-        String total_amount = paramsMap.get("total_amount");//支付金额
+        String trade_no = paramsMap.get("transaction_id");//微信交易号
+        String buyer_id = paramsMap.get("openid");//买家微信唯一标识
+        String result_code = paramsMap.get("result_code");//支付状态,SUCCESS/FAIL
+        String total_amount = paramsMap.get("total_fee");//支付金额
         String info = paramsMap.get("info");
-        //支付宝返回报文
-        String status = PayStatusEunm.getStatus(StringUtils.upperCase(trade_status));
-        logger.info(status + "-" + PayStatusEunm.getNameByStatus(status));
+        //微信返回报文
+        String status = "SUCCESS".equals(result_code) ? "3" : "2";
+        logger.info(result_code);
         logger.info(info);
         try {
             OrderFormPayLogDto log = new OrderFormPayLogDto();
@@ -67,7 +71,7 @@ public class AlipayServiceImpl implements PayService {
             log.setTotalAmount(new BigDecimal(total_amount));
             log.setStatus(status);
             log.setInfo(info);
-            //插入支付宝返回日志
+            //插入微信返回日志
             orderFormPayLogService.insert(log);
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,6 +82,6 @@ public class AlipayServiceImpl implements PayService {
         orderFormDto.setId(orderFormId);
         orderFormDto.setStatus(status);
         orderFormService.updateByPrimaryKeySelective(orderFormDto);
-        logger.debug("########################  保存支付宝返回报文,更新订单状态 end ####################################");
+        logger.debug("########################  保存微信返回报文,更新订单状态 end ####################################");
     }
 }

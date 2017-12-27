@@ -14,6 +14,16 @@ public class AddressDto extends AddressBase {
 
     //处理类型：edit-编辑，add-添加
     private String type;
+    //是否选种
+    private boolean selected;
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     /**
      * 处理类型：edit-编辑，add-添加

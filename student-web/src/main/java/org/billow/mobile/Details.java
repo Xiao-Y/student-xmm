@@ -10,8 +10,8 @@ import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
+import org.billow.utils.image.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,11 +31,6 @@ import java.util.List;
 public class Details {
     private static final Logger logger = Logger.getLogger(Details.class);
 
-    @Value("${system.domain.name}")
-    private String systemDomainName;
-    //商品图片路径
-    @Value("${commodity.img.upload}")
-    private String upload;
     @Autowired
     private ShoppingCartService shoppingCartService;
     @Autowired
@@ -53,8 +48,7 @@ public class Details {
         String contextPath = request.getSession().getServletContext().getContextPath();
         CommodityDto commodityDto = commodityService.selectByPrimaryKey(commodity);
         if (commodityDto != null) {
-            String img = systemDomainName + contextPath + "/" + upload + "/" + commodityDto.getImg();
-            commodityDto.setImg(img);
+            commodityDto.setImg(ImageUtils.getImgPath(commodityDto.getImg()));
         }
         return commodityDto;
     }

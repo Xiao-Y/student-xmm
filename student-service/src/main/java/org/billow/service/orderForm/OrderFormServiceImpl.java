@@ -20,6 +20,7 @@ import org.billow.utils.date.DateTime;
 import org.billow.utils.enumType.PayStatusEunm;
 import org.billow.utils.generator.OrderNumUtil;
 import org.billow.utils.generator.UUID;
+import org.billow.utils.image.ImageUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -142,8 +143,13 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
                 this.setOptionButton(dto, isCustomer);
                 if (orderFormDto.getQueryOrderFormDetail()) {
                     OrderFormDetailDto orderFormDetailDto = new OrderFormDetailDto();
-                    orderFormDetailDto.setCommodityId(dto.getId());
+                    orderFormDetailDto.setOrderFormId(dto.getId());
                     List<OrderFormDetailDto> orderFormDetailDtos = orderFormDetailDao.selectAll(orderFormDetailDto);
+                    if(ToolsUtils.isNotEmpty(orderFormDetailDtos)){
+                        for(OrderFormDetailDto detailDto : orderFormDetailDtos){
+                            detailDto.setCommodityImg(ImageUtils.getImgPath(detailDto.getCommodityImg()));
+                        }
+                    }
                     dto.setOrderFormDetailDtos(orderFormDetailDtos);
                 }
             }
@@ -227,14 +233,14 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
     }
 
     @Override
-    public Map<String, String> saveOrderForm(HttpServletResponse response, UserDto loginUser, List<ShoppingCartDto> shoppingCartDtos) {
+    public Map<String, String> saveOrderForm(HttpServletResponse response, UserDto loginUser, String addressId, List<OrderFormDetailDto> orderFormDetailDtos) {
         //订单金额
         BigDecimal orderFormAmount = new BigDecimal(0.00);
         //订单id
         String orderFormId = OrderNumUtil.makeOrderNum();
         // 2、保存订单详细信息
-        for (int i = 0; i < shoppingCartDtos.size(); i++) {
-            ShoppingCartDto shoppingCart = shoppingCartDtos.get(i);
+        for (int i = 0; i < orderFormDetailDtos.size(); i++) {
+            OrderFormDetailDto shoppingCart = orderFormDetailDtos.get(i);
             CommodityDto commodityDto = new CommodityDto();
             commodityDto.setId(shoppingCart.getCommodityId());
             //查询商品信息
@@ -252,7 +258,7 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             orderFormDetailDto.setCommodityImg(dto.getImg());
             //计算订单金额
             orderFormAmount = orderFormAmount.add(new BigDecimal(shoppingCart.getCommodityNum()).multiply(dto.getUnitPrice()));
-            //orderFormDetailDao.insert(orderFormDetailDto);
+            orderFormDetailDao.insert(orderFormDetailDto);
             // 3、删除购物车中已经购买的商品
             ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
             shoppingCartDto.setId(loginUser.getUserId().toString());
@@ -260,21 +266,25 @@ public class OrderFormServiceImpl extends BaseServiceImpl<OrderFormDto> implemen
             //shoppingCartDao.deleteByPrimaryKey(shoppingCartDto);
             //4更新商品销售数量
             dto.setQuantity(dto.getQuantity() + new Integer(shoppingCart.getCommodityNum()));
-            //commodityDao.updateByPrimaryKeySelective(dto);
+            commodityDao.updateByPrimaryKeySelective(dto);
         }
         // 1、保存订单信息
+        //查询地址信息
+        AddressDto addressDto = new AddressDto();
+        addressDto.setId(addressId);
+        AddressDto dto = addressDao.selectByPrimaryKey(addressDto);
         OrderFormDto orderFormDto = new OrderFormDto();
         orderFormDto.setId(orderFormId);
         orderFormDto.setStatus(PayStatusEunm.UNPAID.getStatus());
         orderFormDto.setDelFlag("0");
-//        orderFormDto.setConsignee(dto.getConsignee());
-//        orderFormDto.setConsigneePhone(dto.getConsigneePhone());
-//        orderFormDto.setConsigneeAddress(dto.getConsigneeAddress());
+        orderFormDto.setConsignee(dto.getConsignee());
+        orderFormDto.setConsigneePhone(dto.getConsigneePhone());
+        orderFormDto.setConsigneeAddress(dto.getConsigneeAddress());
         orderFormDto.setOrderformAmount(orderFormAmount.setScale(2));
         orderFormDto.setCreateDate(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
         orderFormDto.setUpdateDate(new DateTime(new Date(), DateTime.YEAR_TO_SECOND));
         orderFormDto.setUserId(loginUser.getUserId());
-        //orderFormDao.insert(orderFormDto);
+        orderFormDao.insert(orderFormDto);
         logger.info("订单生成，订单号：" + orderFormId);
         //返回订单号
         Map<String, String> map = new HashMap<>();

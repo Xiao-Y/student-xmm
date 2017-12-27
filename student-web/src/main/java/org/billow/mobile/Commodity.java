@@ -2,12 +2,11 @@ package org.billow.mobile;
 
 import com.github.pagehelper.PageInfo;
 import org.billow.api.commodity.CommodityService;
-import org.billow.common.annotation.SameUrlData;
 import org.billow.model.expand.CommodityDto;
 import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
+import org.billow.utils.image.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,11 +23,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/mb/commodity")
 public class Commodity {
-    //商品图片路径
-    @Value("${commodity.img.upload}")
-    private String upload;
-    @Value("${system.domain.name}")
-    private String systemDomainName;
+
     @Autowired
     private CommodityService commodityService;
 
@@ -49,8 +44,7 @@ public class Commodity {
         if (ToolsUtils.isNotEmpty(commodityList)) {
             for (CommodityDto dto : commodityList) {
                 //获取商品图片的名称
-                String img = systemDomainName + contextPath + "/" + upload + "/" + dto.getImg();
-                dto.setImg(img);
+                dto.setImg(ImageUtils.getImgPath(dto.getImg()));
             }
         }
         PageInfo<CommodityDto> page = new PageInfo<>(commodityList);

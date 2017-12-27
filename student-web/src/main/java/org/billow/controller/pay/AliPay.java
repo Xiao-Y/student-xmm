@@ -11,7 +11,7 @@ import com.alipay.api.response.AlipayTradeRefundResponse;
 import org.apache.log4j.Logger;
 import org.billow.api.orderForm.OrderFormDetailService;
 import org.billow.api.orderForm.OrderFormService;
-import org.billow.api.pay.AlipayService;
+import org.billow.api.pay.PayService;
 import org.billow.common.login.LoginHelper;
 import org.billow.common.queues.OrderFormTaskQueue;
 import org.billow.model.custom.JsonResult;
@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
@@ -58,8 +59,8 @@ public class AliPay {
     private OrderFormService orderFormService;
     @Autowired
     private OrderFormDetailService orderFormDetailService;
-    @Autowired
-    private AlipayService alipayService;
+    @Resource(name = "alipayServiceImpl")
+    private PayService alipayService;
     @Value("${system.domain.name}")
     private String systemDomainName;
     @Value("${shopping.mall.name}")
@@ -171,7 +172,7 @@ public class AliPay {
             //更新订单状态和保存支付宝返回的数据
             String info = JSON.toJSONString(paramsMap);
             paramsMap.put("info", info);
-            alipayService.saveAlipayData(paramsMap);
+            alipayService.savePayData(paramsMap);
             try {
                 //插入自动确认订单队列
                 String typeCode = OrderFormTaskQueueEunm.ORDER_FORM_AUTO_CONFIRMATION.getTypeCode();
@@ -330,7 +331,7 @@ public class AliPay {
                 String info = JSON.toJSONString(alipayTradeRefundResponse);
                 paramsMap.put("info", info);
                 //更新订单状态和保存支付宝返回的数据
-                alipayService.saveAlipayData(paramsMap);
+                alipayService.savePayData(paramsMap);
                 message = PayStatusEunm.REFUND_SUCCESS.getName();
                 type = MessageTipsCst.TYPE_SUCCES;
             } else {

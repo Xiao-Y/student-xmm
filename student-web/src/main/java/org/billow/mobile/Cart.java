@@ -9,6 +9,7 @@ import org.billow.model.expand.ShoppingCartDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.ToolsUtils;
 import org.billow.utils.constant.MessageTipsCst;
+import org.billow.utils.image.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -31,11 +32,6 @@ import java.util.List;
 public class Cart {
     private static final Logger logger = Logger.getLogger(Cart.class);
 
-    //商品图片路径
-    @Value("${commodity.img.upload}")
-    private String upload;
-    @Value("${system.domain.name}")
-    private String systemDomainName;
     @Value("${mail.auto.send}")
     private boolean emailAutoSend;
     @Value("${mail.auto.default.to}")
@@ -53,7 +49,6 @@ public class Cart {
     @ResponseBody
     @RequestMapping("/myShoppingCart")
     public List<ShoppingCartDto> myShoppingCart(HttpServletRequest request) {
-        String contextPath = request.getSession().getServletContext().getContextPath();
         UserDto userDto = LoginHelper.getLoginUser(request);
         List<ShoppingCartDto> list = shoppingCartService.myShoppingCart(userDto);
         if (ToolsUtils.isNotEmpty(list)) {
@@ -61,8 +56,7 @@ public class Cart {
                 dto.setSelected(true);
                 CommodityDto commodityDto = dto.getCommodityDto();
                 //获取商品图片的名称
-                String img = systemDomainName + contextPath + "/" + upload + "/" + commodityDto.getImg();
-                commodityDto.setImg(img);
+                commodityDto.setImg(ImageUtils.getImgPath(commodityDto.getImg()));
             }
         }
         return list;

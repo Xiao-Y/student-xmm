@@ -21,6 +21,8 @@ public class OrderFormDto extends OrderFormBase {
         super();
     }
 
+    //微信用户的登陆状态
+    private String jsCode;
     //状态的中文名
     private String statusName;
     //状态的英文名
@@ -37,6 +39,25 @@ public class OrderFormDto extends OrderFormBase {
      * 是否按照createDate的Asc排序
      */
     private boolean updateDateAscOrderBy;
+
+    /**
+     * 微信用户的登陆状态
+     *
+     * @return
+     */
+    public String getJsCode() {
+        return jsCode;
+    }
+
+    /**
+     * 微信用户的登陆状态
+     *
+     * @param jsCode
+     */
+    public void setJsCode(String jsCode) {
+        this.jsCode = jsCode;
+    }
+
     /**
      * 订单详细
      */

@@ -8,8 +8,8 @@ import org.billow.model.expand.CommodityDto;
 import org.billow.model.expand.UserDto;
 import org.billow.utils.PageHelper;
 import org.billow.utils.ToolsUtils;
+import org.billow.utils.image.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,15 +28,6 @@ import java.util.List;
 public class Home {
     private static final Logger logger = Logger.getLogger(Home.class);
 
-    //商品图片路径
-    @Value("${commodity.img.upload}")
-    private String upload;
-    @Value("${system.domain.name}")
-    private String systemDomainName;
-    @Value("${weichat.appid}")
-    public String appid;
-    @Value("${weichat.appsecret}")
-    public String appsecret;
     @Autowired
     private UserService userService;
     @Autowired
@@ -47,19 +38,18 @@ public class Home {
     @RequestMapping("/login")
     public UserDto login(HttpServletRequest request, String code) {
         System.out.println(code);
-//        UserDto user = null;
-//        String url = "https://api.weixin.qq.com/sns/oauth2/access_token";
-//        String param = "appid=" + appid + "&secret=" + appsecret + "&grant_type=authorization_code&code=" + code;
-//        Gson gson = new Gson();
-//        Map<String, String> map = gson.fromJson(HttpRequest.sendGet(url, param), new TypeToken<Map<String, String>>() {
-//        }.getType());
+        //Map<String, String> map = WeChatPayApi.getOpenIdAndSessionKey(code);
+        //System.out.println(map);
+
+        UserDto user = null;
 //        Object openID = map.get("openid");
 //        System.out.println(openID);
 //        if (openID != null && !"".equals(openID)) {
 //            // 通过openID获取user对象
 //            user = userService.getUserByOpenId(openID.toString());
 //        }
-        UserDto user = userService.findUserByUserName("billow");
+
+        user = userService.findUserByUserName("billow");
         String sessionId = LoginHelper.setLoginUser(request, user);
         user.setSessionId(sessionId);
         return user;
@@ -71,7 +61,6 @@ public class Home {
     @ResponseBody
     @RequestMapping("/getCommodityNewList")
     public List<CommodityDto> getCommodityNewList(HttpServletRequest request, CommodityDto commodityDto) {
-        String contextPath = request.getSession().getServletContext().getContextPath();
         commodityDto.setDeleFlag("1");
         commodityDto.setStatus("1");
         commodityDto.setValid("1");
@@ -82,8 +71,7 @@ public class Home {
         if (ToolsUtils.isNotEmpty(newList)) {
             for (CommodityDto dto : newList) {
                 //获取商品图片的名称
-                String img = systemDomainName + contextPath + "/" + upload + "/" + dto.getImg();
-                dto.setImg(img);
+                dto.setImg(ImageUtils.getImgPath(dto.getImg()));
             }
         }
         return newList;
@@ -95,7 +83,6 @@ public class Home {
     @ResponseBody
     @RequestMapping("/getCommodityHotList")
     public List<CommodityDto> getCommodityHotList(HttpServletRequest request, CommodityDto commodityDto) {
-        String contextPath = request.getSession().getServletContext().getContextPath();
         commodityDto.setDeleFlag("1");
         commodityDto.setStatus("1");
         commodityDto.setValid("1");
@@ -106,8 +93,7 @@ public class Home {
         if (ToolsUtils.isNotEmpty(hotList)) {
             for (CommodityDto dto : hotList) {
                 //获取商品图片的名称
-                String img = systemDomainName + contextPath + "/" + upload + "/" + dto.getImg();
-                dto.setImg(img);
+                dto.setImg(ImageUtils.getImgPath(dto.getImg()));
             }
         }
         return hotList;
